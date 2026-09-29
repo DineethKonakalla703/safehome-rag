@@ -1,5 +1,7 @@
 # SafeHome-RAG Frontend
 
+This is the review-ready Priority 1 interface: a responsive residential CRM dashboard powered by mock data, localStorage, and deterministic AI simulation rules. It has no backend or database; Priority 2 may introduce an API and MongoDB Atlas.
+
 ## Setup
 
 ```bash

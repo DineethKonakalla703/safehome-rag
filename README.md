@@ -1,6 +1,6 @@
 # SafeHome-RAG
 
-SafeHome-RAG is a Priority 1 college-project prototype for residential complaint management, maintenance coordination, and billing. It demonstrates one complete workflow with a React frontend, mock data, rule-based analysis, and browser local storage.
+SafeHome-RAG is a review-ready Priority 1 college-project prototype for residential complaint management, maintenance coordination, and billing. Its sophisticated responsive dashboard demonstrates one complete workflow with a React frontend, mock data, rule-based AI simulation, and browser localStorage.
 
 ## Priority 1 scope
 
@@ -55,6 +55,7 @@ The login screen is a role picker; no password is required.
 - Four deterministic complaint-analysis rules
 - Persistent ticket, timeline, assignment, status, and bill changes
 - Responsive desktop and mobile layout
+- Polished SaaS-style dashboards, case-file ticket details, status badges, and billing summaries
 - Seeded review data and safe empty states
 
 ## Future phases
