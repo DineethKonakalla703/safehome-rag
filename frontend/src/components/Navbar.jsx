@@ -1,0 +1,20 @@
+import { LogOut, Menu } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../utils/auth';
+import { roleLabels } from '../data/mockData';
+
+export default function Navbar({ user, onMenu }) {
+  const navigate = useNavigate();
+  return (
+    <header className="navbar">
+      <button className="icon-button menu-button" onClick={onMenu} aria-label="Open navigation"><Menu size={20} /></button>
+      <div className="nav-title"><strong>Green Valley Residency</strong><span>Operations console</span></div>
+      <div className="user-area">
+        <div className="avatar">{user.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div>
+        <div className="user-copy"><strong>{user.name}</strong><span>{roleLabels[user.role]}</span></div>
+        <button className="logout-button" onClick={() => { logout(); navigate('/login'); }}><LogOut size={17} /><span>Logout</span></button>
+      </div>
+    </header>
+  );
+}
+
