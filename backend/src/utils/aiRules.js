@@ -11,4 +11,3 @@ export function analyzeComplaint(description = '') {
   }
   return { category: 'General Maintenance', severity: 'Low', safetyRisk: false, suggestedAction: 'Assign general maintenance technician.', humanApprovalRequired: false };
 }
-

@@ -1,7 +1,11 @@
 import { Router } from 'express';
-import { createBill, listBills } from '../controllers/billController.js';
+import { createBill, generateMonthlyBills, listBills, residentBills, updateBillStatus } from '../controllers/billController.js';
+import { authenticate, authorize } from '../middleware/auth.js';
 const router = Router();
+router.use(authenticate);
 router.get('/', listBills);
-router.post('/', createBill);
+router.get('/resident/:residentId', residentBills);
+router.post('/', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), createBill);
+router.post('/monthly-generate', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), generateMonthlyBills);
+router.patch('/:id/status', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), updateBillStatus);
 export default router;
-

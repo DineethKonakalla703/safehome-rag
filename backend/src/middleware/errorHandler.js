@@ -11,4 +11,3 @@ export function errorHandler(error, req, res, next) {
   if (status >= 500) console.error(error);
   res.status(status).json({ success: false, error: { message, ...(error.details ? { details: error.details } : {}) } });
 }
-

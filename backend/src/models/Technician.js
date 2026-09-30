@@ -10,4 +10,3 @@ const schema = new mongoose.Schema({
   workload: { type: Number, min: 0, default: 0 },
 }, { timestamps: true, versionKey: false });
 export default mongoose.model('Technician', schema);
-

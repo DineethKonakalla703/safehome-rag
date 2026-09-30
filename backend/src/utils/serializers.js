@@ -40,4 +40,3 @@ export async function decorateBills(records) {
   const blockMap = new Map(blocks.map((item) => [item.blockId, item.name]));
   return bills.map((bill) => ({ ...bill, residentName: userMap.get(bill.residentId) || bill.residentId, apartmentNumber: apartmentMap.get(bill.apartmentId) || bill.apartmentId, blockName: blockMap.get(bill.blockId) || bill.blockId }));
 }
-

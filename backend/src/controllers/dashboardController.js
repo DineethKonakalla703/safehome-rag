@@ -15,6 +15,7 @@ export const mainAdminDashboard = asyncHandler(async (req, res) => {
 });
 
 export const blockAdminDashboard = asyncHandler(async (req, res) => {
+  if (req.user.role === 'BLOCK_SUB_ADMIN' && req.user.blockId !== req.params.blockId) throw new AppError(403, 'You can only view your assigned block.');
   const block = await Block.findOne({ blockId: req.params.blockId }).lean();
   if (!block) throw new AppError(404, 'Block not found.');
   const filter = { blockId: block.blockId };
@@ -25,6 +26,7 @@ export const blockAdminDashboard = asyncHandler(async (req, res) => {
 });
 
 export const residentDashboard = asyncHandler(async (req, res) => {
+  if (req.user.role === 'RESIDENT' && req.user.userId !== req.params.residentId) throw new AppError(403, 'You can only view your own dashboard.');
   const resident = await User.findOne({ userId: req.params.residentId, role: 'RESIDENT' }).lean();
   if (!resident) throw new AppError(404, 'Resident not found.');
   const filter = { residentId: resident.userId };
@@ -33,4 +35,3 @@ export const residentDashboard = asyncHandler(async (req, res) => {
   ]);
   ok(res, { summary: { myTickets, openTickets, myBills, pendingAmount: pendingRows[0]?.total || 0, recentTicketStatus: recent[0]?.status || 'No tickets' }, recentTickets: await decorateTickets(recent) });
 });
-

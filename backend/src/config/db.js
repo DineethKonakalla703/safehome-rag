@@ -13,4 +13,3 @@ export function databaseStatus() {
   const labels = ['disconnected', 'connected', 'connecting', 'disconnecting'];
   return { state: labels[mongoose.connection.readyState] || 'unknown', database: mongoose.connection.name || 'safehome_rag' };
 }
-

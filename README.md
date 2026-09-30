@@ -1,22 +1,28 @@
 # SafeHome-RAG
 
-SafeHome-RAG is a review-ready Priority 1 college-project prototype for residential complaint management, maintenance coordination, and billing. Its sophisticated responsive dashboard demonstrates one complete workflow with a React frontend, mock data, rule-based AI simulation, and browser localStorage.
+SafeHome-RAG is a full-stack residential operations CRM for communities, blocks, apartments, residents, maintenance, billing, visitors, parking, amenities, notices, documents, inventory, reporting, and audit history.
 
-## Priority 1 scope
+This repository now contains the Phase 1 core product: a sophisticated React dashboard connected to an authenticated Express and MongoDB Atlas API. The name describes the long-term project direction; this phase deliberately does **not** include generative AI, GraphRAG, or a chatbot. Complaint classification remains a transparent deterministic rule simulation.
 
-The prototype supports demo login, role-aware dashboards, complaint creation, rule-based safety analysis, block-restricted ticket access, technician assignment, ticket status changes, demo bill generation, and automatically updated dashboard summaries.
+## Stack
 
-It intentionally does **not** include a backend, database, real authentication, file upload, payment gateway, external API, real AI model, or GraphRAG.
+- React 18, Vite, React Router, Lucide icons, and plain CSS
+- Node.js, Express, MongoDB Atlas, and Mongoose
+- JWT authentication and bcrypt password hashing
+- REST APIs with server-side role and record scoping
 
-## Technology
+## Local setup
 
-- React + Vite
-- React Router
-- Lucide React icons
-- Plain CSS
-- `mockData.js` and `localStorage`
+1. Copy `backend/.env.example` to `backend/.env` and configure Atlas plus a strong `JWT_SECRET`.
+2. Optionally copy `frontend/.env.example` to `frontend/.env`; the default API URL is already `http://localhost:5000/api`.
+3. Install, seed, and start both applications:
 
-## Run locally
+```bash
+cd backend
+npm install
+npm run seed
+npm run dev
+```
 
 ```bash
 cd frontend
@@ -24,43 +30,30 @@ npm install
 npm run dev
 ```
 
-Open the local URL shown by Vite. Verify a production build with `npm run build`.
+Open `http://localhost:5173`. All seeded accounts use `Demo@123` for local review.
 
-## Demo users
+## Demo identities
 
-| Role | Demo identity | Email |
-| --- | --- | --- |
-| Main Admin | Main Admin | admin@safehome.com |
-| Block Sub Admin | Block A Admin | blocka.admin@safehome.com |
-| Resident | Resident One | resident1@safehome.com |
-| Technician | Technician Suresh | technician@safehome.com |
+| Role | Email |
+| --- | --- |
+| Main Admin | `admin@safehome.com` |
+| Block A Admin | `blocka.admin@safehome.com` |
+| Resident One | `resident1@safehome.com` |
+| Technician Suresh | `technician@safehome.com` |
+| Security Officer | `security@safehome.com` |
+| Facility Manager | `facility@safehome.com` |
 
-The login screen is a role picker; no password is required.
+The login page retains four review shortcuts while also accepting credentials directly.
 
-## Suggested demo flow
+## Phase 1 capabilities
 
-1. Enter as Main Admin and review the community dashboard.
-2. Log out and enter as Resident One.
-3. Create a complaint with: “Water is leaking near the electrical switchboard in A-102.”
-4. Review the high-risk rule-based analysis on the ticket.
-5. Log in as Block A Admin and open the new Block A ticket.
-6. Assign Suresh, update the status to In Progress, and generate a demo bill.
-7. Open Billing and return to the dashboard to show updated summaries.
+- Community, block, apartment, resident, owner, and tenant records
+- Complaint tickets, comments, SLA, escalation, reopen, technician assignment, and work orders
+- Monthly and repair bills, manual payment status, receipts, and due dates
+- Visitor approvals/check-out, vehicle registration, and parking assignment
+- Amenity catalogue, resident booking, and admin approval
+- Notices, document metadata, maintenance inventory, and stock usage
+- Scoped dashboards, operational reports, CSV export, and audit logs
+- Main Admin, Block Admin, Resident, Technician, Facility Manager, and Security access rules
 
-## Current features
-
-- Protected client-side routes and role-based navigation
-- Main Admin, Block Admin, Resident, and Technician views
-- Role-based ticket and bill filtering
-- Four deterministic complaint-analysis rules
-- Persistent ticket, timeline, assignment, status, and bill changes
-- Responsive desktop and mobile layout
-- Polished SaaS-style dashboards, case-file ticket details, status badges, and billing summaries
-- Seeded review data and safe empty states
-
-## Future phases
-
-Priority 2 can introduce an Express API, secure authentication, server-side authorization, and MongoDB Atlas. Later phases may add uploads, notifications, payments, analytics, and retrieval-augmented AI. These are deliberately outside this MVP.
-
-See [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) for the review walkthrough.
-
+See [backend/README.md](backend/README.md) for the API reference and [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) for the review flow.

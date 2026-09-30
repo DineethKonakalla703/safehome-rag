@@ -5,9 +5,10 @@ import TicketTable from '../components/TicketTable';
 import { getCurrentUser } from '../utils/auth';
 import { PageHeader, useRecords } from './DashboardShared';
 import StatCard from '../components/StatCard';
+import { ErrorState, LoadingState } from '../components/DataState';
 
 export default function TicketList() {
-  const user = getCurrentUser(); const { tickets } = useRecords(user);
+  const user = getCurrentUser(); const { tickets, loading, error, reload } = useRecords(user);
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('All');
   const visibleTickets = tickets.filter((ticket) => {
@@ -17,6 +18,7 @@ export default function TicketList() {
   const open = tickets.filter((ticket) => !['Resolved', 'Closed'].includes(ticket.status)).length;
   const highRisk = tickets.filter((ticket) => ticket.safetyRisk).length;
   const title = user.role === 'RESIDENT' ? 'My tickets' : user.role === 'TECHNICIAN' ? 'Assigned tickets' : 'Maintenance tickets';
+  if (loading) return <LoadingState label="Loading tickets…" />;
+  if (error) return <ErrorState error={error} onRetry={reload} />;
   return <><PageHeader eyebrow="Service desk" title={title} subtitle={`${tickets.length} record${tickets.length === 1 ? '' : 's'} available under your access level.`} action={user.role === 'RESIDENT' ? <Link className="primary-button" to="/resident/create-complaint"><Plus size={17} /> Create complaint</Link> : null} /><section className="stats-grid ticket-stats"><StatCard label="Visible Tickets" value={tickets.length} icon={Tickets} /><StatCard label="Open Tickets" value={open} icon={Clock3} tone="amber" /><StatCard label="High Risk" value={highRisk} icon={AlertTriangle} tone="red" /></section><section className="content-card"><div className="table-toolbar"><div className="search-control"><Search size={17} /><input aria-label="Search tickets" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search ID, title, or category" /></div><div className="filter-control"><Filter size={16} /><select aria-label="Filter by status" value={status} onChange={(event) => setStatus(event.target.value)}><option>All</option><option>New</option><option>Assigned</option><option>In Progress</option><option>Resolved</option><option>Closed</option></select></div><span className="result-count">{visibleTickets.length} shown</span></div><TicketTable tickets={visibleTickets} /></section></>;
 }
-

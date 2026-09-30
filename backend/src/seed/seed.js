@@ -9,13 +9,23 @@ import Community from '../models/Community.js';
 import Technician from '../models/Technician.js';
 import Ticket from '../models/Ticket.js';
 import User from '../models/User.js';
+import Amenity from '../models/Amenity.js';
+import AmenityBooking from '../models/AmenityBooking.js';
+import Document from '../models/Document.js';
+import InventoryItem from '../models/InventoryItem.js';
+import Notice from '../models/Notice.js';
+import ParkingSlot from '../models/ParkingSlot.js';
+import Resident from '../models/Resident.js';
+import Vehicle from '../models/Vehicle.js';
+import Visitor from '../models/Visitor.js';
+import WorkOrder from '../models/WorkOrder.js';
 
 dotenv.config();
 
 async function seed() {
   try {
     await connectDatabase();
-    await Promise.all([AuditLog.deleteMany({}), Bill.deleteMany({}), Ticket.deleteMany({}), Technician.deleteMany({}), Apartment.deleteMany({}), Block.deleteMany({}), Community.deleteMany({}), User.deleteMany({})]);
+    await Promise.all([AmenityBooking.deleteMany({}), Amenity.deleteMany({}), Document.deleteMany({}), InventoryItem.deleteMany({}), Notice.deleteMany({}), ParkingSlot.deleteMany({}), Vehicle.deleteMany({}), Visitor.deleteMany({}), WorkOrder.deleteMany({}), Resident.deleteMany({}), AuditLog.deleteMany({}), Bill.deleteMany({}), Ticket.deleteMany({}), Technician.deleteMany({}), Apartment.deleteMany({}), Block.deleteMany({}), Community.deleteMany({}), User.deleteMany({})]);
 
     await Community.create({ communityId: 'C001', name: 'Green Valley Residency', address: 'Vijayawada, Andhra Pradesh' });
     await Block.insertMany([{ blockId: 'B001', name: 'Block A', communityId: 'C001' }, { blockId: 'B002', name: 'Block B', communityId: 'C001' }]);
@@ -24,22 +34,33 @@ async function seed() {
       { apartmentId: 'A102', number: 'A-102', blockId: 'B001', communityId: 'C001', status: 'Occupied' },
       { apartmentId: 'B101', number: 'B-101', blockId: 'B002', communityId: 'C001', status: 'Occupied' },
     ]);
-    await User.insertMany([
-      { userId: 'U001', name: 'Main Admin', email: 'admin@safehome.com', role: 'MAIN_ADMIN', communityId: 'C001' },
-      { userId: 'U002', name: 'Block A Admin', email: 'blocka.admin@safehome.com', role: 'BLOCK_SUB_ADMIN', communityId: 'C001', blockId: 'B001' },
-      { userId: 'U003', name: 'Resident One', email: 'resident1@safehome.com', role: 'RESIDENT', communityId: 'C001', blockId: 'B001', apartmentId: 'A102' },
-      { userId: 'U004', name: 'Technician Suresh', email: 'technician@safehome.com', role: 'TECHNICIAN', communityId: 'C001', blockId: 'B001', technicianId: 'T002' },
+    await User.create([
+      { userId: 'U001', name: 'Main Admin', email: 'admin@safehome.com', password: 'Demo@123', role: 'MAIN_ADMIN', communityId: 'C001', status: 'Active' },
+      { userId: 'U002', name: 'Block A Admin', email: 'blocka.admin@safehome.com', password: 'Demo@123', role: 'BLOCK_SUB_ADMIN', communityId: 'C001', blockId: 'B001', status: 'Active' },
+      { userId: 'U003', name: 'Resident One', email: 'resident1@safehome.com', password: 'Demo@123', role: 'RESIDENT', communityId: 'C001', blockId: 'B001', apartmentId: 'A102', phone: '9000000003', ownerOrTenant: 'Tenant', familyMembers: 3, status: 'Active' },
+      { userId: 'U004', name: 'Technician Suresh', email: 'technician@safehome.com', password: 'Demo@123', role: 'TECHNICIAN', communityId: 'C001', blockId: 'B001', technicianId: 'T002', status: 'Active' },
+      { userId: 'U005', name: 'Security Officer', email: 'security@safehome.com', password: 'Demo@123', role: 'SECURITY', communityId: 'C001', blockId: 'B001', status: 'Active' },
+      { userId: 'U006', name: 'Facility Manager', email: 'facility@safehome.com', password: 'Demo@123', role: 'FACILITY_MANAGER', communityId: 'C001', status: 'Active' },
     ]);
     await Technician.insertMany([
       { technicianId: 'T001', name: 'Ramesh', skill: 'Plumber', available: true, communityId: 'C001', blockId: 'B001', rating: 4.7, workload: 1 },
       { technicianId: 'T002', name: 'Suresh', skill: 'Electrician', available: true, communityId: 'C001', blockId: 'B001', rating: 4.8, workload: 0 },
       { technicianId: 'T003', name: 'Kiran', skill: 'General Maintenance', available: true, communityId: 'C001', blockId: 'B001', rating: 4.5, workload: 2 },
     ]);
+    await Resident.create({ residentId: 'U003', name: 'Resident One', email: 'resident1@safehome.com', phone: '9000000003', apartmentId: 'A102', blockId: 'B001', communityId: 'C001', ownerOrTenant: 'Tenant', familyMembers: 3, emergencyContact: '9000000099', moveInDate: new Date('2025-06-01'), status: 'Active' });
     await Ticket.create({
       ticketId: 'TK001', title: 'Water leakage near electrical switchboard', description: 'Water is leaking near the electrical switchboard in A-102.', residentId: 'U003', apartmentId: 'A102', blockId: 'B001', communityId: 'C001', category: 'Plumbing + Electrical Risk', severity: 'High', safetyRisk: true, suggestedAction: 'Immediate escalation required. Assign electrician and plumber.', humanApprovalRequired: true, status: 'New', assignedTechnicianId: null,
-      timeline: [{ message: 'Ticket created by Resident One', actor: 'U003' }, { message: 'AI simulation detected high safety risk', actor: 'RULE_ENGINE' }],
+      timeline: [{ message: 'Ticket created by Resident One', actor: 'U003' }, { message: 'Rule engine detected high safety risk', actor: 'RULE_ENGINE' }],
     });
-    await Bill.create({ billId: 'BILL001', ticketId: 'TK001', residentId: 'U003', apartmentId: 'A102', blockId: 'B001', communityId: 'C001', serviceCharge: 300, partsCharge: 200, totalAmount: 500, paymentStatus: 'Pending', generatedAt: new Date() });
+    await Bill.create({ billId: 'BILL001', ticketId: 'TK001', residentId: 'U003', apartmentId: 'A102', blockId: 'B001', communityId: 'C001', serviceCharge: 300, partsCharge: 200, totalAmount: 500, paymentStatus: 'Pending', billType: 'Repair', dueDate: new Date(Date.now() + 14 * 86400000), generatedAt: new Date() });
+    await Visitor.create({ visitorId: 'VIS001', name: 'Anil Kumar', phone: '9000000101', purpose: 'Family visit', residentId: 'U003', apartmentId: 'A102', blockId: 'B001', status: 'Pending' });
+    await Vehicle.create({ vehicleId: 'VEH001', residentId: 'U003', apartmentId: 'A102', blockId: 'B001', vehicleNumber: 'AP39AB1234', vehicleType: 'Car', parkingSlotId: 'PS001' });
+    await ParkingSlot.insertMany([{ slotId: 'PS001', blockId: 'B001', slotNumber: 'A-P01', status: 'Assigned', assignedTo: 'VEH001' }, { slotId: 'PS002', blockId: 'B001', slotNumber: 'A-P02', status: 'Available' }, { slotId: 'PS003', blockId: 'B002', slotNumber: 'B-P01', status: 'Available' }]);
+    await Amenity.insertMany([{ amenityId: 'AM001', name: 'Community Hall', location: 'Clubhouse Ground Floor', charge: 1000, availability: true }, { amenityId: 'AM002', name: 'Badminton Court', location: 'Sports Block', charge: 200, availability: true }]);
+    await AmenityBooking.create({ bookingId: 'BK001', amenityId: 'AM002', residentId: 'U003', blockId: 'B001', date: new Date(Date.now() + 3 * 86400000), timeSlot: '18:00-19:00', status: 'Approved', charge: 200 });
+    await Notice.create({ noticeId: 'NT001', title: 'Water tank maintenance', message: 'Water supply will be paused from 10:00 AM to 12:00 PM on Saturday.', targetType: 'Community', createdBy: 'U001' });
+    await Document.create({ documentId: 'DOC001', title: 'Community Guidelines', type: 'Policy', fileUrl: 'https://example.com/community-guidelines.pdf', relatedEntityType: 'Community', relatedEntityId: 'C001', uploadedBy: 'U001' });
+    await InventoryItem.insertMany([{ itemId: 'INV001', name: 'LED Bulb 12W', category: 'Electrical', quantity: 18, minimumStock: 10, unit: 'pieces', location: 'Maintenance Store', lastUpdatedBy: 'U001' }, { itemId: 'INV002', name: 'PVC Pipe 1 inch', category: 'Plumbing', quantity: 6, minimumStock: 8, unit: 'lengths', location: 'Maintenance Store', lastUpdatedBy: 'U001' }]);
     await AuditLog.create({ action: 'DATABASE_SEEDED', entityType: 'System', entityId: 'safehome_rag', actorId: 'SEED_SCRIPT', message: 'Priority 2 demo data seeded successfully.' });
     console.log('SafeHome-RAG demo data seeded successfully.');
   } catch (error) {

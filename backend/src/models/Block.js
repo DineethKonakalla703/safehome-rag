@@ -5,4 +5,3 @@ const schema = new mongoose.Schema({
   communityId: { type: String, required: true, index: true },
 }, { timestamps: true, versionKey: false });
 export default mongoose.model('Block', schema);
-

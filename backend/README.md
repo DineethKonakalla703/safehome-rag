@@ -1,42 +1,20 @@
-# SafeHome-RAG Priority 2 API
+# SafeHome-RAG Phase 1 API
 
-The backend is a Node.js/Express REST API backed by MongoDB Atlas and Mongoose. It persists the Priority 2 demo workflow while keeping authentication deliberately simple.
+Node.js and Express REST API backed by MongoDB Atlas. It provides JWT authentication, role-scoped operational data, Mongoose validation, consistent JSON responses, and audit logging.
 
-## Architecture
+## Configure and run
 
-- `src/config` — MongoDB connection and status
-- `src/models` — Mongoose schemas for users, community data, operations, billing, and audit history
-- `src/controllers` — request validation, role filtering, workflows, and dashboard aggregation
-- `src/routes` — REST route definitions
-- `src/utils` — deterministic analysis, response helpers, serializers, and audit helpers
-- `src/seed` — repeatable demo dataset
-- `src/server.js` — Express application entry point
-
-API responses consistently use either:
-
-```json
-{ "success": true, "data": {} }
-```
-
-or:
-
-```json
-{ "success": false, "error": { "message": "..." } }
-```
-
-## Environment
-
-Copy `.env.example` to `.env`:
+Copy `.env.example` to `.env` and replace the placeholders:
 
 ```env
 PORT=5000
 MONGODB_URI=mongodb+srv://USERNAME:PASSWORD@CLUSTER_URL/safehome_rag
 CLIENT_URL=http://localhost:5173
+JWT_SECRET=replace_with_a_long_random_secret
+JWT_EXPIRES_IN=8h
 ```
 
-Create a MongoDB Atlas cluster, create a database user, permit your development IP, and use a URI whose database is `safehome_rag`. Do not commit `.env`.
-
-## Install and run
+Then run:
 
 ```bash
 npm install
@@ -44,44 +22,39 @@ npm run seed
 npm run dev
 ```
 
-Production-style start:
+Use `npm start` for a production-style process and `npm run check` for the entry-point syntax check. Never commit `.env`.
 
-```bash
-npm start
-```
+## Response format
 
-## Endpoints
+Success responses use `{ "success": true, "data": ... }`. Errors use `{ "success": false, "error": { "message": "..." } }` with an appropriate HTTP status.
 
-| Method | Route | Purpose |
-| --- | --- | --- |
-| GET | `/api/health` | API and MongoDB status |
-| GET | `/api/users` | All demo users |
-| GET | `/api/users/demo` | Login role cards |
-| GET | `/api/reference` | Communities, blocks, apartments, technicians |
-| GET | `/api/tickets` | Role-filtered ticket list |
-| GET | `/api/tickets/:ticketId` | Role-filtered ticket detail |
-| POST | `/api/tickets` | Create and classify a complaint |
-| PATCH | `/api/tickets/:ticketId/assign` | Assign a technician and audit the action |
-| PATCH | `/api/tickets/:ticketId/status` | Update status and audit the action |
-| GET | `/api/bills` | Role-filtered bill list |
-| POST | `/api/bills` | Create one bill per ticket and audit the action |
-| GET | `/api/dashboard/main-admin` | Global summary |
-| GET | `/api/dashboard/block-admin/:blockId` | Restricted block summary |
-| GET | `/api/dashboard/resident/:residentId` | Personal resident summary |
+Except for health, demo-user discovery, and login, endpoints require `Authorization: Bearer <token>`.
 
-Ticket and bill lists accept `role`, `userId`, and `blockId` query parameters. These demonstrate server-side scoping but are not a replacement for authenticated authorization.
+## API groups
 
-## Seed behavior
+| Group | Routes |
+| --- | --- |
+| Health and auth | `GET /api/health`, `POST /api/auth/login`, `GET /api/auth/me` |
+| Users and references | `GET /api/users`, `GET /api/users/demo`, `GET /api/reference` |
+| Property records | CRUD `/api/communities`, `/api/blocks`, `/api/apartments`, `/api/residents` |
+| Tickets | list/detail/create plus `assign`, `status`, `comments`, `reopen`, and `escalate` actions under `/api/tickets` |
+| Work orders | `GET/POST /api/work-orders`, `PATCH /api/work-orders/:id/status` |
+| Billing | list/create, status, monthly generation, and resident history under `/api/bills` |
+| Visitors | CRUD plus `PATCH /api/visitors/:id/approve` and `/exit` |
+| Parking | CRUD `/api/vehicles`, CRUD `/api/parking-slots`, and parking assignment |
+| Amenities | CRUD `/api/amenities`, CRUD `/api/amenity-bookings`, and booking status |
+| Communications | CRUD `/api/notices` and metadata-only `/api/documents` |
+| Inventory | CRUD `/api/inventory` plus `POST /api/inventory/:id/use` |
+| Dashboards | main admin, block admin, and resident views under `/api/dashboard` |
+| Analytics | ticket, billing, technician, resident, and SLA endpoints under `/api/reports` |
+| Accountability | `GET /api/audit-logs` (Main Admin) |
 
-`npm run seed` clears the demo collections and recreates the canonical Priority 2 dataset, including `TK001`, `BILL001`, and the four demo users. Running it more than once does not create duplicates.
+## Access model
 
-## Priority 2 limitations
+`MAIN_ADMIN` has global access. `BLOCK_SUB_ADMIN` and `SECURITY` are constrained to their assigned block. `RESIDENT` is constrained to personal records, while `TECHNICIAN` is constrained to assigned work. `FACILITY_MANAGER` can operate maintenance resources globally. Mutation routes add audit records.
 
-- Demo role selection; no JWT or password authentication
-- Query-based role context is for review only
-- Deterministic rules instead of a real AI service
-- No payment gateway, uploads, notifications, or GraphRAG
-- MongoDB Atlas is required for persistent operation
+## Seed data
 
-These controls should be replaced by authenticated server-side authorization in a production phase.
+The repeatable seed resets Phase 1 collections and creates Green Valley Residency, Blocks A/B, apartments, six role accounts, three technicians, a safety-risk ticket, repair bill, visitor, vehicle and slots, amenities and a booking, notice, document metadata, inventory, and an initial audit event. The demo password is `Demo@123`.
 
+No real AI API, GraphRAG, chatbot, payment gateway, or binary file storage is included in Phase 1.

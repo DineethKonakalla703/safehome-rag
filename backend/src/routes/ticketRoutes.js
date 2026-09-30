@@ -1,10 +1,14 @@
 import { Router } from 'express';
-import { assignTechnician, createTicket, getTicket, listTickets, updateTicketStatus } from '../controllers/ticketController.js';
+import { addComment, assignTechnician, createTicket, escalateTicket, getTicket, listTickets, reopenTicket, updateTicketStatus } from '../controllers/ticketController.js';
+import { authenticate, authorize } from '../middleware/auth.js';
 const router = Router();
+router.use(authenticate);
 router.get('/', listTickets);
 router.get('/:ticketId', getTicket);
-router.post('/', createTicket);
-router.patch('/:ticketId/assign', assignTechnician);
-router.patch('/:ticketId/status', updateTicketStatus);
+router.post('/', authorize('RESIDENT', 'MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), createTicket);
+router.patch('/:ticketId/assign', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), assignTechnician);
+router.patch('/:ticketId/status', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'), updateTicketStatus);
+router.post('/:ticketId/comments', addComment);
+router.post('/:ticketId/reopen', authorize('RESIDENT', 'MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), reopenTicket);
+router.patch('/:ticketId/escalate', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), escalateTicket);
 export default router;
-

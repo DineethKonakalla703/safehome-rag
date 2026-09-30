@@ -1,20 +1,16 @@
-# Review Demo Script
+# Phase 1 Review Demo
 
-1. Show the repository structure and explain that Priority 1 is frontend-only.
-2. From `frontend`, run `npm install` and `npm run dev`.
-3. On the login screen, choose **Main Admin**.
-4. Review global ticket, risk, and billing metrics. Log out.
-5. Choose **Resident One** and open **Create Complaint**.
-6. Enter the title `Water leakage near electrical switchboard`.
-7. Enter `Water is leaking near the electrical switchboard in A-102.` as the description and submit.
-8. On ticket details, point out **AI Simulation Output**, the Plumbing + Electrical Risk category, High severity, and Safety Risk: Yes.
-9. Log out and choose **Block A Admin**.
-10. Explain that the dashboard and ticket list are restricted to Block A records.
-11. Open the newly created ticket.
-12. Select **Suresh — Electrician** and choose **Assign technician**.
-13. Select **In Progress** and choose **Update status**.
-14. If the new ticket has no bill, choose **Generate Demo Bill**.
-15. Open **Billing** and point out the ₹300 service charge, ₹200 parts charge, and ₹500 total.
-16. Return to the Block A dashboard and show that ticket and billing summaries reflect the saved data.
-17. Optionally log in as Technician Suresh to show only tickets assigned to Suresh.
+Start the seeded backend on port 5000, then start the Vite frontend. All demo users use password `Demo@123`.
 
+1. Sign in as **Main Admin** and show the global database-backed dashboard.
+2. Open Communities, Blocks, Apartments, and Residents; add or edit a record to demonstrate authenticated CRUD and audit history.
+3. Sign in as **Resident One** and create: “Water is leaking near the electrical switchboard in A-102.”
+4. On ticket details, show the rule-based safety flag, SLA, comments, timeline, and resident context.
+5. Sign in as **Block A Admin**. Show the restricted Block A dashboard and assign **Suresh — Electrician**. This creates a work order.
+6. Sign in as **Technician Suresh**, open Assigned Work Orders, add a completion note, and complete the work.
+7. Return as Block Admin, generate a repair bill, open Billing, and mark it paid to create a receipt.
+8. As Resident One, register/approve a visitor, add a vehicle, and book an amenity.
+9. As Security Officer, demonstrate visitor approval and check-out.
+10. As Main Admin, create a notice, review documents and inventory, export reports as CSV, and finish with Audit Logs.
+
+Emphasize that Phase 1 uses JWT authentication, MongoDB persistence, role scoping, and deterministic safety rules. AI APIs, GraphRAG, chatbot, payment gateway, and binary file uploads are intentionally future work.

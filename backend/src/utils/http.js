@@ -20,4 +20,3 @@ export async function nextPublicId(Model, field, prefix) {
   const number = latest ? Number(String(latest[field]).replace(/\D/g, '')) + 1 : 1;
   return `${prefix}${String(number).padStart(3, '0')}`;
 }
-

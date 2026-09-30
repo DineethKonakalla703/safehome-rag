@@ -1,0 +1,26 @@
+import Amenity from '../models/Amenity.js';
+import AmenityBooking from '../models/AmenityBooking.js';
+import Apartment from '../models/Apartment.js';
+import Block from '../models/Block.js';
+import Community from '../models/Community.js';
+import Document from '../models/Document.js';
+import InventoryItem from '../models/InventoryItem.js';
+import Notice from '../models/Notice.js';
+import ParkingSlot from '../models/ParkingSlot.js';
+import Resident from '../models/Resident.js';
+import Vehicle from '../models/Vehicle.js';
+import Visitor from '../models/Visitor.js';
+import { createResourceController } from './resourceController.js';
+
+export const communityController = createResourceController({ Model: Community, idField: 'communityId', prefix: 'C', required: ['name', 'address'] });
+export const blockController = createResourceController({ Model: Block, idField: 'blockId', prefix: 'B', required: ['name', 'communityId'], scope: { blockField: 'blockId' } });
+export const apartmentController = createResourceController({ Model: Apartment, idField: 'apartmentId', prefix: 'APT', required: ['number', 'blockId', 'communityId'], scope: { blockField: 'blockId' } });
+export const residentController = createResourceController({ Model: Resident, idField: 'residentId', prefix: 'R', required: ['name', 'email', 'apartmentId', 'blockId', 'communityId'], scope: { residentField: 'residentId', blockField: 'blockId' } });
+export const visitorController = createResourceController({ Model: Visitor, idField: 'visitorId', prefix: 'VIS', required: ['name', 'phone', 'purpose', 'residentId', 'apartmentId', 'blockId'], scope: { residentField: 'residentId', blockField: 'blockId' } });
+export const vehicleController = createResourceController({ Model: Vehicle, idField: 'vehicleId', prefix: 'VEH', required: ['residentId', 'apartmentId', 'blockId', 'vehicleNumber'], scope: { residentField: 'residentId', blockField: 'blockId' } });
+export const parkingController = createResourceController({ Model: ParkingSlot, idField: 'slotId', prefix: 'PS', required: ['blockId', 'slotNumber'], scope: { blockField: 'blockId' } });
+export const amenityController = createResourceController({ Model: Amenity, idField: 'amenityId', prefix: 'AM', required: ['name', 'location'], scope: { unrestrictedRead: true } });
+export const bookingController = createResourceController({ Model: AmenityBooking, idField: 'bookingId', prefix: 'BK', required: ['amenityId', 'residentId', 'blockId', 'date', 'timeSlot'], scope: { residentField: 'residentId', blockField: 'blockId' } });
+export const noticeController = createResourceController({ Model: Notice, idField: 'noticeId', prefix: 'NT', required: ['title', 'message', 'targetType'], scope: { blockField: 'blockId', includeGlobalRecords: true } });
+export const documentController = createResourceController({ Model: Document, idField: 'documentId', prefix: 'DOC', required: ['title', 'type', 'fileUrl', 'relatedEntityType', 'relatedEntityId'], scope: { blockField: 'blockId', includeGlobalRecords: true } });
+export const inventoryController = createResourceController({ Model: InventoryItem, idField: 'itemId', prefix: 'INV', required: ['name', 'category', 'unit', 'location'] });

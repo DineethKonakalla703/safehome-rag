@@ -7,4 +7,3 @@ const schema = new mongoose.Schema({
   status: { type: String, default: 'Occupied', enum: ['Occupied', 'Vacant', 'Maintenance'] },
 }, { timestamps: true, versionKey: false });
 export default mongoose.model('Apartment', schema);
-
