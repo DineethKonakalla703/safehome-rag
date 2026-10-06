@@ -1,3 +1,4 @@
+import { Router } from 'express';
 import { createKnowledgeDocument, getKnowledgeChunks, getKnowledgeDocument, listKnowledgeDocuments, queryKnowledge, reindexKnowledgeDocument } from '../controllers/knowledgeController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 const router = Router(); router.use(authenticate);
