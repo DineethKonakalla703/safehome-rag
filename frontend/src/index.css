@@ -445,3 +445,4 @@ input:focus, textarea:focus, select:focus { border-color: #83a9f5; box-shadow: 0
   .sample-hint { align-items: flex-start; flex-wrap: wrap; }
   .sample-hint button { margin-left: 29px; }
 }
+.attachment-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.attachment-card{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}.attachment-card img{width:100%;height:170px;object-fit:cover;background:#e2e8f0}.attachment-card>div{padding:13px}.attachment-card p{margin:7px 0;color:var(--muted);line-height:1.5}.attachment-card small{display:block;margin-bottom:8px}

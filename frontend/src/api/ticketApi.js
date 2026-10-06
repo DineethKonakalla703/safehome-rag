@@ -1,4 +1,4 @@
-import { apiRequest, normalizeTicket } from './apiClient';
+import { apiRequest, apiUpload, normalizeTicket } from './apiClient';
 export async function getTickets() { return (await apiRequest('/tickets')).map(normalizeTicket); }
 export async function getTicket(id) { return normalizeTicket(await apiRequest(`/tickets/${id}`)); }
 export async function createTicket(body) { return normalizeTicket(await apiRequest('/tickets', { method: 'POST', body: JSON.stringify(body) })); }
@@ -7,3 +7,5 @@ export async function updateTicketStatus(id, status) { return normalizeTicket(aw
 export async function addTicketComment(id, message) { return normalizeTicket(await apiRequest(`/tickets/${id}/comments`, { method: 'POST', body: JSON.stringify({ message }) })); }
 export async function reopenTicket(id) { return normalizeTicket(await apiRequest(`/tickets/${id}/reopen`, { method: 'POST' })); }
 export async function escalateTicket(id, escalated = true) { return normalizeTicket(await apiRequest(`/tickets/${id}/escalate`, { method: 'PATCH', body: JSON.stringify({ escalated }) })); }
+export async function uploadTicketImage(id, file) { const data = new FormData(); data.append('image', file); return apiUpload(`/tickets/${id}/attachments`, data); }
+export async function analyzeTicketImage(id, attachmentId) { return apiRequest(`/tickets/${id}/analyze-image/${attachmentId}`, { method: 'POST' }); }

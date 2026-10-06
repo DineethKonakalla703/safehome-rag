@@ -8,6 +8,7 @@ backend/node_modules/
 tmp/
 output/
 deliverables/
+backend/uploads/
 .env
 backend/.env
 frontend/.env

@@ -35,10 +35,11 @@ export async function detectCollectiveIncidents({ ticket = null, communityId, bl
     const related = group.tickets;
     if (related.length < 3) continue;
     const [groupBlockId, category] = groupKey.split('::');
-    const existing = await Incident.findOne({ blockId: groupBlockId, category, status: { $ne: 'Resolved' } });
+    const existing = await Incident.findOne({ blockId: groupBlockId, category, status: { $nin: ['Resolved', 'RESOLVED', 'CLOSED', 'FALSE_POSITIVE'] } });
     const incidentId = existing?.incidentId || await nextPublicId(Incident, 'incidentId', 'INC');
     const severity = related.some((item) => ['Critical', 'High'].includes(item.severity)) ? 'High' : 'Medium';
-    const data = { incidentId, title: `${groupBlockId} ${group.label} Issue`, category, blockId: groupBlockId, communityId: scope.communityId, severity, status: existing?.status || 'Open', relatedTickets: related.map((item) => item.ticketId), detectedBy: 'keyword-family-and-time-window', aiReason: `${related.length} semantically similar ${group.label.toLowerCase()} tickets were reported in the same block within ${hours} hours.`, detectedAt: existing?.detectedAt || new Date() };
+    const confidence = Math.min(0.98, 0.68 + related.length * 0.06);
+    const data = { incidentId, title: `${groupBlockId} ${group.label} Issue`, category, blockId: groupBlockId, communityId: scope.communityId, severity, confidence, status: existing?.status || 'DETECTED', relatedTickets: related.map((item) => item.ticketId), affectedBlocks: [groupBlockId], affectedApartments: [...new Set(related.map((item)=>item.apartmentId).filter(Boolean))], detectedBy: 'keyword-family-and-time-window', aiReason: `${related.length} semantically similar ${group.label.toLowerCase()} tickets were reported in the same block within ${hours} hours.`, detectedAt: existing?.detectedAt || new Date(), timeline: existing?.timeline?.length ? existing.timeline : [{ action: 'INCIDENT_DETECTED', details: `${related.length} tickets grouped with confidence ${confidence}.`, performedBy: actorId }] };
     const incident = await Incident.findOneAndUpdate({ incidentId }, data, { upsert: true, new: true, runValidators: true });
     await Ticket.updateMany({ ticketId: { $in: data.relatedTickets } }, { relatedIncidentId: incidentId });
     if (!existing) await writeAIAudit({ action: 'INCIDENT_DETECTED', entityType: 'Incident', entityId: incidentId, actorId, message: data.aiReason });

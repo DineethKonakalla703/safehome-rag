@@ -1,4 +1,6 @@
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+export const API_ORIGIN = API_BASE_URL.replace(/\/api$/, '');
+export const assetUrl = (value) => value?.startsWith('/') ? `${API_ORIGIN}${value}` : value;
 export const OFFLINE_MESSAGE = 'Backend API is not running. Start backend using: cd backend && npm run dev';
 
 export class ApiError extends Error {

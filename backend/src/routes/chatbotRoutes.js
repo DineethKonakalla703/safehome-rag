@@ -1,4 +1,4 @@
 import { Router } from 'express';
-import { chatbotMessage } from '../controllers/chatbotController.js';
+import { cancelChatbotConfirmation, chatbotMessage } from '../controllers/chatbotController.js';
 import { authenticate } from '../middleware/auth.js';
-const router = Router(); router.use(authenticate); router.post('/message', chatbotMessage); export default router;
+const router = Router(); router.use(authenticate); router.post('/message', chatbotMessage);router.post('/confirmation/:id/cancel',cancelChatbotConfirmation); export default router;

@@ -4,6 +4,14 @@ SafeHome-RAG is a full-stack residential operations CRM for communities, blocks,
 
 This repository contains the completed Phase 1 CRM plus a governed Phase 2 intelligence layer. Claude performs optional reasoning, while authenticated backend services retain validation, authorization, confirmation, persistence, and audit responsibility. When Claude is unavailable or unconfigured, deterministic fallback logic keeps the core CRM operational.
 
+## Project Handover
+
+A complete handover document for future development is available at:
+
+[docs/PROJECT_HANDOVER.md](docs/PROJECT_HANDOVER.md)
+
+This file contains the current project status, completed features, architecture, pending Phase 2 AI work, environment variables, setup steps, and recommended next implementation order.
+
 ## Stack
 
 - React 18, Vite, React Router, Lucide icons, and plain CSS
