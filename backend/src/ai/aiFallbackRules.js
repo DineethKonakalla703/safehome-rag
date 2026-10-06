@@ -18,6 +18,7 @@ export function fallbackComplaintAnalysis({ title = '', description = '', catego
 export function fallbackChatIntent(message = '') {
   const text = message.toLowerCase();
   if ((text.includes('block') || text.includes('residents')) && (text.includes('excel') || text.includes('sheet'))) return { intent: 'BULK_CREATE_BLOCK_RESIDENTS', entities: { blockName: (message.match(/block\s+(?:named\s+)?([a-z0-9-]+)/i) || [])[1] || '' }, requiresConfirmation: true, response: 'I can prepare a validated import preview before any records are created.' };
+  if (/\b(create|add)\b/i.test(message) && /\bblock\b/i.test(message)) return { intent: 'CREATE_BLOCK', entities: { blockName: (message.match(/block\s+(?:named\s+)?([a-z0-9-]+)/i) || [])[1] || '' }, requiresConfirmation: true, response: 'I can create the block through the validated backend CRUD service after confirmation.' };
   if (text.includes('recommend') && text.includes('technician')) return { intent: 'RECOMMEND_TECHNICIAN', entities: { ticketId: (message.match(/TK\d+/i) || [])[0]?.toUpperCase() }, requiresConfirmation: false, response: 'I can generate ranked technician recommendations for an authorized administrator.' };
   if (text.includes('sla')) return { intent: 'PREDICT_SLA_RISK', entities: { ticketId: (message.match(/TK\d+/i) || [])[0]?.toUpperCase() }, requiresConfirmation: false, response: 'I can calculate the current SLA breach risk.' };
   if (text.includes('bill')) return { intent: 'SHOW_BILLS', entities: {}, requiresConfirmation: false, response: 'I will retrieve bills within your access scope.' };

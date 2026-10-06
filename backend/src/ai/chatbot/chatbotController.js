@@ -1,5 +1,5 @@
 import AIConversation from '../../models/AIConversation.js';
-import { nextPublicId } from '../../utils/http.js';
+import { AppError, nextPublicId } from '../../utils/http.js';
 import { writeAIAudit } from '../aiAuditLogger.js';
 import { normalizeEntities } from './entityExtractor.js';
 import { detectIntent } from './intentDetector.js';
@@ -23,8 +23,12 @@ export async function processChatMessage({ message, conversationId, confirm = fa
     await writeAIAudit({ action: 'CHATBOT_ACTION_REQUESTED', entityType: 'AIConversation', entityId: id, actorId: user.userId, message: `${detected.intent} awaiting confirmation.` });
     return { conversationId: id, intent: detected.intent, entities, requiresConfirmation: true, response };
   }
-  if (confirm) await writeAIAudit({ action: 'CHATBOT_ACTION_CONFIRMED', entityType: 'AIConversation', entityId: id, actorId: user.userId, message: `${detected.intent} confirmed.` });
+  if (confirm) {
+    const previousAssistant = [...conversation.messages].reverse().find((item) => item.role === 'assistant' && item.intent === detected.intent);
+    if (!conversationId || !previousAssistant?.content.includes('Confirmation is required')) throw new AppError(409, 'No matching chatbot action is awaiting confirmation.');
+    await writeAIAudit({ action: 'CHATBOT_ACTION_CONFIRMED', entityType: 'AIConversation', entityId: id, actorId: user.userId, message: `${detected.intent} confirmed.` });
+  }
   const data = await routeTool({ intent: detected.intent, entities, user });
-  const response = data?.executed === false ? data.message : detected.response || 'Request completed within your authorized scope.'; conversation.messages.push({ role: 'assistant', content: response, intent: detected.intent }); await conversation.save();
+  const response = data?.message || detected.response || 'Request completed within your authorized scope.'; conversation.messages.push({ role: 'assistant', content: response, intent: detected.intent }); await conversation.save();
   return { conversationId: id, intent: detected.intent, entities, requiresConfirmation: false, response, data };
 }

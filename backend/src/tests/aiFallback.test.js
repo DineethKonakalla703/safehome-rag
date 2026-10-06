@@ -5,6 +5,7 @@ import { fallbackChatIntent, fallbackComplaintAnalysis } from '../ai/aiFallbackR
 import { parseClaudeJson } from '../ai/claudeJsonParser.js';
 import { canUseIntent, sensitiveIntent } from '../ai/chatbot/permissionGuard.js';
 import { parseResidentWorkbook } from '../utils/excelParser.js';
+import { classifyIncidentCategory } from '../ai/collectiveIncidentDetector.js';
 
 test('Claude JSON parser accepts plain and fenced JSON and rejects malformed output', () => {
   assert.deepEqual(parseClaudeJson('{"severity":"High"}'), { severity: 'High' });
@@ -27,9 +28,25 @@ test('fallback chatbot recognizes bulk onboarding and requires confirmation', ()
   assert.equal(result.requiresConfirmation, true);
 });
 
+test('fallback chatbot recognizes direct block creation and requires confirmation', () => {
+  const result = fallbackChatIntent('Create a new block named C');
+  assert.equal(result.intent, 'CREATE_BLOCK');
+  assert.equal(result.entities.blockName, 'C');
+  assert.equal(result.requiresConfirmation, true);
+});
+
+test('incident categories group different Claude wording into the same water family', () => {
+  const first = classifyIncidentCategory({ category: 'Plumbing + Electrical Risk', description: 'Water near a switchboard' });
+  const second = classifyIncidentCategory({ aiAnalysis: { category: 'Electrical & Plumbing - Combined Hazard' }, title: 'Leakage near wiring' });
+  assert.equal(first.category, 'water-supply');
+  assert.equal(second.category, first.category);
+});
+
 test('permission guard keeps billing from technicians and bulk import with Main Admin', () => {
   assert.equal(canUseIntent('TECHNICIAN', 'SHOW_BILLS'), false);
   assert.equal(canUseIntent('MAIN_ADMIN', 'BULK_CREATE_BLOCK_RESIDENTS'), true);
+  assert.equal(canUseIntent('MAIN_ADMIN', 'CREATE_BLOCK'), true);
+  assert.equal(canUseIntent('BLOCK_SUB_ADMIN', 'CREATE_BLOCK'), false);
   assert.equal(sensitiveIntent('BULK_CREATE_BLOCK_RESIDENTS'), true);
 });
 

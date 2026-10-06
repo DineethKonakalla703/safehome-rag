@@ -9,6 +9,7 @@ import { generateGroundedAnswer } from '../rag/answerGenerator.js';
 import { recommendTechnicians } from '../technicianRecommender.js';
 import { predictSlaRisk } from '../slaRiskPredictor.js';
 import { buildBulkImportInstruction } from './bulkCrudIntentHandler.js';
+import { createBlockFromChat } from '../../services/chatbotCrudService.js';
 
 const ticketScope = (user) => scopedFilter(user, { residentField: 'residentId', blockField: 'blockId', technicianField: 'assignedTechnicianId' });
 export async function routeTool({ intent, entities, user }) {
@@ -24,6 +25,7 @@ export async function routeTool({ intent, entities, user }) {
   if (intent === 'QUERY_KNOWLEDGE') { const retrieved = await retrieveKnowledge(entities.question); return generateGroundedAnswer(entities.question, retrieved, await buildGraphContext(user, entities)); }
   if (intent === 'SHOW_REPORT_SUMMARY') { const [tickets, open, highRisk] = await Promise.all([Ticket.countDocuments(ticketScope(user)), Ticket.countDocuments({ ...ticketScope(user), status: { $nin: ['Resolved', 'Closed'] } }), Ticket.countDocuments({ ...ticketScope(user), safetyRisk: true })]); return { tickets, open, highRisk }; }
   if (intent === 'BULK_CREATE_BLOCK_RESIDENTS') return buildBulkImportInstruction(entities);
+  if (intent === 'CREATE_BLOCK') return createBlockFromChat({ user, blockName: entities.blockName });
   if (intent === 'CREATE_TICKET' || intent === 'CREATE_NOTICE') return { executed: false, message: 'This write action requires the dedicated validated CRM form/API and was not executed by the chatbot.' };
   return null;
 }
