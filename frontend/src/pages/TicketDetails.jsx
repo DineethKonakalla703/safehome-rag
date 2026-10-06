@@ -2,7 +2,7 @@ import { ArrowLeft, Bot, Camera, CheckCircle2, CreditCard, Edit3, Home, MessageS
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { createBill, getBills } from '../api/billApi';
-import { predictSlaRisk, recommendTechnicians, reviewAIAnalysis } from '../api/aiApi';
+import { predictSlaRisk, recommendTechnicians, recommendVendors, reviewAIAnalysis } from '../api/aiApi';
 import { getReferenceData } from '../api/referenceApi';
 import { addTicketComment, analyzeTicketImage, assignTicket, escalateTicket, getTicket, overrideTicketAI, reanalyzeTicket, reopenTicket, updateTicketStatus, uploadTicketImage } from '../api/ticketApi';
 import { getWorkOrders, updateWorkOrderStatus } from '../api/workOrderApi';
@@ -11,6 +11,7 @@ import StatusBadge from '../components/StatusBadge';
 import AIAnalysisCard from '../components/AIAnalysisCard';
 import SafetyRiskBanner from '../components/SafetyRiskBanner';
 import TechnicianRecommendationPanel from '../components/TechnicianRecommendationPanel';
+import VendorRecommendationPanel from '../components/VendorRecommendationPanel';
 import SlaRiskPanel from '../components/SlaRiskPanel';
 import { getCurrentUser } from '../utils/auth';
 import { assetUrl } from '../api/apiClient';
@@ -26,6 +27,7 @@ export default function TicketDetails() {
   const [overrideRisk, setOverrideRisk] = useState(false);
   const [overrideReason, setOverrideReason] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [vendorRecs, setVendorRecs] = useState([]);
   const [loading, setLoading] = useState(true); const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
   const load = async () => { setLoading(true); setError(''); try { const [nextTicket, reference, nextBills, nextOrders] = await Promise.all([getTicket(id), getReferenceData(), getBills(), getWorkOrders()]); setTicket(nextTicket); setRefs(reference); setBills(nextBills); setOrders(nextOrders); setTechnicianId(nextTicket.assignedTechnicianId || ''); setStatus(nextTicket.status); setOverrideCat(nextTicket.category); setOverrideSev(nextTicket.severity); setOverrideRisk(Boolean(nextTicket.safetyRisk)); } catch (e) { setError(e.message); } finally { setLoading(false); } };
   useEffect(() => { load(); }, [id]);
@@ -216,6 +218,7 @@ export default function TicketDetails() {
   </div><aside className="detail-side">
     <section className="content-card action-card"><div className="card-title"><Wrench size={19}/><h2>Technician assignment</h2></div><p className="muted">Currently assigned</p><strong className="assigned-name">{techName}</strong>{canManage && <><label>Choose technician<select value={technicianId} onChange={(e) => setTechnicianId(e.target.value)}><option value="">Select technician</option>{refs.technicians.map((tech) => <option key={tech.id} value={tech.id}>{tech.name} — {tech.specialty}</option>)}</select></label><button className="primary-button full" disabled={!technicianId || busy} onClick={() => act(() => assignTicket(id, technicianId))}>Assign & create work order</button></>}</section>
     <TechnicianRecommendationPanel recommendations={ticket.recommendedTechnicians} canManage={canManage} busy={busy} onGenerate={()=>act(()=>recommendTechnicians(id))}/>
+    <VendorRecommendationPanel recommendations={ticket.recommendedVendors?.length ? ticket.recommendedVendors : vendorRecs} canManage={canManage} busy={busy} onGenerate={() => act(async () => { const recs = await recommendVendors(id); setVendorRecs(recs); })}/>
     <SlaRiskPanel prediction={ticket.slaPrediction} canManage={canManage} busy={busy} onPredict={()=>act(()=>predictSlaRisk(id))}/>
     <section className="content-card action-card"><div className="card-title"><CheckCircle2 size={19}/><h2>Status and escalation</h2></div>{canWork && <><label>New status<select value={status} onChange={(e) => setStatus(e.target.value)}>{statuses.map((item) => <option key={item}>{item}</option>)}</select></label><button className="secondary-button full" disabled={status === ticket.status || busy} onClick={() => act(() => updateTicketStatus(id, status))}>Update status</button></>}{['Resolved','Closed'].includes(ticket.status) && <button className="secondary-button full" disabled={busy} onClick={() => act(() => reopenTicket(id))}>Reopen ticket</button>}{canManage && <button className="danger-button full" disabled={busy} onClick={() => act(() => escalateTicket(id, !ticket.escalationFlag))}>{ticket.escalationFlag ? 'Remove escalation' : 'Escalate ticket'}</button>}</section>
     <section className="content-card action-card"><div className="card-title"><Wrench size={19}/><h2>Work order</h2></div>{order ? <><div className="bill-summary"><div><span>Work order</span><strong>{order.workOrderId}</strong></div><div><span>Status</span><strong>{order.status}</strong></div></div>{canWork && <><input value={completionNote} onChange={(e) => setCompletionNote(e.target.value)} placeholder="Completion note"/><button className="primary-button full" disabled={busy} onClick={() => act(() => updateWorkOrderStatus(order.workOrderId, status === 'Resolved' ? 'Completed' : 'In Progress', completionNote))}>Update work order</button></>}</> : <p className="muted">A work order is created when a technician is assigned.</p>}</section>

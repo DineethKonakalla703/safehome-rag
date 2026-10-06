@@ -21,7 +21,7 @@ import chatbotRoutes from './routes/chatbotRoutes.js';
 import importRoutes from './routes/importRoutes.js';
 import incidentRoutes from './routes/incidentRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
-import { amenityRoutes, apartmentRoutes, blockRoutes, bookingRoutes, communityRoutes, documentRoutes, inventoryRoutes, noticeRoutes, parkingRoutes, residentRoutes, vehicleRoutes, visitorRoutes } from './routes/coreRoutes.js';
+import { amenityRoutes, apartmentRoutes, blockRoutes, bookingRoutes, communityRoutes, documentRoutes, inventoryRoutes, noticeRoutes, parkingRoutes, residentRoutes, vehicleRoutes, vendorRoutes, visitorRoutes } from './routes/coreRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import { apiLimiter, requestId, sanitizeInput } from './middleware/security.js';
 import { startSlaMonitor } from './services/slaMonitorService.js';
@@ -72,6 +72,7 @@ app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/import', importRoutes);
 app.use('/api/incidents', incidentRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/vendors', vendorRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

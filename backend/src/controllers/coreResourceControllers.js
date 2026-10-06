@@ -10,6 +10,7 @@ import ParkingSlot from '../models/ParkingSlot.js';
 import Resident from '../models/Resident.js';
 import Vehicle from '../models/Vehicle.js';
 import Visitor from '../models/Visitor.js';
+import Vendor from '../models/Vendor.js';
 import { createResourceController } from './resourceController.js';
 
 export const communityController = createResourceController({ Model: Community, idField: 'communityId', prefix: 'C', required: ['name', 'address'] });
@@ -24,3 +25,4 @@ export const bookingController = createResourceController({ Model: AmenityBookin
 export const noticeController = createResourceController({ Model: Notice, idField: 'noticeId', prefix: 'NT', required: ['title', 'message', 'targetType'], scope: { blockField: 'blockId', includeGlobalRecords: true } });
 export const documentController = createResourceController({ Model: Document, idField: 'documentId', prefix: 'DOC', required: ['title', 'type', 'fileUrl', 'relatedEntityType', 'relatedEntityId'], scope: { blockField: 'blockId', includeGlobalRecords: true } });
 export const inventoryController = createResourceController({ Model: InventoryItem, idField: 'itemId', prefix: 'INV', required: ['name', 'category', 'unit', 'location'] });
+export const vendorController = createResourceController({ Model: Vendor, idField: 'vendorId', prefix: 'VEN', required: ['name', 'category', 'phone'] });

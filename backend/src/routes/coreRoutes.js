@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { amenityController, apartmentController, blockController, bookingController, communityController, documentController, inventoryController, noticeController, parkingController, residentController, vehicleController, visitorController } from '../controllers/coreResourceControllers.js';
+import { amenityController, apartmentController, blockController, bookingController, communityController, documentController, inventoryController, noticeController, parkingController, residentController, vehicleController, vendorController, visitorController } from '../controllers/coreResourceControllers.js';
 import { approveVisitor, assignParking, exitVisitor, updateBookingStatus, useInventory } from '../controllers/operationsController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
@@ -36,3 +36,5 @@ export const noticeRoutes = build(noticeController, ['MAIN_ADMIN', 'BLOCK_SUB_AD
 export const documentRoutes = build(documentController, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN']);
 export const inventoryRoutes = build(inventoryController, ['MAIN_ADMIN', 'FACILITY_MANAGER']);
 inventoryRoutes.post('/:id/use', authorize('MAIN_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'), useInventory);
+
+export const vendorRoutes = build(vendorController, ['MAIN_ADMIN', 'FACILITY_MANAGER']);

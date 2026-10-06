@@ -20,6 +20,7 @@ import Vehicle from '../models/Vehicle.js';
 import Visitor from '../models/Visitor.js';
 import WorkOrder from '../models/WorkOrder.js';
 import Incident from '../models/Incident.js';
+import Vendor from '../models/Vendor.js';
 import KnowledgeDocument from '../models/KnowledgeDocument.js';
 import KnowledgeChunk from '../models/KnowledgeChunk.js';
 import AIConversation from '../models/AIConversation.js';
@@ -31,7 +32,7 @@ dotenv.config();
 async function seed() {
   try {
     await connectDatabase();
-    await Promise.all([BulkImport.deleteMany({}), AIConversation.deleteMany({}), KnowledgeChunk.deleteMany({}), KnowledgeDocument.deleteMany({}), Incident.deleteMany({}), AmenityBooking.deleteMany({}), Amenity.deleteMany({}), Document.deleteMany({}), InventoryItem.deleteMany({}), Notice.deleteMany({}), ParkingSlot.deleteMany({}), Vehicle.deleteMany({}), Visitor.deleteMany({}), WorkOrder.deleteMany({}), Resident.deleteMany({}), AuditLog.deleteMany({}), Bill.deleteMany({}), Ticket.deleteMany({}), Technician.deleteMany({}), Apartment.deleteMany({}), Block.deleteMany({}), Community.deleteMany({}), User.deleteMany({})]);
+    await Promise.all([Vendor.deleteMany({}), BulkImport.deleteMany({}), AIConversation.deleteMany({}), KnowledgeChunk.deleteMany({}), KnowledgeDocument.deleteMany({}), Incident.deleteMany({}), AmenityBooking.deleteMany({}), Amenity.deleteMany({}), Document.deleteMany({}), InventoryItem.deleteMany({}), Notice.deleteMany({}), ParkingSlot.deleteMany({}), Vehicle.deleteMany({}), Visitor.deleteMany({}), WorkOrder.deleteMany({}), Resident.deleteMany({}), AuditLog.deleteMany({}), Bill.deleteMany({}), Ticket.deleteMany({}), Technician.deleteMany({}), Apartment.deleteMany({}), Block.deleteMany({}), Community.deleteMany({}), User.deleteMany({})]);
 
     await Community.create({ communityId: 'C001', name: 'Green Valley Residency', address: 'Vijayawada, Andhra Pradesh' });
     await Block.insertMany([{ blockId: 'B001', name: 'Block A', communityId: 'C001' }, { blockId: 'B002', name: 'Block B', communityId: 'C001' }]);
@@ -52,6 +53,12 @@ async function seed() {
       { technicianId: 'T001', name: 'Ramesh', skill: 'Plumber', available: true, communityId: 'C001', blockId: 'B001', rating: 4.7, workload: 1 },
       { technicianId: 'T002', name: 'Suresh', skill: 'Electrician', available: true, communityId: 'C001', blockId: 'B001', rating: 4.8, workload: 0 },
       { technicianId: 'T003', name: 'Kiran', skill: 'General Maintenance', available: true, communityId: 'C001', blockId: 'B001', rating: 4.5, workload: 2 },
+    ]);
+    await Vendor.insertMany([
+      { vendorId: 'VEN001', name: 'QuickFix Plumbing Solutions', category: 'Plumbing', communityId: 'C001', phone: '9848011223', email: 'service@quickfixplumbing.com', hourlyRate: 450, rating: 4.8, completedJobsCount: 42, warrantyPeriodMonths: 6, emergencyAvailable: true, available: true, location: 'Vijayawada Central', status: 'Active' },
+      { vendorId: 'VEN002', name: 'Spark Electrical & Controls', category: 'Electrical', communityId: 'C001', phone: '9848033445', email: 'support@sparkelectrical.in', hourlyRate: 500, rating: 4.9, completedJobsCount: 56, warrantyPeriodMonths: 12, emergencyAvailable: true, available: true, location: 'Benz Circle', status: 'Active' },
+      { vendorId: 'VEN003', name: 'Otis & City Lift Services', category: 'Lift Emergency', communityId: 'C001', phone: '9848055667', email: 'emergency@citylifts.com', hourlyRate: 1200, rating: 4.7, completedJobsCount: 88, warrantyPeriodMonths: 24, emergencyAvailable: true, available: true, location: 'MG Road', status: 'Active' },
+      { vendorId: 'VEN004', name: 'Apex Civil & Structural Repairs', category: 'Structural', communityId: 'C001', phone: '9848077889', email: 'info@apexstructural.com', hourlyRate: 750, rating: 4.6, completedJobsCount: 19, warrantyPeriodMonths: 36, emergencyAvailable: false, available: true, location: 'Auto Nagar', status: 'Active' },
     ]);
     await Resident.create({ residentId: 'U003', name: 'Resident One', email: 'resident1@safehome.com', phone: '9000000003', apartmentId: 'A102', blockId: 'B001', communityId: 'C001', ownerOrTenant: 'Tenant', familyMembers: 3, emergencyContact: '9000000099', moveInDate: new Date('2025-06-01'), status: 'Active' });
     await Ticket.create({

@@ -95,3 +95,57 @@ export const getAIFeedbackAnalytics = asyncHandler(async (req, res) => {
     },
   });
 });
+
+export const getAIUsageAnalytics = asyncHandler(async (req, res) => {
+  const filter = filterFor(req.user);
+  const tickets = await Ticket.find({ ...filter, 'aiAnalysis.createdAt': { $exists: true } }).select('ticketId title aiAnalysis createdAt').sort({ createdAt: -1 }).limit(50).lean();
+  const summary = {
+    totalLogged: tickets.length,
+    recentEvents: tickets.map((t) => ({
+      ticketId: t.ticketId,
+      provider: t.aiAnalysis?.provider || 'rules',
+      fallbackUsed: Boolean(t.aiAnalysis?.fallbackUsed),
+      confidence: t.aiAnalysis?.confidence || 0,
+      timestamp: t.aiAnalysis?.createdAt || t.createdAt,
+    })),
+  };
+  ok(res, summary);
+});
+
+export const getAIOverridesAnalytics = asyncHandler(async (req, res) => {
+  const filter = filterFor(req.user);
+  const tickets = await Ticket.find({ ...filter, 'aiReview.overrideReason': { $exists: true } })
+    .select('ticketId title category severity safetyRisk aiAnalysis aiReview')
+    .sort({ 'aiReview.reviewedAt': -1 })
+    .limit(50)
+    .lean();
+
+  ok(res, {
+    count: tickets.length,
+    overrides: tickets.map((t) => ({
+      ticketId: t.ticketId,
+      title: t.title,
+      currentCategory: t.category,
+      currentSeverity: t.severity,
+      currentSafetyRisk: t.safetyRisk,
+      aiCategory: t.aiReview?.originalAiAnalysis?.category || t.aiAnalysis?.category,
+      aiSeverity: t.aiReview?.originalAiAnalysis?.severity || t.aiAnalysis?.severity,
+      aiSafetyRisk: t.aiReview?.originalAiAnalysis?.safetyRisk ?? t.aiAnalysis?.safetyRisk,
+      overrideReason: t.aiReview?.overrideReason,
+      reviewedBy: t.aiReview?.reviewedBy,
+      reviewedAt: t.aiReview?.reviewedAt,
+    })),
+  });
+});
+
+export const getTicketAIHistory = asyncHandler(async (req, res) => {
+  const ticket = await scopedTicket(req.user, req.params.ticketId);
+  ok(res, {
+    ticketId: ticket.ticketId,
+    title: ticket.title,
+    aiAnalysis: ticket.aiAnalysis,
+    aiReview: ticket.aiReview,
+    attachments: ticket.attachments,
+    timeline: ticket.timeline.filter((item) => item.actor === 'AI_SERVICE' || item.message.toLowerCase().includes('ai')),
+  });
+});
