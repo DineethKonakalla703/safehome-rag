@@ -20,6 +20,16 @@ export async function apiRequest(path, options = {}) {
   return payload.data;
 }
 
+export async function apiUpload(path, formData, options = {}) {
+  const token = localStorage.getItem('safehome_token');
+  let response;
+  try { response = await fetch(`${API_BASE_URL}${path}`, { ...options, method: options.method || 'POST', body: formData, headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}), ...options.headers } }); }
+  catch { throw new ApiError(OFFLINE_MESSAGE); }
+  let payload; try { payload = await response.json(); } catch { throw new ApiError('The backend returned an unreadable response.', response.status); }
+  if (!response.ok || payload.success === false) throw new ApiError(payload?.error?.message || `Request failed with status ${response.status}.`, response.status, payload?.error?.details);
+  return payload.data;
+}
+
 export const queryString = (params = {}) => { const query = new URLSearchParams(Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== '')); return query.toString() ? `?${query}` : ''; };
 export const dateOnly = (value) => value ? new Date(value).toISOString().slice(0, 10) : '';
 export const normalizeUser = (user) => ({ ...user, id: user.userId });

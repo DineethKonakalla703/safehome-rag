@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
   blockId: { type: String, required: true, index: true },
   communityId: { type: String, required: true, index: true },
   category: { type: String, required: true },
-  severity: { type: String, required: true, enum: ['Low', 'Medium', 'High'] },
+  severity: { type: String, required: true, enum: ['Low', 'Medium', 'High', 'Critical'] },
   safetyRisk: { type: Boolean, required: true },
   suggestedAction: { type: String, required: true },
   humanApprovalRequired: { type: Boolean, required: true },
@@ -33,6 +33,13 @@ const schema = new mongoose.Schema({
   attachments: { type: [{ name: String, url: String }], default: [] },
   comments: { type: [commentSchema], default: [] },
   timeline: { type: [timelineSchema], default: [] },
+  aiAnalysis: {
+    category: String, severity: { type: String, enum: ['Low', 'Medium', 'High', 'Critical'] }, safetyRisk: Boolean, safetyRiskType: { type: String, default: null }, missingInfo: { type: [String], default: [] }, suggestedAction: String,
+    confidence: { type: Number, min: 0, max: 1 }, provider: String, modelVersion: String, fallbackUsed: Boolean, humanApprovalRequired: Boolean, reviewedByHuman: { type: Boolean, default: false }, reviewedBy: { type: String, default: null }, reviewedAt: { type: Date, default: null }, createdAt: Date,
+  },
+  slaPrediction: { riskLevel: { type: String, enum: ['Low', 'Medium', 'High', 'Critical'] }, riskScore: { type: Number, min: 0, max: 1 }, reason: String, predictedAt: Date },
+  recommendedTechnicians: { type: [{ technicianId: String, name: String, score: Number, reason: String, generatedAt: Date }], default: [] },
+  relatedIncidentId: { type: String, default: null, index: true },
 }, { timestamps: true, versionKey: false });
 
 export default mongoose.model('Ticket', schema);

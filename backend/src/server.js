@@ -12,6 +12,10 @@ import authRoutes from './routes/authRoutes.js';
 import workOrderRoutes from './routes/workOrderRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import auditRoutes from './routes/auditRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
+import knowledgeRoutes from './routes/knowledgeRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
+import importRoutes from './routes/importRoutes.js';
 import { amenityRoutes, apartmentRoutes, blockRoutes, bookingRoutes, communityRoutes, documentRoutes, inventoryRoutes, noticeRoutes, parkingRoutes, residentRoutes, vehicleRoutes, visitorRoutes } from './routes/coreRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 
@@ -46,6 +50,10 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/audit-logs', auditRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/knowledge', knowledgeRoutes);
+app.use('/api/chatbot', chatbotRoutes);
+app.use('/api/import', importRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

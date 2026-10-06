@@ -9,6 +9,10 @@ import MainAdminDashboard from './pages/MainAdminDashboard';
 import ResidentDashboard from './pages/ResidentDashboard';
 import TicketDetails from './pages/TicketDetails';
 import TicketList from './pages/TicketList';
+import AIInsights from './pages/AIInsights';
+import CollectiveIncidents from './pages/CollectiveIncidents';
+import KnowledgeSupport from './pages/KnowledgeSupport';
+import AIChatbot from './pages/AIChatbot';
 import { AmenitiesPage, ApartmentsPage, AuditLogsPage, BlocksPage, BookingsPage, CommunitiesPage, DocumentsPage, InventoryPage, NoticesPage, ParkingPage, ReportsPage, ResidentsPage, SecurityDashboard, TechniciansPage, VehiclesPage, VisitorsPage, WorkOrdersPage } from './pages/ManagementPages';
 
 const protect = (element, roles) => <ProtectedPage roles={roles}>{element}</ProtectedPage>;
@@ -43,6 +47,10 @@ export default function App() {
       <Route path="/inventory" element={protect(<InventoryPage />, ['MAIN_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
       <Route path="/reports" element={protect(<ReportsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/audit-logs" element={protect(<AuditLogsPage />, ['MAIN_ADMIN'])} />
+      <Route path="/ai-insights" element={protect(<AIInsights />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
+      <Route path="/collective-incidents" element={protect(<CollectiveIncidents />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
+      <Route path="/knowledge-support" element={protect(<KnowledgeSupport />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
+      <Route path="/ai-chatbot" element={protect(<AIChatbot />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'TECHNICIAN'])} />
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>;

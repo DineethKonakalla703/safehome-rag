@@ -4,7 +4,9 @@ import Technician from '../models/Technician.js';
 import Ticket from '../models/Ticket.js';
 import User from '../models/User.js';
 import WorkOrder from '../models/WorkOrder.js';
-import { analyzeComplaint } from '../utils/aiRules.js';
+import { analyzeComplaintWithAI } from '../ai/complaintAnalyzer.js';
+import { detectCollectiveIncidents } from '../ai/collectiveIncidentDetector.js';
+import { writeAIAudit } from '../ai/aiAuditLogger.js';
 import { writeAudit } from '../utils/audit.js';
 import { AppError, asyncHandler, created, nextPublicId, ok, requireFields } from '../utils/http.js';
 import { decorateTickets } from '../utils/serializers.js';
@@ -52,16 +54,19 @@ export const createTicket = asyncHandler(async (req, res) => {
   if (!resident || !apartment || !block) throw new AppError(400, 'Resident, apartment, or block reference is invalid.');
   if (apartment.blockId !== block.blockId || resident.blockId !== block.blockId || apartment.communityId !== req.body.communityId || block.communityId !== req.body.communityId || resident.communityId !== req.body.communityId) throw new AppError(400, 'Resident, apartment, block, and community references must match.');
   if (req.user.role === 'BLOCK_SUB_ADMIN' && req.user.blockId !== block.blockId) throw new AppError(403, 'You can only create tickets in your assigned block.');
-  const analysis = analyzeComplaint(req.body.description);
+  const analysis = await analyzeComplaintWithAI({ title: req.body.title, description: req.body.description, category: req.body.category, resident: { userId: resident.userId, apartmentId: resident.apartmentId, blockId: resident.blockId }, block: { blockId: block.blockId, name: block.name }, apartment: { apartmentId: apartment.apartmentId, number: apartment.number } });
   const ticketId = await nextPublicId(Ticket, 'ticketId', 'TK');
   const record = await Ticket.create({
     ticketId, title: req.body.title, description: req.body.description, residentId: req.body.residentId, apartmentId: req.body.apartmentId, blockId: req.body.blockId, communityId: req.body.communityId,
-    ...analysis, status: 'New', priority: analysis.severity, slaDueDate: new Date(Date.now() + (analysis.severity === 'High' ? 4 : analysis.severity === 'Medium' ? 24 : 72) * 3600000), timeline: [
+    category: analysis.category, severity: analysis.severity, safetyRisk: analysis.safetyRisk, suggestedAction: analysis.suggestedAction, humanApprovalRequired: analysis.safetyRisk, aiAnalysis: { ...analysis, humanApprovalRequired: analysis.safetyRisk, reviewedByHuman: false, createdAt: new Date() }, status: 'New', priority: analysis.severity, slaDueDate: new Date(Date.now() + (analysis.severity === 'Critical' ? 1 : analysis.severity === 'High' ? 4 : analysis.severity === 'Medium' ? 24 : 72) * 3600000), timeline: [
       { message: `Ticket created by ${resident.name}`, actor: resident.userId },
-      { message: analysis.safetyRisk ? 'Rule engine detected high safety risk' : 'Rule-based classification completed', actor: 'RULE_ENGINE' },
+      { message: analysis.safetyRisk ? `${analysis.fallbackUsed ? 'Fallback rules' : 'Claude'} detected a safety risk` : `${analysis.fallbackUsed ? 'Fallback rule' : 'Claude'} analysis completed`, actor: 'AI_SERVICE' },
     ],
   });
   await writeAudit({ action: 'TICKET_CREATED', entityType: 'Ticket', entityId: ticketId, actorId: resident.userId, message: `Complaint created with ${analysis.severity.toLowerCase()} severity.` });
+  await writeAIAudit({ action: 'AI_COMPLAINT_ANALYSIS_GENERATED', entityType: 'Ticket', entityId: ticketId, actorId: resident.userId, message: `${analysis.provider} analysis generated with confidence ${analysis.confidence}; fallback ${analysis.fallbackUsed}.` });
+  if (analysis.safetyRisk) await writeAIAudit({ action: 'AI_SAFETY_RISK_DETECTED', entityType: 'Ticket', entityId: ticketId, actorId: resident.userId, message: `${analysis.safetyRiskType || 'Safety risk'} requires human approval.` });
+  detectCollectiveIncidents({ ticket: record, actorId: resident.userId }).catch((error) => console.warn(`Incident detection skipped: ${error.message}`));
   created(res, (await decorateTickets([record]))[0]);
 });
 

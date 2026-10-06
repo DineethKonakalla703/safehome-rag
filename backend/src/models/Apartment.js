@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const schema = new mongoose.Schema({
   apartmentId: { type: String, required: true, unique: true },
   number: { type: String, required: true },
+  floorNumber: { type: String, default: '' },
   blockId: { type: String, required: true, index: true },
   communityId: { type: String, required: true, index: true },
   status: { type: String, default: 'Occupied', enum: ['Occupied', 'Vacant', 'Maintenance'] },

@@ -4,6 +4,10 @@ frontend/dist/
 backend/node_modules/
 .DS_Store
 *.log
+.pptx-build*/
+tmp/
+output/
+deliverables/
 .env
 backend/.env
 frontend/.env
