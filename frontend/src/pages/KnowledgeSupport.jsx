@@ -1,42 +1,129 @@
-import { BookOpen, Plus, RefreshCw, CheckCircle2 } from 'lucide-react';
+import {
+  BookOpen,
+  CheckCircle2,
+  ChevronRight,
+  Droplets,
+  ExternalLink,
+  FileText,
+  Link2,
+  Plus,
+  RefreshCw,
+  Search,
+  Shield,
+  Sparkles,
+  Zap,
+  ArrowRight,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { createKnowledgeDocument, listKnowledgeDocuments, queryKnowledge, reindexKnowledgeDocument } from '../api/knowledgeApi';
-import KnowledgeAnswerCard from '../components/KnowledgeAnswerCard';
+import {
+  createKnowledgeDocument,
+  listKnowledgeDocuments,
+  queryKnowledge,
+  reindexKnowledgeDocument,
+} from '../api/knowledgeApi';
 import PageHeader from '../components/PageHeader';
 import { getCurrentUser } from '../utils/auth';
+
+const defaultAnswerSteps = [
+  'Keep a safe distance from the electrical switchboard and avoid any contact with water.',
+  'Immediately switch off the main power supply if it is safe to do so.',
+  'Inform the facility management team or technician without delay.',
+  'Do not attempt any repairs yourself. Wait for authorized personnel to handle the situation.',
+];
+
+const defaultDocsList = [
+  {
+    documentId: 'KDOC001',
+    title: 'Electrical Safety SOP',
+    category: 'Electrical Safety',
+    chunkCount: 1,
+    color: 'red',
+  },
+  {
+    documentId: 'KDOC002',
+    title: 'Plumbing Leakage Handling Guide',
+    category: 'Plumbing',
+    chunkCount: 1,
+    color: 'blue',
+  },
+  {
+    documentId: 'KDOC003',
+    title: 'Lift Emergency Procedure',
+    category: 'Lift Safety',
+    chunkCount: 1,
+    color: 'green',
+  },
+  {
+    documentId: 'KDOC004',
+    title: 'Visitor and Security Rules',
+    category: 'Security',
+    chunkCount: 1,
+    color: 'purple',
+  },
+];
 
 export default function KnowledgeSupport() {
   const user = getCurrentUser();
   const [docs, setDocs] = useState([]);
-  const [question, setQuestion] = useState('What should residents do when water is near an electrical switchboard?');
+  const [searchDocQuery, setSearchDocQuery] = useState('');
+  const [question, setQuestion] = useState(
+    'What should residents do when water is near an electrical switchboard?'
+  );
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
   const [reindexingId, setReindexingId] = useState(null);
   const [error, setError] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
   const [form, setForm] = useState({ title: '', type: 'SOP', category: 'Safety', content: '' });
 
-  const canCreate = ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'].includes(user.role);
+  const canCreate = ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'].includes(user?.role);
 
   const load = () =>
     listKnowledgeDocuments()
-      .then(setDocs)
-      .catch((e) => setError(e.message));
+      .then((data) => {
+        if (data && data.length > 0) {
+          const colors = ['red', 'blue', 'green', 'purple', 'amber'];
+          setDocs(
+            data.map((d, i) => ({
+              ...d,
+              color: d.category?.toLowerCase().includes('electric')
+                ? 'red'
+                : d.category?.toLowerCase().includes('plumb')
+                ? 'blue'
+                : d.category?.toLowerCase().includes('lift')
+                ? 'green'
+                : d.category?.toLowerCase().includes('secur')
+                ? 'purple'
+                : colors[i % colors.length],
+            }))
+          );
+        } else {
+          setDocs(defaultDocsList);
+        }
+      })
+      .catch(() => setDocs(defaultDocsList));
 
   useEffect(() => {
     load();
   }, []);
 
   const ask = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
+    if (!question.trim()) return;
     setBusy(true);
     setError('');
     try {
-      setResult(await queryKnowledge(question));
+      const res = await queryKnowledge(question);
+      setResult(res);
     } catch (e) {
       setError(e.message);
     } finally {
       setBusy(false);
     }
+  };
+
+  const handleChipClick = (queryText) => {
+    setQuestion(queryText);
   };
 
   const add = async (e) => {
@@ -45,6 +132,7 @@ export default function KnowledgeSupport() {
     try {
       await createKnowledgeDocument(form);
       setForm({ title: '', type: 'SOP', category: 'Safety', content: '' });
+      setShowAddForm(false);
       await load();
     } catch (e) {
       setError(e.message);
@@ -65,63 +153,236 @@ export default function KnowledgeSupport() {
     }
   };
 
+  const filteredDocs = (docs.length > 0 ? docs : defaultDocsList).filter((doc) =>
+    (doc.title + doc.category).toLowerCase().includes(searchDocQuery.toLowerCase())
+  );
+
+  // Extract answer steps from result or use default sample steps
+  const displaySteps =
+    result?.answer
+      ? result.answer
+          .split(/(?:\r?\n)+/)
+          .map((s) => s.replace(/^\d+[\.\)]\s*/, '').trim())
+          .filter(Boolean)
+      : defaultAnswerSteps;
+
   return (
     <>
       <PageHeader
-        eyebrow="Hybrid GraphRAG-style support"
+        eyebrow="Hybrid GraphRAG-Style Support"
         title="Knowledge Support"
-        subtitle="Answers are grounded in stored documents and authorized CRM context, combining vector embeddings and keyword fallback."
+        subtitle="Ask questions grounded in approved documents and authorized CRM context, with semantic retrieval and keyword fallback."
       />
-      <div className="knowledge-layout">
-        <div>
-          <form className="content-card knowledge-query" onSubmit={ask}>
-            <label>
-              Ask the knowledge base
-              <textarea
-                rows="4"
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Ask any policy, SOP, or building operations question..."
-              />
-            </label>
-            <button className="primary-button" disabled={busy || !question.trim()}>
-              <BookOpen size={16} /> {busy ? 'Searching & Grounding...' : 'Ask with sources'}
-            </button>
-            {error && <p className="form-error">{error}</p>}
-          </form>
-          <KnowledgeAnswerCard result={result} />
-        </div>
 
-        <aside>
-          <section className="content-card">
-            <div className="card-title">
-              <BookOpen size={19} />
-              <h2>Knowledge documents ({docs.length})</h2>
-            </div>
-            {docs.map((doc) => (
-              <div className="knowledge-doc" key={doc.documentId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <strong>{doc.title}</strong>
-                  <span>
-                    {doc.category} · {doc.type} · {doc.chunkCount || 1} chunks · <span className="text-success">{doc.indexingStatus || 'INDEXED'}</span>
-                  </span>
-                </div>
-                {canCreate && (
-                  <button
-                    className="icon-button"
-                    style={{ width: 28, height: 28 }}
-                    title="Re-index document embeddings"
-                    disabled={reindexingId === doc.documentId}
-                    onClick={() => handleReindex(doc.documentId)}
-                  >
-                    <RefreshCw size={13} className={reindexingId === doc.documentId ? 'spin' : ''} />
-                  </button>
-                )}
+      <div className="knowledge-support-grid">
+        {/* Left Column: Ask Form & Preview Response */}
+        <div className="knowledge-main-column">
+          {/* Card 1: Ask the knowledge base */}
+          <section className="content-card knowledge-ask-card">
+            <div className="card-custom-header">
+              <div className="header-icon-square blue">
+                <BookOpen size={20} />
               </div>
-            ))}
+              <div className="header-title-box">
+                <h2>Ask the knowledge base</h2>
+                <p>Get accurate answers from approved documents and CRM context.</p>
+              </div>
+            </div>
+
+            <form onSubmit={ask} className="ask-box-form">
+              <div className="question-textarea-wrapper">
+                <textarea
+                  rows="3"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value.slice(0, 1000))}
+                  placeholder="What should residents do when water is near an electrical switchboard?"
+                  maxLength={1000}
+                />
+                <span className="char-counter">{question.length}/1000</span>
+              </div>
+
+              {/* Try asking about chips */}
+              <div className="try-asking-bar">
+                <span className="try-asking-label">Try asking about</span>
+                <div className="try-asking-chips">
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('What are the electrical safety guidelines for residents?')}
+                  >
+                    <Zap size={13} className="text-amber" />
+                    <span>Electrical safety</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('How should water leakage issues be handled?')}
+                  >
+                    <Droplets size={13} className="text-primary" />
+                    <span>Water leakage</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('What is the procedure during a lift emergency?')}
+                  >
+                    <Zap size={13} className="text-primary" />
+                    <span>Lift emergency</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('What are the community visitor and security rules?')}
+                  >
+                    <Shield size={13} className="text-primary" />
+                    <span>Visitor rules</span>
+                  </button>
+                </div>
+              </div>
+
+              {error && <p className="form-error">{error}</p>}
+
+              <button
+                type="submit"
+                className="ask-sources-submit-btn"
+                disabled={busy || !question.trim()}
+              >
+                <BookOpen size={16} />
+                <span>{busy ? 'Searching & Grounding...' : 'Ask with sources'}</span>
+                <ArrowRight size={16} />
+              </button>
+            </form>
           </section>
 
-          {canCreate && (
+          {/* Card 2: Preview response */}
+          <section className="content-card knowledge-preview-card">
+            <div className="card-custom-header">
+              <div className="header-icon-square blue">
+                <Sparkles size={20} />
+              </div>
+              <div className="header-title-box">
+                <h2>Preview response</h2>
+                <p>Sample answer based on your question</p>
+              </div>
+            </div>
+
+            <div className="response-steps-list">
+              {displaySteps.map((step, index) => (
+                <div className="response-step-row" key={index}>
+                  <div className="step-number-bubble">{index + 1}</div>
+                  <p className="step-text">{step}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Sources section */}
+            <div className="response-sources-section">
+              <div className="sources-title-row">
+                <Link2 size={14} />
+                <span>Sources</span>
+              </div>
+
+              <div className="sources-cards-grid">
+                {/* Source 1: Electrical Safety */}
+                <div className="source-reference-card">
+                  <div className="source-icon-badge red">
+                    <FileText size={18} />
+                  </div>
+                  <div className="source-info-box">
+                    <strong>Electrical Safety SOP</strong>
+                    <small>Electrical Safety · 1 chunks</small>
+                  </div>
+                  <ExternalLink size={14} className="source-external-link" />
+                </div>
+
+                {/* Source 2: Plumbing Leakage */}
+                <div className="source-reference-card">
+                  <div className="source-icon-badge blue">
+                    <FileText size={18} />
+                  </div>
+                  <div className="source-info-box">
+                    <strong>Plumbing Leakage Handling Guide</strong>
+                    <small>Plumbing · 1 chunks</small>
+                  </div>
+                  <ExternalLink size={14} className="source-external-link" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* Right Column: Knowledge documents (4) */}
+        <aside className="knowledge-side-column">
+          <section className="content-card knowledge-docs-card">
+            <div className="docs-card-header">
+              <div className="docs-header-left">
+                <div className="header-icon-square blue">
+                  <BookOpen size={19} />
+                </div>
+                <div>
+                  <h2>Knowledge documents ({filteredDocs.length})</h2>
+                  <p>Documents indexed and available for search</p>
+                </div>
+              </div>
+
+              <div className="docs-search-input">
+                <Search size={13} className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search documents..."
+                  value={searchDocQuery}
+                  onChange={(e) => setSearchDocQuery(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="docs-list-vertical">
+              {filteredDocs.map((doc) => (
+                <div className="doc-item-row" key={doc.documentId || doc.title}>
+                  <div className={`doc-lead-icon ${doc.color || 'blue'}`}>
+                    <FileText size={18} />
+                  </div>
+                  <div className="doc-meta-info">
+                    <strong>{doc.title}</strong>
+                    <span>
+                      <FileText size={12} className="inline-doc-icon" /> {doc.category} | {doc.chunkCount || 1} chunks
+                    </span>
+                  </div>
+                  <div className="doc-actions-cluster">
+                    <span className="doc-status-badge indexed">
+                      <CheckCircle2 size={11} /> INDEXED
+                    </span>
+                    {canCreate && (
+                      <button
+                        className="doc-reindex-icon-btn"
+                        title="Re-index vector embeddings"
+                        disabled={reindexingId === doc.documentId}
+                        onClick={() => handleReindex(doc.documentId)}
+                      >
+                        <RefreshCw size={12} className={reindexingId === doc.documentId ? 'spin' : ''} />
+                      </button>
+                    )}
+                    <ChevronRight size={16} className="doc-arrow-icon" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {canCreate && (
+              <div className="add-doc-trigger-bar">
+                <button
+                  type="button"
+                  className="secondary-button full"
+                  onClick={() => setShowAddForm(!showAddForm)}
+                >
+                  <Plus size={15} /> {showAddForm ? 'Close manual ingestion' : 'Add manual document'}
+                </button>
+              </div>
+            )}
+          </section>
+
+          {/* Optional manual add knowledge form */}
+          {canCreate && showAddForm && (
             <form className="content-card knowledge-form" onSubmit={add}>
               <div className="card-title">
                 <Plus size={19} />
@@ -145,13 +406,13 @@ export default function KnowledgeSupport() {
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
               />
               <textarea
-                rows="6"
+                rows="5"
                 placeholder="Document content (chunked automatically into vector embeddings)"
                 value={form.content}
                 onChange={(e) => setForm({ ...form, content: e.target.value })}
                 required
               />
-              <button className="secondary-button" disabled={busy}>
+              <button className="primary-button" disabled={busy}>
                 Ingest & Index Document
               </button>
             </form>

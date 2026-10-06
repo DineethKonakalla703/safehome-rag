@@ -1,24 +1,31 @@
 import {
-  ArrowRight,
+  AlertTriangle,
+  BarChart3,
+  BookOpen,
   Bot,
+  Building,
+  Building2,
+  Calendar,
+  CheckCheck,
+  ChevronDown,
   ChevronUp,
+  ExternalLink,
+  FileText,
+  Megaphone,
   Mic,
   MicOff,
   Paperclip,
   Plus,
+  Receipt,
+  Search,
   Send,
   Sparkles,
-  UserRound,
+  User,
+  UserCheck,
+  Users,
+  Wrench,
   X,
   Zap,
-  Building,
-  FileText,
-  AlertTriangle,
-  Receipt,
-  UserCheck,
-  Calendar,
-  Wrench,
-  Search,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -47,7 +54,22 @@ const availableModels = [
   { id: 'rules-fallback', name: 'Deterministic Rule Engine', tag: 'Offline Safe' },
 ];
 
-export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] }) {
+const promptSuggestionsRow1 = [
+  { text: 'Show unresolved tickets in Block A', icon: Sparkles, active: true },
+  { text: 'Raise a complaint for water leakage in bathroom', icon: FileText },
+  { text: 'Publish a notice about elevator maintenance tomorrow', icon: Megaphone },
+  { text: 'Generate bill for ticket TK001', icon: Receipt },
+];
+
+const promptSuggestionsRow2 = [
+  { text: 'Assign technician T001 to ticket TK001', icon: Users },
+  { text: 'Show collective incidents', icon: BarChart3 },
+  { text: 'Show SLA-risk tickets', icon: AlertTriangle },
+  { text: 'Ask knowledge support about electrical safety', icon: BookOpen },
+  { text: 'Create a new block named C', icon: Building2 },
+];
+
+export default function ChatbotPanel({ messages, onSend, busy }) {
   const [value, setValue] = useState('');
   const [selectedModel, setSelectedModel] = useState('Gemini 3.8 Flash High');
   const [showModelMenu, setShowModelMenu] = useState(false);
@@ -65,11 +87,10 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Adjust textarea height automatically
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 140)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
     }
   }, [value]);
 
@@ -77,7 +98,6 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
     const text = e.target.value;
     setValue(text);
 
-    // Check for trigger characters
     const lastChar = text.slice(-1);
     if (lastChar === '/' || text === '/') {
       setShowSlashMenu(true);
@@ -125,7 +145,7 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
   const handleToggleVoice = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert('Speech recognition is not supported in this browser. Please use Google Chrome or Edge.');
+      alert('Speech recognition is not supported in this browser.');
       return;
     }
 
@@ -184,55 +204,164 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
   };
 
   return (
-    <section className="content-card chatbot-panel">
-      {/* Messages Feed */}
-      <div className="chat-messages">
-        {messages.map((item, index) => (
-          <div className={`chat-message ${item.role}`} key={`${item.role}-${index}`}>
-            <span>
-              {item.role === 'assistant' ? <Bot size={17} /> : <UserRound size={17} />}
-            </span>
-            <div>
-              <p>{item.content}</p>
-              {item.intent && <small className="chat-intent-tag">{item.intent}</small>}
+    <section className="content-card modern-chatbot-card">
+      {/* Messages Stream */}
+      <div className="clean-chat-stream">
+        {messages.map((item, index) => {
+          const isUser = item.role === 'user';
+          return (
+            <div
+              className={`stream-message-row ${isUser ? 'user-row' : 'bot-row'}`}
+              key={`${item.role}-${index}`}
+            >
+              {!isUser && (
+                <div className="bot-avatar-box">
+                  <Bot size={20} />
+                </div>
+              )}
+
+              <div className="message-content-wrapper">
+                {/* Tickets Table Card or Simple Bubble */}
+                {item.tickets && item.tickets.length > 0 ? (
+                  <div className="chat-ticket-table-card">
+                    <div className="ticket-card-top-bar">
+                      <div>
+                        <h3>{item.title || 'Here are all unresolved tickets for Block A.'}</h3>
+                        <p>{item.subtitle || `Total ${item.tickets.length} tickets · Sorted by last updated (newest first)`}</p>
+                      </div>
+                      <a href="/tickets" className="view-in-crm-action">
+                        <ExternalLink size={13} />
+                        <span>View in CRM</span>
+                      </a>
+                    </div>
+
+                    <div className="chat-table-scroll">
+                      <table className="chat-tickets-table">
+                        <thead>
+                          <tr>
+                            <th>Ticket ID</th>
+                            <th>Category</th>
+                            <th>Issue</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {item.tickets.map((t) => {
+                            const pLower = (t.priority || 'medium').toLowerCase();
+                            return (
+                              <tr key={t.ticketId}>
+                                <td>
+                                  <a href={`/tickets`} className="ticket-id-link">
+                                    {t.ticketId}
+                                  </a>
+                                </td>
+                                <td>{t.category}</td>
+                                <td className="ticket-title-cell">{t.title}</td>
+                                <td>
+                                  <span className={`chat-priority-badge ${pLower}`}>
+                                    <span className="dot" /> {t.priority}
+                                  </span>
+                                </td>
+                                <td>
+                                  <span className="chat-status-pill">
+                                    {t.status}
+                                  </span>
+                                </td>
+                                <td className="ticket-date-cell">{t.updatedAt}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={`clean-bubble ${isUser ? 'user-bubble' : 'bot-bubble'}`}>
+                    <p>{item.content}</p>
+                    {item.intent && <small className="chat-intent-chip">{item.intent}</small>}
+                  </div>
+                )}
+
+                <div className={`message-time-stamp ${isUser ? 'right-align' : ''}`}>
+                  <span>{item.time || '10:24 AM'}</span>
+                  {isUser && <CheckCheck size={13} className="double-check-icon" />}
+                </div>
+              </div>
+
+              {isUser && (
+                <div className="user-avatar-circle">
+                  <User size={18} />
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
+
         {busy && (
-          <div className="chat-message assistant">
-            <span><Bot size={17} /></span>
-            <div className="chat-typing-indicator">
-              <span className="dot" />
-              <span className="dot" />
-              <span className="dot" />
+          <div className="stream-message-row bot-row">
+            <div className="bot-avatar-box">
+              <Bot size={20} />
+            </div>
+            <div className="message-content-wrapper">
+              <div className="clean-bubble bot-bubble typing-bubble">
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+              </div>
             </div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Suggested Quick Prompts */}
-      {suggestions.length > 0 && (
-        <div className="suggested-prompts-bar">
-          {suggestions.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className="suggestion-chip"
-              onClick={() => onSend(item)}
-              disabled={busy}
-            >
-              <Sparkles size={12} /> {item}
-            </button>
-          ))}
+      {/* Suggested Quick Prompts (Matching Reference UI) */}
+      <div className="chat-prompts-section">
+        <span className="prompts-title-label">Try asking something else</span>
+        <div className="prompts-grid-rows">
+          <div className="prompts-row">
+            {promptSuggestionsRow1.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.text}
+                  type="button"
+                  className={`prompt-chip-btn ${item.active ? 'highlighted' : ''}`}
+                  onClick={() => onSend(item.text)}
+                  disabled={busy}
+                >
+                  <Icon size={14} className="chip-lead-icon" />
+                  <span>{item.text}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="prompts-row">
+            {promptSuggestionsRow2.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.text}
+                  type="button"
+                  className="prompt-chip-btn"
+                  onClick={() => onSend(item.text)}
+                  disabled={busy}
+                >
+                  <Icon size={14} className="chip-lead-icon" />
+                  <span>{item.text}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      )}
+      </div>
 
-      {/* Sleek Modern Input Bar */}
-      <div className="modern-chat-wrapper">
+      {/* Clean White Chat Input Box */}
+      <div className="clean-input-container">
         {/* Slash Command Autocomplete Popover */}
         {showSlashMenu && (
-          <div className="chat-popover">
+          <div className="chat-popover light-popover">
             <div className="popover-header">Action Shortcuts (type /)</div>
             {slashCommands.map((item) => {
               const Icon = item.icon;
@@ -255,7 +384,7 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
 
         {/* Mention Scope Popover */}
         {showMentionMenu && (
-          <div className="chat-popover">
+          <div className="chat-popover light-popover">
             <div className="popover-header">CRM Context Mentions (type @)</div>
             {mentionOptions.map((item) => {
               const Icon = item.icon;
@@ -278,7 +407,7 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
 
         {/* Model Switcher Menu */}
         {showModelMenu && (
-          <div className="chat-model-menu">
+          <div className="chat-model-menu light-popover">
             <div className="popover-header">Active AI Reasoning Model</div>
             {availableModels.map((m) => (
               <div
@@ -298,10 +427,9 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
           </div>
         )}
 
-        {/* Main Floating Chat Pill Box */}
-        <div className="modern-chat-box">
+        <div className="clean-input-box">
           {attachedFile && (
-            <div className="attached-file-chip">
+            <div className="attached-file-chip-light">
               <Paperclip size={12} />
               <span>{attachedFile.name}</span>
               <button onClick={() => setAttachedFile(null)} aria-label="Remove attachment">
@@ -316,13 +444,13 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
             value={value}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            placeholder="Ask anything, @ to mention, / for actions"
-            className="modern-chat-textarea"
+            placeholder="Ask anything, @ to mention, / for actions..."
+            className="clean-textarea"
             disabled={busy}
           />
 
-          <div className="chat-box-footer">
-            <div className="footer-left">
+          <div className="clean-input-footer">
+            <div className="footer-left-group">
               {/* Attach File Button */}
               <input
                 type="file"
@@ -333,8 +461,8 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
               />
               <button
                 type="button"
-                className="chat-icon-btn"
-                title="Attach document or photo"
+                className="clean-circle-btn plus-btn"
+                title="Attach file"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <Plus size={16} />
@@ -343,7 +471,7 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
               {/* Model Selector Pill */}
               <button
                 type="button"
-                className="chat-model-pill"
+                className="clean-model-pill"
                 onClick={() => {
                   setShowModelMenu(!showModelMenu);
                   setShowSlashMenu(false);
@@ -351,30 +479,40 @@ export default function ChatbotPanel({ messages, onSend, busy, suggestions = [] 
                 }}
               >
                 <span>{selectedModel}</span>
-                <ChevronUp size={13} />
+                <ChevronDown size={13} />
               </button>
             </div>
 
-            <div className="footer-right">
-              {/* Speech-to-Text Microphone Button */}
+            <div className="footer-right-group">
+              {/* Voice Microphone Button */}
               <button
                 type="button"
-                className={`chat-icon-btn ${isListening ? 'listening' : ''}`}
+                className={`clean-tool-icon-btn ${isListening ? 'listening' : ''}`}
                 title={isListening ? 'Listening... click to stop' : 'Voice input'}
                 onClick={handleToggleVoice}
               >
                 {isListening ? <MicOff size={16} className="text-danger" /> : <Mic size={16} />}
               </button>
 
-              {/* Circular Submit Button */}
+              {/* Attach Paperclip Button */}
               <button
                 type="button"
-                className={`chat-send-btn ${value.trim() || attachedFile ? 'active' : ''}`}
+                className="clean-tool-icon-btn"
+                title="Attach document"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Paperclip size={16} />
+              </button>
+
+              {/* Send Button */}
+              <button
+                type="button"
+                className="clean-send-btn"
                 disabled={(!value.trim() && !attachedFile) || busy}
                 onClick={handleSubmit}
                 title="Send message"
               >
-                <ArrowRight size={17} />
+                <Send size={15} />
               </button>
             </div>
           </div>
