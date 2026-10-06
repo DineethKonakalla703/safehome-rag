@@ -9,3 +9,5 @@ export async function reopenTicket(id) { return normalizeTicket(await apiRequest
 export async function escalateTicket(id, escalated = true) { return normalizeTicket(await apiRequest(`/tickets/${id}/escalate`, { method: 'PATCH', body: JSON.stringify({ escalated }) })); }
 export async function uploadTicketImage(id, file) { const data = new FormData(); data.append('image', file); return apiUpload(`/tickets/${id}/attachments`, data); }
 export async function analyzeTicketImage(id, attachmentId) { return apiRequest(`/tickets/${id}/analyze-image/${attachmentId}`, { method: 'POST' }); }
+export async function reanalyzeTicket(id) { return normalizeTicket(await apiRequest(`/tickets/${id}/reanalyze`, { method: 'POST' })); }
+export async function overrideTicketAI(id, body) { return normalizeTicket(await apiRequest(`/tickets/${id}/override-ai`, { method: 'POST', body: JSON.stringify(body) })); }

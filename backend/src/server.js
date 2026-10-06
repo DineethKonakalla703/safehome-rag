@@ -24,6 +24,7 @@ import notificationRoutes from './routes/notificationRoutes.js';
 import { amenityRoutes, apartmentRoutes, blockRoutes, bookingRoutes, communityRoutes, documentRoutes, inventoryRoutes, noticeRoutes, parkingRoutes, residentRoutes, vehicleRoutes, visitorRoutes } from './routes/coreRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import { apiLimiter, requestId, sanitizeInput } from './middleware/security.js';
+import { startSlaMonitor } from './services/slaMonitorService.js';
 
 dotenv.config();
 const app = express();
@@ -78,6 +79,7 @@ async function start() {
   try {
     if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'replace_with_a_long_random_secret') throw new Error('JWT_SECRET must be configured with a secure random value.');
     await connectDatabase();
+    startSlaMonitor();
     app.listen(port, () => console.log(`SafeHome-RAG API listening on http://localhost:${port}`));
   } catch (error) {
     console.error(`Backend startup failed: ${error.message}`);

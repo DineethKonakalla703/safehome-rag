@@ -11,6 +11,7 @@ import TicketDetails from './pages/TicketDetails';
 import TicketList from './pages/TicketList';
 import AIInsights from './pages/AIInsights';
 import CollectiveIncidents from './pages/CollectiveIncidents';
+import IncidentDetails from './pages/IncidentDetails';
 import KnowledgeSupport from './pages/KnowledgeSupport';
 import AIChatbot from './pages/AIChatbot';
 import { AmenitiesPage, ApartmentsPage, AuditLogsPage, BlocksPage, BookingsPage, CommunitiesPage, DocumentsPage, InventoryPage, NoticesPage, ParkingPage, ReportsPage, ResidentsPage, SecurityDashboard, TechniciansPage, VehiclesPage, VisitorsPage, WorkOrdersPage } from './pages/ManagementPages';
@@ -49,6 +50,7 @@ export default function App() {
       <Route path="/audit-logs" element={protect(<AuditLogsPage />, ['MAIN_ADMIN'])} />
       <Route path="/ai-insights" element={protect(<AIInsights />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/collective-incidents" element={protect(<CollectiveIncidents />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
+      <Route path="/incidents/:id" element={protect(<IncidentDetails />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/knowledge-support" element={protect(<KnowledgeSupport />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
       <Route path="/ai-chatbot" element={protect(<AIChatbot />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'TECHNICIAN'])} />
     </Route>

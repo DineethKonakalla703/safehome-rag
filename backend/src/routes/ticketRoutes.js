@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addComment, assignTechnician, createTicket, escalateTicket, getTicket, listTickets, reopenTicket, updateTicketStatus } from '../controllers/ticketController.js';
+import { addComment, assignTechnician, createTicket, escalateTicket, getTicket, listTickets, overrideTicketAI, reanalyzeTicket, reopenTicket, updateTicketStatus } from '../controllers/ticketController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { imageUpload } from '../middleware/imageUpload.js';
 import { analyzeTicketImage, uploadTicketAttachment } from '../controllers/attachmentController.js';
@@ -13,6 +13,8 @@ router.patch('/:ticketId/status', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FA
 router.post('/:ticketId/comments', addComment);
 router.post('/:ticketId/reopen', authorize('RESIDENT', 'MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), reopenTicket);
 router.patch('/:ticketId/escalate', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), escalateTicket);
+router.post('/:ticketId/reanalyze', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), reanalyzeTicket);
+router.post('/:ticketId/override-ai', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), overrideTicketAI);
 router.post('/:ticketId/attachments', imageUpload.single('image'), uploadTicketAttachment);
 router.post('/:ticketId/analyze-image/:attachmentId', analyzeTicketImage);
 export default router;

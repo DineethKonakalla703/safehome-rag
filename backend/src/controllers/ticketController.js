@@ -133,3 +133,106 @@ export const escalateTicket = asyncHandler(async (req, res) => {
   await writeAudit({ action: 'TICKET_ESCALATION_UPDATED', entityType: 'Ticket', entityId: ticket.ticketId, actorId: req.user.userId, message: `${ticket.ticketId} escalation set to ${ticket.escalationFlag}.` });
   ok(res, (await decorateTickets([ticket]))[0]);
 });
+
+export const reanalyzeTicket = asyncHandler(async (req, res) => {
+  const ticket = await Ticket.findOne({ ticketId: req.params.ticketId, ...authFilter(req.user) });
+  if (!ticket) throw new AppError(404, 'Ticket not found.');
+
+  const [resident, apartment, block] = await Promise.all([
+    User.findOne({ userId: ticket.residentId }).lean(),
+    Apartment.findOne({ apartmentId: ticket.apartmentId }).lean(),
+    Block.findOne({ blockId: ticket.blockId }).lean(),
+  ]);
+
+  const analysis = await analyzeComplaintWithAI({
+    title: ticket.title,
+    description: ticket.description,
+    category: ticket.category,
+    resident: resident ? { userId: resident.userId, apartmentId: resident.apartmentId, blockId: resident.blockId } : null,
+    block: block ? { blockId: block.blockId, name: block.name } : null,
+    apartment: apartment ? { apartmentId: apartment.apartmentId, number: apartment.number } : null,
+  });
+
+  ticket.aiAnalysis = {
+    ...analysis,
+    humanApprovalRequired: analysis.safetyRisk,
+    reviewedByHuman: false,
+    createdAt: new Date(),
+  };
+  ticket.category = analysis.category;
+  ticket.severity = analysis.severity;
+  ticket.safetyRisk = analysis.safetyRisk;
+  ticket.suggestedAction = analysis.suggestedAction;
+  ticket.humanApprovalRequired = analysis.safetyRisk;
+  ticket.timeline.push({
+    message: `AI reanalysis completed: ${analysis.severity} (${analysis.category})`,
+    actor: req.user.userId,
+  });
+
+  await ticket.save();
+  await writeAIAudit({
+    action: 'AI_COMPLAINT_REANALYZED',
+    entityType: 'Ticket',
+    entityId: ticket.ticketId,
+    actorId: req.user.userId,
+    message: `Reanalysis triggered by ${req.user.userId}: ${analysis.provider} classified as ${analysis.severity}.`,
+  });
+
+  ok(res, (await decorateTickets([ticket]))[0]);
+});
+
+export const overrideTicketAI = asyncHandler(async (req, res) => {
+  requireFields(req.body, ['overrideReason']);
+  const ticket = await Ticket.findOne({ ticketId: req.params.ticketId, ...authFilter(req.user) });
+  if (!ticket) throw new AppError(404, 'Ticket not found.');
+
+  const originalAiAnalysis = ticket.aiAnalysis ? { ...(ticket.aiAnalysis.toObject ? ticket.aiAnalysis.toObject() : ticket.aiAnalysis) } : null;
+
+  if (req.body.correctedCategory) {
+    ticket.category = req.body.correctedCategory;
+  }
+  if (req.body.correctedSeverity) {
+    if (!['Low', 'Medium', 'High', 'Critical'].includes(req.body.correctedSeverity)) {
+      throw new AppError(400, 'Invalid severity level.');
+    }
+    ticket.severity = req.body.correctedSeverity;
+    ticket.priority = req.body.correctedSeverity;
+  }
+  if (typeof req.body.correctedSafetyRisk === 'boolean') {
+    ticket.safetyRisk = req.body.correctedSafetyRisk;
+    ticket.humanApprovalRequired = req.body.correctedSafetyRisk;
+  }
+
+  ticket.aiReview = {
+    originalAiAnalysis,
+    correctedCategory: req.body.correctedCategory || ticket.category,
+    correctedSeverity: req.body.correctedSeverity || ticket.severity,
+    correctedSafetyRisk: typeof req.body.correctedSafetyRisk === 'boolean' ? req.body.correctedSafetyRisk : ticket.safetyRisk,
+    overrideReason: req.body.overrideReason,
+    reviewedBy: req.user.userId,
+    reviewedAt: new Date(),
+    acceptedAiRecommendation: false,
+  };
+
+  if (ticket.aiAnalysis) {
+    ticket.aiAnalysis.reviewedByHuman = true;
+    ticket.aiAnalysis.reviewedBy = req.user.userId;
+    ticket.aiAnalysis.reviewedAt = new Date();
+  }
+
+  ticket.timeline.push({
+    message: `AI analysis overridden by reviewer: ${req.body.overrideReason}`,
+    actor: req.user.userId,
+  });
+
+  await ticket.save();
+  await writeAIAudit({
+    action: 'AI_ANALYSIS_HUMAN_OVERRIDDEN',
+    entityType: 'Ticket',
+    entityId: ticket.ticketId,
+    actorId: req.user.userId,
+    message: `Human override: category=${ticket.category}, severity=${ticket.severity}, safetyRisk=${ticket.safetyRisk}. Reason: ${req.body.overrideReason}`,
+  });
+
+  ok(res, (await decorateTickets([ticket]))[0]);
+});

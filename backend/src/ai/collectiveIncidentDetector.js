@@ -38,8 +38,40 @@ export async function detectCollectiveIncidents({ ticket = null, communityId, bl
     const existing = await Incident.findOne({ blockId: groupBlockId, category, status: { $nin: ['Resolved', 'RESOLVED', 'CLOSED', 'FALSE_POSITIVE'] } });
     const incidentId = existing?.incidentId || await nextPublicId(Incident, 'incidentId', 'INC');
     const severity = related.some((item) => ['Critical', 'High'].includes(item.severity)) ? 'High' : 'Medium';
-    const confidence = Math.min(0.98, 0.68 + related.length * 0.06);
-    const data = { incidentId, title: `${groupBlockId} ${group.label} Issue`, category, blockId: groupBlockId, communityId: scope.communityId, severity, confidence, status: existing?.status || 'DETECTED', relatedTickets: related.map((item) => item.ticketId), affectedBlocks: [groupBlockId], affectedApartments: [...new Set(related.map((item)=>item.apartmentId).filter(Boolean))], detectedBy: 'keyword-family-and-time-window', aiReason: `${related.length} semantically similar ${group.label.toLowerCase()} tickets were reported in the same block within ${hours} hours.`, detectedAt: existing?.detectedAt || new Date(), timeline: existing?.timeline?.length ? existing.timeline : [{ action: 'INCIDENT_DETECTED', details: `${related.length} tickets grouped with confidence ${confidence}.`, performedBy: actorId }] };
+
+    // Spatial & Temporal Proximity Analysis
+    const apartments = related.map((t) => String(t.apartmentId || '')).filter(Boolean);
+    const floors = apartments.map((apt) => (apt.match(/\d+/) || [''])[0].slice(0, 1));
+    const floorClusters = new Set(floors);
+    const floorProximity = floors.length > 0 && floorClusters.size <= Math.ceil(floors.length / 2);
+
+    const now = Date.now();
+    const recent24hCount = related.filter((t) => (now - new Date(t.createdAt).getTime()) <= 24 * 3600000).length;
+    const timeDecayFactor = recent24hCount >= 2 ? 0.12 : 0.05;
+    const proximityBonus = floorProximity ? 0.08 : 0.02;
+
+    const confidence = Number(Math.min(0.99, 0.68 + (related.length * 0.04) + timeDecayFactor + proximityBonus).toFixed(2));
+    const locationDetail = floorProximity ? ` clustered across common floors (${[...floorClusters].join(', ')})` : '';
+
+    const data = {
+      incidentId,
+      title: `${groupBlockId} ${group.label} Issue`,
+      category,
+      blockId: groupBlockId,
+      communityId: scope.communityId,
+      severity,
+      confidence,
+      status: existing?.status || 'DETECTED',
+      relatedTickets: related.map((item) => item.ticketId),
+      affectedBlocks: [groupBlockId],
+      affectedApartments: [...new Set(apartments)],
+      detectedBy: 'hybrid-proximity-and-time-decay',
+      aiReason: `${related.length} semantically similar ${group.label.toLowerCase()} tickets were reported in ${groupBlockId}${locationDetail} with ${recent24hCount} occurrences in the last 24h (confidence: ${Math.round(confidence * 100)}%).`,
+      detectedAt: existing?.detectedAt || new Date(),
+      timeline: existing?.timeline?.length
+        ? existing.timeline
+        : [{ action: 'INCIDENT_DETECTED', details: `${related.length} tickets clustered with ${Math.round(confidence * 100)}% confidence based on proximity and time decay.`, performedBy: actorId }],
+    };
     const incident = await Incident.findOneAndUpdate({ incidentId }, data, { upsert: true, new: true, runValidators: true });
     await Ticket.updateMany({ ticketId: { $in: data.relatedTickets } }, { relatedIncidentId: incidentId });
     if (!existing) await writeAIAudit({ action: 'INCIDENT_DETECTED', entityType: 'Incident', entityId: incidentId, actorId, message: data.aiReason });

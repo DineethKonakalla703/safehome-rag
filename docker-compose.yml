@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: safehome-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - MONGODB_URI=${MONGODB_URI}
+      - CLIENT_URL=${CLIENT_URL:-http://localhost:80}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=3d
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CLAUDE_MODEL=claude-3-5-sonnet-latest
+      - AI_PROVIDER=claude
+      - AI_FALLBACK_ENABLED=true
+      - SLA_MONITOR_ENABLED=true
+      - SLA_MONITOR_INTERVAL_MINUTES=15
+    volumes:
+      - ticket_uploads:/app/uploads
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: safehome-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  ticket_uploads:

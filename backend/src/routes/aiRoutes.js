@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { aiInsights, detectIncidents, listIncidents, predictForTicket, recommendForTicket, reviewAIAnalysis } from '../controllers/aiController.js';
+import { aiInsights, detectIncidents, getAIFeedbackAnalytics, listIncidents, predictForTicket, recommendForTicket, recommendVendorsForTicket, reviewAIAnalysis } from '../controllers/aiController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 const router = Router(); router.use(authenticate);
 router.get('/insights', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), aiInsights);
+router.get('/analytics', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), getAIFeedbackAnalytics);
 router.get('/incidents', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), listIncidents);
 router.post('/recommend-technicians', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), recommendForTicket);
+router.post('/recommend-vendors', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), recommendVendorsForTicket);
 router.post('/predict-sla-risk', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), predictForTicket);
 router.post('/detect-incidents', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), detectIncidents);
 router.patch('/tickets/:ticketId/review', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), reviewAIAnalysis);
