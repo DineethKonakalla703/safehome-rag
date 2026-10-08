@@ -1,4 +1,4 @@
-import { CheckCircle2, Download, ExternalLink, Eye, Wrench, X } from 'lucide-react';
+import { CheckCircle2, Download, ExternalLink, Eye, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { amenityApi, bookingApi } from '../api/amenityApi';
@@ -11,7 +11,7 @@ import { getAuditLogs, getReports } from '../api/reportApi';
 import { residentApi } from '../api/residentApi';
 import { getUsers } from '../api/userApi';
 import { visitorApi } from '../api/visitorApi';
-import { getWorkOrders, updateWorkOrderStatus } from '../api/workOrderApi';
+import { getWorkOrders } from '../api/workOrderApi';
 import DataState from '../components/DataState';
 import PageHeader from '../components/PageHeader';
 import ResourceManager from '../components/ResourceManager';
@@ -81,16 +81,6 @@ export function WorkOrdersPage() {
                             title="View full work order details"
                           >
                             <Eye size={14} /> View details
-                          </button>
-                          <button
-                            className="table-action"
-                            onClick={async () => {
-                              const note = window.prompt('Completion/progress note', row.completionNote || '') || '';
-                              await updateWorkOrderStatus(row.workOrderId, row.status === 'Completed' ? 'In Progress' : 'Completed', note);
-                              load();
-                            }}
-                          >
-                            <Wrench size={14} /> {row.status === 'Completed' ? 'Reopen work' : 'Complete'}
                           </button>
                         </div>
                       </td>
