@@ -7,5 +7,5 @@ router.get('/', listBills);
 router.get('/resident/:residentId', residentBills);
 router.post('/', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'), createBill);
 router.post('/monthly-generate', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), generateMonthlyBills);
-router.patch('/:id/status', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN'), updateBillStatus);
+router.patch('/:id/status', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT'), updateBillStatus);
 export default router;

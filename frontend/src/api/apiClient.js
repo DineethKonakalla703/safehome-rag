@@ -36,7 +36,7 @@ export const queryString = (params = {}) => { const query = new URLSearchParams(
 export const dateOnly = (value) => value ? new Date(value).toISOString().slice(0, 10) : '';
 export const normalizeUser = (user) => ({ ...user, id: user.userId });
 export const normalizeTicket = (ticket) => ({ ...ticket, id: ticket.ticketId, createdAt: dateOnly(ticket.createdAt), timeline: (ticket.timeline || []).map((item) => ({ ...item, text: item.message, at: item.timestamp ? new Date(item.timestamp).toLocaleString() : '' })) });
-export const normalizeBill = (bill) => ({ ...bill, id: bill.billId, generatedAt: dateOnly(bill.generatedAt), dueDate: dateOnly(bill.dueDate) });
+export const normalizeBill = (bill) => ({ ...bill, id: bill.billId, rawGeneratedAt: bill.generatedAt, rawDueDate: bill.dueDate, rawPaidAt: bill.paidAt, generatedAt: dateOnly(bill.generatedAt), dueDate: dateOnly(bill.dueDate) });
 
 export function createCrudApi(path) {
   return {
