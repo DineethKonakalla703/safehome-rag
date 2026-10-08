@@ -1,5 +1,6 @@
-import { CheckCircle2, Download, Wrench } from 'lucide-react';
+import { CheckCircle2, Download, ExternalLink, Eye, Wrench, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { amenityApi, bookingApi } from '../api/amenityApi';
 import { apartmentApi, blockApi, communityApi } from '../api/communityApi';
 import { documentApi } from '../api/documentApi';
@@ -39,7 +40,157 @@ export const DocumentsPage = () => { const user=current(); const manage=['MAIN_A
 export const InventoryPage = () => { const manage=isMain()||current().role==='FACILITY_MANAGER'; return <ResourceManager title="Inventory" subtitle="Maintenance stock, reorder thresholds and accountable usage." api={inventoryApi} idKey="itemId" columns={[col('itemId','ID'),col('name','Item'),col('category','Category'),col('quantity','Stock'),col('minimumStock','Minimum'),col('unit','Unit')]} fields={[req('name','Item name'),req('category','Category'),field('quantity','Quantity','number'),field('minimumStock','Minimum stock','number'),req('unit','Unit'),req('location','Location')]} canCreate={manage} canEdit={manage} canDelete={manage} actions={[{label:'Use stock',run:(r)=>{const quantity=window.prompt(`Quantity to use (${r.quantity} available)`);return quantity?inventoryApi.use(r.itemId,Number(quantity)):Promise.resolve();}}]}/>; };
 
 function AsyncTable({ loader, title, subtitle, children }) { const [state,setState]=useState({data:null,loading:true,error:null}); const load=()=>{setState({data:null,loading:true,error:null});loader().then(data=>setState({data,loading:false,error:null})).catch(error=>setState({data:null,loading:false,error}));}; useEffect(load,[]); return <><PageHeader eyebrow="SafeHome operations" title={title} subtitle={subtitle}/><DataState loading={state.loading} error={state.error} onRetry={load}/>{state.data&&children(state.data,load)}</>; }
-export function WorkOrdersPage() { return <AsyncTable loader={getWorkOrders} title="Work Orders" subtitle="Assigned maintenance work and technician completion tracking.">{(orders,load)=><section className="content-card resource-card"><div className="table-wrap"><table><thead><tr><th>Order</th><th>Ticket</th><th>Technician</th><th>Title</th><th>Status</th><th>Completion note</th><th>Action</th></tr></thead><tbody>{orders.map((row)=><tr key={row.workOrderId}><td>{row.workOrderId}</td><td>{row.ticketId}</td><td>{row.technicianId}</td><td>{row.title}</td><td><StatusBadge>{row.status}</StatusBadge></td><td>{row.completionNote||'—'}</td><td><button className="table-action" onClick={async()=>{const note=window.prompt('Completion/progress note',row.completionNote||'')||'';await updateWorkOrderStatus(row.workOrderId,row.status==='Completed'?'In Progress':'Completed',note);load();}}><Wrench size={14}/> {row.status==='Completed'?'Reopen work':'Complete'}</button></td></tr>)}</tbody></table></div></section>}</AsyncTable>; }
+export function WorkOrdersPage() {
+  const [selected, setSelected] = useState(null);
+  return (
+    <>
+      <AsyncTable loader={getWorkOrders} title="Work Orders" subtitle="Assigned maintenance work and technician completion tracking.">
+        {(orders, load) => (
+          <section className="content-card resource-card">
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Ticket</th>
+                    <th>Technician</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Completion note</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((row) => (
+                    <tr key={row.workOrderId}>
+                      <td><strong className="ticket-id">{row.workOrderId}</strong></td>
+                      <td>
+                        <Link to={`/tickets/${row.ticketId}`} className="ticket-link" title="Open ticket case file">
+                          {row.ticketId}
+                        </Link>
+                      </td>
+                      <td>{row.technicianId}</td>
+                      <td>{row.title}</td>
+                      <td><StatusBadge>{row.status}</StatusBadge></td>
+                      <td>{row.completionNote || '—'}</td>
+                      <td>
+                        <div className="row-actions">
+                          <button
+                            className="table-action"
+                            onClick={() => setSelected(row)}
+                            title="View full work order details"
+                          >
+                            <Eye size={14} /> View details
+                          </button>
+                          <button
+                            className="table-action"
+                            onClick={async () => {
+                              const note = window.prompt('Completion/progress note', row.completionNote || '') || '';
+                              await updateWorkOrderStatus(row.workOrderId, row.status === 'Completed' ? 'In Progress' : 'Completed', note);
+                              load();
+                            }}
+                          >
+                            <Wrench size={14} /> {row.status === 'Completed' ? 'Reopen work' : 'Complete'}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+      </AsyncTable>
+      {selected && (
+        <div className="modal-backdrop">
+          <section className="resource-modal">
+            <div className="modal-head">
+              <div>
+                <span className="section-kicker">Work order details</span>
+                <h2>{selected.workOrderId}</h2>
+              </div>
+              <button className="icon-action" onClick={() => setSelected(null)}>
+                <X size={18} />
+              </button>
+            </div>
+            <dl className="info-grid">
+              <div>
+                <dt>Ticket reference</dt>
+                <dd>
+                  <Link to={`/tickets/${selected.ticketId}`} className="ticket-link">
+                    <strong>{selected.ticketId}</strong> &rarr;
+                  </Link>
+                </dd>
+              </div>
+              <div>
+                <dt>Work title</dt>
+                <dd>{selected.title}</dd>
+              </div>
+              <div>
+                <dt>Assigned technician</dt>
+                <dd>{selected.technicianId}</dd>
+              </div>
+              <div>
+                <dt>Location / Block</dt>
+                <dd>{selected.apartmentId ? `${selected.apartmentId} · ` : ''}{selected.blockId || 'Community'}</dd>
+              </div>
+              {selected.category && (
+                <div>
+                  <dt>Category</dt>
+                  <dd>{selected.category}</dd>
+                </div>
+              )}
+              {selected.severity && (
+                <div>
+                  <dt>Severity / Risk</dt>
+                  <dd>
+                    {selected.severity}
+                    {selected.safetyRisk && <span className="risk-indicator"> (Safety Risk)</span>}
+                  </dd>
+                </div>
+              )}
+              <div style={{ gridColumn: '1 / -1' }}>
+                <dt>Complaint description</dt>
+                <dd className="detail-description">{selected.description || 'No additional description provided.'}</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd><StatusBadge>{selected.status}</StatusBadge></dd>
+              </div>
+              <div>
+                <dt>Scheduled at</dt>
+                <dd>{selected.scheduledAt ? new Date(selected.scheduledAt).toLocaleString() : 'Immediate dispatch'}</dd>
+              </div>
+              {selected.completedAt && (
+                <div>
+                  <dt>Completed at</dt>
+                  <dd>{new Date(selected.completedAt).toLocaleString()}</dd>
+                </div>
+              )}
+              <div style={{ gridColumn: '1 / -1' }}>
+                <dt>Completion note</dt>
+                <dd>{selected.completionNote || 'No completion notes recorded yet.'}</dd>
+              </div>
+            </dl>
+            <div className="modal-actions">
+              <Link
+                to={`/tickets/${selected.ticketId}`}
+                className="primary-button"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              >
+                <ExternalLink size={15} /> Open Full Ticket Case File
+              </Link>
+              <button className="secondary-button" onClick={() => setSelected(null)}>
+                Close
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+    </>
+  );
+}
 export function TechniciansPage() { return <AsyncTable loader={getUsers} title="Technicians" subtitle="Technician directory and operational assignments.">{(users)=><section className="content-card resource-card"><div className="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Block</th><th>Status</th></tr></thead><tbody>{users.filter((u)=>u.role==='TECHNICIAN').map((u)=><tr key={u.id}><td>{u.id}</td><td>{u.name}</td><td>{u.email}</td><td>{u.blockId||'All blocks'}</td><td><StatusBadge>{u.status||'Active'}</StatusBadge></td></tr>)}</tbody></table></div></section>}</AsyncTable>; }
 const flattenReports=(reports)=>Object.entries(reports).flatMap(([report,data])=>Object.entries(data).flatMap(([metric,value])=>Array.isArray(value)?value.map((v)=>({report,metric,label:v._id??'Unspecified',value:v.count})): [{report,metric,label:metric,value}]));
 export function ReportsPage() { return <AsyncTable loader={getReports} title="Reports & Analytics" subtitle="Operational summaries generated from live scoped records.">{(reports)=>{const rows=flattenReports(reports);const exportCsv=()=>{const csv=['Report,Metric,Label,Value',...rows.map((r)=>[r.report,r.metric,r.label,r.value].map((v)=>`"${String(v).replaceAll('"','""')}"`).join(','))].join('\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='safehome-reports.csv';a.click();URL.revokeObjectURL(url);};return <section className="content-card resource-card"><div className="table-toolbar"><button className="secondary-button" onClick={exportCsv}><Download size={16}/> Export CSV</button></div><div className="table-wrap"><table><thead><tr><th>Report</th><th>Metric</th><th>Group</th><th>Value</th></tr></thead><tbody>{rows.map((r,i)=><tr key={i}><td>{r.report}</td><td>{r.metric}</td><td>{r.label}</td><td>{r.value}</td></tr>)}</tbody></table></div></section>;}}</AsyncTable>; }

@@ -6,7 +6,25 @@ import { AppError, asyncHandler, created, nextPublicId, ok, requireFields } from
 
 const filterFor = (user) => scopedFilter(user, { blockField: 'blockId', technicianField: 'technicianId', residentField: 'residentId' });
 
-export const listWorkOrders = asyncHandler(async (req, res) => ok(res, await WorkOrder.find(filterFor(req.user)).sort({ createdAt: -1 }).lean()));
+export const listWorkOrders = asyncHandler(async (req, res) => {
+  const records = await WorkOrder.find(filterFor(req.user)).sort({ createdAt: -1 }).lean();
+  const ticketIds = [...new Set(records.map((r) => r.ticketId))];
+  const tickets = await Ticket.find({ ticketId: { $in: ticketIds } })
+    .select('ticketId apartmentId category severity safetyRisk residentId')
+    .lean();
+  const ticketMap = new Map(tickets.map((t) => [t.ticketId, t]));
+  const enriched = records.map((r) => {
+    const t = ticketMap.get(r.ticketId);
+    return {
+      ...r,
+      apartmentId: t?.apartmentId || '',
+      category: t?.category || '',
+      severity: t?.severity || '',
+      safetyRisk: t?.safetyRisk || false,
+    };
+  });
+  ok(res, enriched);
+});
 
 export const createWorkOrder = asyncHandler(async (req, res) => {
   requireFields(req.body, ['ticketId', 'technicianId']);

@@ -3151,3 +3151,25 @@ input:focus, textarea:focus, select:focus { border-color: #83a9f5; box-shadow: 0
     align-items: flex-start;
   }
 }
+
+.ticket-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.ticket-link:hover {
+  text-decoration: underline;
+}
+
+.detail-description {
+  white-space: pre-wrap;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.risk-indicator {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 12px;
+}
