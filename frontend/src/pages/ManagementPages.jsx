@@ -1,6 +1,7 @@
 import { CheckCircle2, Download, ExternalLink, Eye, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../api/apiClient';
 import { amenityApi, bookingApi } from '../api/amenityApi';
 import { apartmentApi, blockApi, communityApi } from '../api/communityApi';
 import { documentApi } from '../api/documentApi';
@@ -162,6 +163,18 @@ export function WorkOrdersPage() {
                 <dt>Completion note</dt>
                 <dd>{selected.completionNote || 'No completion notes recorded yet.'}</dd>
               </div>
+              {selected.completionImage?.fileUrl && (
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <dt>Completion Proof Photo</dt>
+                  <dd style={{ marginTop: '6px' }}>
+                    <img
+                      src={assetUrl(selected.completionImage.fileUrl)}
+                      alt="Work Completion Proof"
+                      style={{ maxWidth: '300px', maxHeight: '180px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                    />
+                  </dd>
+                </div>
+              )}
             </dl>
             <div className="modal-actions">
               <Link
