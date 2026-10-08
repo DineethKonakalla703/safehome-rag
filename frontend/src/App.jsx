@@ -53,7 +53,7 @@ export default function App() {
       <Route path="/ai-insights" element={protect(<AIInsights />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/collective-incidents" element={protect(<CollectiveIncidents />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/incidents/:id" element={protect(<IncidentDetails />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
-      <Route path="/knowledge-support" element={protect(<KnowledgeSupport />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
+      <Route path="/knowledge-support" element={protect(<KnowledgeSupport />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
       <Route path="/ai-chatbot" element={protect(<AIChatbot />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'TECHNICIAN'])} />
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />

@@ -3059,3 +3059,95 @@ input:focus, textarea:focus, select:focus { border-color: #83a9f5; box-shadow: 0
     min-width: 100%;
   }
 }
+
+/* ==========================================================================
+   RESIDENT KNOWLEDGE SUPPORT INTEGRATION
+   ========================================================================== */
+
+.resident-quick-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.05);
+}
+
+.resident-quick-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.resident-quick-banner-text strong {
+  display: block;
+  font-size: 14.5px;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.resident-quick-banner-text p {
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.compact-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 8px 16px;
+}
+
+.resident-support-intro-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+}
+
+.resident-support-intro-banner strong {
+  display: block;
+  font-size: 14px;
+  color: #1e3a8a;
+  margin-bottom: 2px;
+}
+
+.resident-support-intro-banner p {
+  font-size: 12.5px;
+  color: #3b82f6;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.tip-knowledge-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+  margin: 8px 0;
+}
+
+.tip-knowledge-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .resident-quick-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

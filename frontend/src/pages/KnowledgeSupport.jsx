@@ -60,6 +60,27 @@ const defaultDocsList = [
     chunkCount: 1,
     color: 'purple',
   },
+  {
+    documentId: 'KDOC005',
+    title: 'Resident Community Guidelines & Noise Policy',
+    category: 'Community Bylaws',
+    chunkCount: 1,
+    color: 'amber',
+  },
+  {
+    documentId: 'KDOC006',
+    title: 'Amenity Booking & Clubhouse Rules',
+    category: 'Amenities',
+    chunkCount: 1,
+    color: 'blue',
+  },
+  {
+    documentId: 'KDOC007',
+    title: 'Maintenance Billing & Payment FAQ',
+    category: 'Billing FAQ',
+    chunkCount: 1,
+    color: 'green',
+  },
 ];
 
 export default function KnowledgeSupport() {
@@ -169,14 +190,28 @@ export default function KnowledgeSupport() {
   return (
     <>
       <PageHeader
-        eyebrow="Hybrid GraphRAG-Style Support"
+        eyebrow={user?.role === 'RESIDENT' ? 'Resident Help Center & SOPs' : 'Hybrid GraphRAG-Style Support'}
         title="Knowledge Support"
-        subtitle="Ask questions grounded in approved documents and authorized CRM context, with semantic retrieval and keyword fallback."
+        subtitle={
+          user?.role === 'RESIDENT'
+            ? 'Search approved society bylaws, emergency safety procedures, amenity guidelines, and billing FAQs.'
+            : 'Ask questions grounded in approved documents and authorized CRM context, with semantic retrieval and keyword fallback.'
+        }
       />
 
       <div className="knowledge-support-grid">
         {/* Left Column: Ask Form & Preview Response */}
         <div className="knowledge-main-column">
+          {user?.role === 'RESIDENT' && (
+            <div className="resident-support-intro-banner">
+              <Sparkles size={18} className="text-primary" />
+              <div>
+                <strong>Resident Self-Service Knowledge Base</strong>
+                <p>Instant answers on emergency precautions, society bylaws, amenity bookings, and maintenance bills with source citations.</p>
+              </div>
+            </div>
+          )}
+
           {/* Card 1: Ask the knowledge base */}
           <section className="content-card knowledge-ask-card">
             <div className="card-custom-header">
@@ -236,6 +271,30 @@ export default function KnowledgeSupport() {
                   >
                     <Shield size={13} className="text-primary" />
                     <span>Visitor rules</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('What are the quiet hours, pet rules, and community guidelines for residents?')}
+                  >
+                    <FileText size={13} className="text-primary" />
+                    <span>Quiet hours & pets</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('What are the rules and timings for booking amenities like badminton and clubhouse?')}
+                  >
+                    <BookOpen size={13} className="text-primary" />
+                    <span>Amenity booking</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="topic-chip"
+                    onClick={() => handleChipClick('When are monthly maintenance bills due and what are the payment terms?')}
+                  >
+                    <FileText size={13} className="text-primary" />
+                    <span>Billing FAQ</span>
                   </button>
                 </div>
               </div>
