@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const schema = new mongoose.Schema({
   billId: { type: String, required: true, unique: true },
   ticketId: { type: String, required: true, unique: true, index: true },
@@ -18,5 +19,16 @@ const schema = new mongoose.Schema({
   paymentMethod: { type: String, default: null },
   paidAt: { type: Date, default: null },
   generatedAt: { type: Date, default: Date.now },
+  orderId: { type: String, default: null },
+  paymentId: { type: String, default: null },
+  taxInvoiceNumber: { type: String, default: null },
+  taxBreakdown: {
+    baseAmount: Number,
+    cgst: Number,
+    sgst: Number,
+    totalGst: Number,
+    sacCode: { type: String, default: '9995' },
+  },
 }, { timestamps: true, versionKey: false });
+
 export default mongoose.model('Bill', schema);

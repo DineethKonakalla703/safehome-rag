@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { amenityController, apartmentController, blockController, bookingController, communityController, documentController, inventoryController, noticeController, parkingController, residentController, vehicleController, vendorController, visitorController } from '../controllers/coreResourceControllers.js';
-import { approveVisitor, assignParking, exitVisitor, updateBookingStatus, useInventory } from '../controllers/operationsController.js';
+import { approveVisitor, assignParking, checkInVisitor, exitVisitor, updateBookingStatus, useInventory, verifyGatePass } from '../controllers/operationsController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
 const managers = ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'];
@@ -21,7 +21,9 @@ export const apartmentRoutes = build(apartmentController, ['MAIN_ADMIN']);
 export const residentRoutes = build(residentController, managers);
 
 export const visitorRoutes = build(visitorController, managers, { allowCreateRoles: ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'] });
+visitorRoutes.get('/verify-pass', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'), verifyGatePass);
 visitorRoutes.patch('/:id/approve', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'), approveVisitor);
+visitorRoutes.patch('/:id/check-in', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY'), checkInVisitor);
 visitorRoutes.patch('/:id/exit', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY'), exitVisitor);
 
 export const vehicleRoutes = build(vehicleController, managers, { allowCreateRoles: ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT'] });

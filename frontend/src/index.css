@@ -4289,3 +4289,905 @@ input:focus, textarea:focus, select:focus { border-color: #83a9f5; box-shadow: 0
 }
 
 
+
+
+/* ==========================================================================
+   PRODUCTION READY MODULES: GATE PASS, CHECKOUT, TAX INVOICE & AUTH MODALS
+   ========================================================================== */
+
+/* --- Digital Gate Pass & Verifier --- */
+.gate-pass-verifier-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.verifier-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.verifier-header strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.verifier-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.gate-verify-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.gate-verify-input-wrap {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gate-code-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.gate-verify-input-wrap input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.gate-verify-input-wrap input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.verify-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+}
+
+.verifier-alert.error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.verified-visitor-result-card {
+  margin-top: 18px;
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.verified-badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.verified-pass-code {
+  font-family: monospace;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+.verified-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.info-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.verified-actions {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 14px;
+}
+
+.check-in-btn {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
+  color: #ffffff !important;
+}
+
+/* Digital Pass Modal */
+.digital-pass-card {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 440px;
+  max-width: 95vw;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.digital-pass-header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.qr-code-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px 16px;
+  background: #ffffff;
+}
+
+.qr-rendered {
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.gate-code-big {
+  font-family: monospace;
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 12px;
+  padding: 4px 16px;
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+
+/* --- Secure Payment Gateway Checkout Modal --- */
+.checkout-gateway-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 580px;
+  max-width: 95vw;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3);
+  border: 1px solid #cbd5e1;
+}
+
+.checkout-gateway-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+}
+
+.gateway-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gateway-brand-badge strong {
+  display: block;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.gateway-brand-badge small {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.checkout-gateway-body {
+  padding: 20px;
+}
+
+.checkout-summary-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.summary-title {
+  display: block;
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.amount-label {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  text-align: right;
+}
+
+.amount-figure {
+  font-size: 20px;
+  color: #16a34a;
+  font-weight: 800;
+}
+
+.gst-compliance-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+.gst-pill {
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.checkout-method-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.method-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.method-tab-btn.active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.checkout-method-panel {
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.upi-qr-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.upi-qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-scan-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.upi-vpa-entry {
+  width: 100%;
+  text-align: left;
+}
+
+.upi-vpa-entry label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.upi-input-group input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.upi-instant-note {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.card-input-field {
+  margin-bottom: 12px;
+}
+
+.card-input-field label,
+.card-input-grid label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.card-input-field input,
+.card-input-grid input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.card-input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.bank-selection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.bank-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #334155;
+  cursor: pointer;
+  text-align: left;
+}
+
+.bank-pill-btn.selected {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.cash-notice-box {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+}
+
+.cash-notice-box strong {
+  display: block;
+  color: #0f172a;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.cash-notice-box p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.checkout-footer-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.checkout-trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.checkout-pay-now-btn {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 12px 24px;
+  font-size: 15px;
+}
+
+.checkout-success-view {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.success-icon-bubble {
+  margin: 0 auto 16px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.receipt-meta-box {
+  max-width: 380px;
+  margin: 20px auto;
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.receipt-meta-box div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.success-actions-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* --- Official Printable GST Tax Invoice --- */
+.tax-invoice-printable-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 860px;
+  max-width: 95vw;
+  max-height: 94vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-action-bar {
+  padding: 12px 20px;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.invoice-bar-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.invoice-bar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tax-invoice-sheet {
+  padding: 32px 36px;
+  background: #ffffff;
+  color: #1e293b;
+  font-family: inherit;
+}
+
+.invoice-rwa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.rwa-logo-group {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.rwa-crest {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rwa-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.rwa-address {
+  font-size: 12px;
+  color: #475569;
+  margin: 0 0 6px;
+}
+
+.rwa-statutory-row {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: #334155;
+  flex-wrap: wrap;
+}
+
+.tax-invoice-badge-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.tax-invoice-headline {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #0f172a;
+}
+
+.tax-invoice-sub {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.invoice-divider-line {
+  height: 2px;
+  background: #0f172a;
+  margin: 20px 0;
+}
+
+.invoice-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.meta-column .meta-item {
+  display: flex;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.meta-item .label {
+  width: 140px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.meta-item .value {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.meta-item .value.highlighted {
+  color: #2563eb;
+  font-family: monospace;
+}
+
+.billed-to-box {
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.billed-to-header {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.resident-name-display {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.resident-unit-display,
+.resident-contact-display {
+  color: #475569;
+  margin-bottom: 2px;
+}
+
+.resident-tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.tax-invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.tax-invoice-table th {
+  background: #f1f5f9;
+  padding: 10px 12px;
+  color: #0f172a;
+  font-weight: 700;
+  border: 1px solid #cbd5e1;
+}
+
+.tax-invoice-table td {
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.table-sub-detail {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.tax-summary-row td {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.grand-total-row td {
+  background: #f1f5f9;
+  border-top: 2px solid #0f172a !important;
+}
+
+.grand-total-figure {
+  font-size: 16px;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.settlement-proof-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  font-size: 12px;
+}
+
+.settlement-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #15803d;
+  font-weight: 700;
+}
+
+.settlement-details-row {
+  display: flex;
+  gap: 8px;
+  color: #166534;
+}
+
+.invoice-sign-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.terms-column {
+  font-size: 11px;
+  color: #64748b;
+  max-width: 440px;
+}
+
+.terms-column ul {
+  padding-left: 18px;
+  margin: 6px 0 0;
+}
+
+.signature-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.official-stamp-box {
+  width: 130px;
+  height: 60px;
+  border: 2px dashed #3b82f6;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+
+.signature-line {
+  width: 160px;
+  height: 1px;
+  background: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.signatory-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Print CSS */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-tax-invoice,
+  #printable-tax-invoice * {
+    visibility: visible;
+  }
+  #printable-tax-invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20mm;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* --- Password & Profile Modals --- */
+.change-password-card,
+.forgot-password-card {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 440px;
+  max-width: 95vw;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.change-password-form,
+.forgot-password-form {
+  padding: 20px;
+}
+
+.forgot-modal-instructions {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.change-pwd-button {
+  color: #64748b;
+}
+
+.change-pwd-button:hover {
+  color: #0f172a;
+}

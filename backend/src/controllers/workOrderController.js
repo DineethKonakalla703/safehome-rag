@@ -7,6 +7,7 @@ import { scopedFilter } from '../middleware/auth.js';
 import { ticketUploadDirectory, validImageSignature } from '../middleware/imageUpload.js';
 import { writeAudit } from '../utils/audit.js';
 import { AppError, asyncHandler, created, nextPublicId, ok, requireFields } from '../utils/http.js';
+import { notifyWorkOrderCompleted } from '../services/notificationService.js';
 
 const filterFor = (user) => scopedFilter(user, { blockField: 'blockId', technicianField: 'technicianId', residentField: 'residentId' });
 
@@ -130,6 +131,8 @@ export const uploadWorkOrderCompletionImage = asyncHandler(async (req, res) => {
     actorId: req.user.userId,
     message: `Completion photo uploaded for ${record.workOrderId}.`,
   });
+
+  notifyWorkOrderCompleted(record, ticket).catch((err) => console.warn(`Notification error: ${err.message}`));
 
   ok(res, record);
 });

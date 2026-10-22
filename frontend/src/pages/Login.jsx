@@ -32,7 +32,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { getDemoUsers, login } from '../api/userApi';
+import { getDemoUsers, login, requestPasswordReset, resetPassword } from '../api/userApi';
 import { getCurrentUser, getToken, setSession } from '../utils/auth';
 
 const roleOptions = [
@@ -63,6 +63,64 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [keepSignedIn, setKeepSignedIn] = useState(true);
   const [state, setState] = useState({ loading: false, submitting: false, error: null });
+
+  // Self-Service Password Reset
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotStep, setForgotStep] = useState(1);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotToken, setForgotToken] = useState('');
+  const [forgotNewPassword, setForgotNewPassword] = useState('');
+  const [forgotConfirm, setForgotConfirm] = useState('');
+  const [forgotStatus, setForgotStatus] = useState({ loading: false, error: '', success: '', demoToken: '' });
+
+  const handleRequestReset = async (e) => {
+    e.preventDefault();
+    setForgotStatus({ loading: true, error: '', success: '', demoToken: '' });
+    try {
+      const res = await requestPasswordReset(forgotEmail);
+      setForgotStatus({
+        loading: false,
+        error: '',
+        success: res.message || 'Reset instructions have been generated.',
+        demoToken: res.demoResetToken || '',
+      });
+      if (res.demoResetToken) {
+        setForgotToken(res.demoResetToken);
+      }
+      setForgotStep(2);
+    } catch (err) {
+      setForgotStatus({ loading: false, error: err.message || 'Failed to request reset.', success: '', demoToken: '' });
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setForgotStatus({ ...forgotStatus, loading: true, error: '', success: '' });
+    if (forgotNewPassword.length < 8) {
+      setForgotStatus({ ...forgotStatus, loading: false, error: 'Password must be at least 8 characters.' });
+      return;
+    }
+    if (forgotNewPassword !== forgotConfirm) {
+      setForgotStatus({ ...forgotStatus, loading: false, error: 'Passwords do not match.' });
+      return;
+    }
+    try {
+      await resetPassword(forgotToken, forgotNewPassword);
+      setForgotStatus({
+        loading: false,
+        error: '',
+        success: 'Password reset successfully! You can now sign in with your new password.',
+        demoToken: '',
+      });
+      setForm({ email: forgotEmail, password: forgotNewPassword });
+      setTimeout(() => {
+        setShowForgotModal(false);
+        setForgotStep(1);
+      }, 2500);
+    } catch (err) {
+      setForgotStatus({ ...forgotStatus, loading: false, error: err.message || 'Failed to reset password.' });
+    }
+  };
 
   const load = () => {
     getDemoUsers()
@@ -180,7 +238,12 @@ export default function Login() {
               <button
                 type="button"
                 className="forgot-password-link"
-                onClick={() => setForm({ email: form.email, password: 'Demo@123' })}
+                onClick={() => {
+                  setForgotEmail(form.email || '');
+                  setForgotStatus({ loading: false, error: '', success: '', demoToken: '' });
+                  setForgotStep(1);
+                  setShowForgotModal(true);
+                }}
               >
                 Forgot password?
               </button>
@@ -490,6 +553,163 @@ export default function Login() {
           </div>
         </div>
       </aside>
+
+      {/* Self-Service Password Recovery Modal */}
+      {showForgotModal && (
+        <div className="modal-backdrop" onClick={() => !forgotStatus.loading && setShowForgotModal(false)}>
+          <div className="forgot-password-card" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-head">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ShieldCheck size={20} className="text-primary" />
+                <strong>Self-Service Password Reset</strong>
+              </div>
+              <button
+                type="button"
+                className="icon-action"
+                disabled={forgotStatus.loading}
+                onClick={() => setShowForgotModal(false)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {forgotStep === 1 ? (
+              <form onSubmit={handleRequestReset} className="forgot-password-form">
+                <p className="forgot-modal-instructions">
+                  Enter your registered SafeHome account email. We will generate a secure 30-minute password reset token.
+                </p>
+
+                <div className="form-field-block">
+                  <label>Account Email</label>
+                  <div className="input-with-icon">
+                    <Mail size={16} className="field-lead-icon" />
+                    <input
+                      type="email"
+                      value={forgotEmail}
+                      onChange={(e) => setForgotEmail(e.target.value)}
+                      placeholder="e.g. resident1@safehome.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {forgotStatus.error && (
+                  <div className="login-error-badge">
+                    <AlertTriangle size={15} />
+                    <span>{forgotStatus.error}</span>
+                  </div>
+                )}
+
+                <div className="modal-actions" style={{ marginTop: '16px' }}>
+                  <button
+                    type="submit"
+                    className="primary-login-button"
+                    disabled={forgotStatus.loading}
+                  >
+                    <span>{forgotStatus.loading ? 'Generating Token...' : 'Send Reset Instructions'}</span>
+                    <ArrowRight size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    disabled={forgotStatus.loading}
+                    onClick={() => setShowForgotModal(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <form onSubmit={handleResetPassword} className="forgot-password-form">
+                <p className="forgot-modal-instructions">
+                  Enter the reset token sent to your email/SMS and select a new secure password.
+                </p>
+
+                {forgotStatus.demoToken && (
+                  <div className="demo-helper-caption" style={{ marginBottom: '12px', background: '#eff6ff', padding: '8px 12px', borderRadius: '6px' }}>
+                    <Info size={14} className="text-primary" />
+                    <span>
+                      Demo Mode Token: <code>{forgotStatus.demoToken}</code> (auto-filled below)
+                    </span>
+                  </div>
+                )}
+
+                <div className="form-field-block">
+                  <label>Reset Token</label>
+                  <input
+                    type="text"
+                    value={forgotToken}
+                    onChange={(e) => setForgotToken(e.target.value)}
+                    placeholder="Paste 48-character reset token"
+                    required
+                  />
+                </div>
+
+                <div className="form-field-block">
+                  <label>New Password (min 8 characters)</label>
+                  <div className="input-with-icon">
+                    <Lock size={16} className="field-lead-icon" />
+                    <input
+                      type="password"
+                      value={forgotNewPassword}
+                      onChange={(e) => setForgotNewPassword(e.target.value)}
+                      placeholder="Enter new password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-field-block">
+                  <label>Confirm New Password</label>
+                  <div className="input-with-icon">
+                    <Lock size={16} className="field-lead-icon" />
+                    <input
+                      type="password"
+                      value={forgotConfirm}
+                      onChange={(e) => setForgotConfirm(e.target.value)}
+                      placeholder="Re-enter new password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {forgotStatus.error && (
+                  <div className="login-error-badge">
+                    <AlertTriangle size={15} />
+                    <span>{forgotStatus.error}</span>
+                  </div>
+                )}
+
+                {forgotStatus.success && (
+                  <div className="feedback-banner success mb-2">
+                    <CheckCircle2 size={16} />
+                    <span>{forgotStatus.success}</span>
+                  </div>
+                )}
+
+                <div className="modal-actions" style={{ marginTop: '16px' }}>
+                  <button
+                    type="submit"
+                    className="primary-login-button"
+                    disabled={forgotStatus.loading}
+                  >
+                    <span>{forgotStatus.loading ? 'Updating Password...' : 'Save & Sign In'}</span>
+                    <ArrowRight size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    disabled={forgotStatus.loading}
+                    onClick={() => setForgotStep(1)}
+                  >
+                    Back
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }

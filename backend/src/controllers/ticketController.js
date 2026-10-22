@@ -11,6 +11,7 @@ import { writeAudit } from '../utils/audit.js';
 import { AppError, asyncHandler, created, nextPublicId, ok, requireFields } from '../utils/http.js';
 import { decorateTickets } from '../utils/serializers.js';
 import { scopedFilter } from '../middleware/auth.js';
+import { notifyTicketCreated, notifyTechnicianAssigned } from '../services/notificationService.js';
 
 async function roleFilter(query) {
   const { role, userId, blockId } = query;
@@ -67,6 +68,7 @@ export const createTicket = asyncHandler(async (req, res) => {
   await writeAIAudit({ action: 'AI_COMPLAINT_ANALYSIS_GENERATED', entityType: 'Ticket', entityId: ticketId, actorId: resident.userId, message: `${analysis.provider} analysis generated with confidence ${analysis.confidence}; fallback ${analysis.fallbackUsed}.` });
   if (analysis.safetyRisk) await writeAIAudit({ action: 'AI_SAFETY_RISK_DETECTED', entityType: 'Ticket', entityId: ticketId, actorId: resident.userId, message: `${analysis.safetyRiskType || 'Safety risk'} requires human approval.` });
   detectCollectiveIncidents({ ticket: record, actorId: resident.userId }).catch((error) => console.warn(`Incident detection skipped: ${error.message}`));
+  notifyTicketCreated(record).catch((err) => console.warn(`Notification error: ${err.message}`));
   created(res, (await decorateTickets([record]))[0]);
 });
 
@@ -88,6 +90,7 @@ export const assignTechnician = asyncHandler(async (req, res) => {
     existingWorkOrder.technicianId = technician.technicianId; existingWorkOrder.status = 'Assigned'; await existingWorkOrder.save();
   }
   await writeAudit({ action: 'TECHNICIAN_ASSIGNED', entityType: 'Ticket', entityId: ticket.ticketId, actorId: req.user.userId, message: `${technician.name} assigned to ${ticket.ticketId}.` });
+  notifyTechnicianAssigned(ticket, technician.name, technician.technicianId).catch((err) => console.warn(`Notification error: ${err.message}`));
   ok(res, (await decorateTickets([ticket]))[0]);
 });
 

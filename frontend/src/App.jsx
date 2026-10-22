@@ -16,7 +16,8 @@ import KnowledgeSupport from './pages/KnowledgeSupport';
 import AIChatbot from './pages/AIChatbot';
 import VendorManagement from './pages/VendorManagement';
 import TechnicianDashboard from './pages/TechnicianDashboard';
-import { AmenitiesPage, ApartmentsPage, AuditLogsPage, BlocksPage, BookingsPage, CommunitiesPage, DocumentsPage, InventoryPage, NoticesPage, ParkingPage, ReportsPage, ResidentsPage, SecurityDashboard, TechniciansPage, VehiclesPage, VisitorsPage, WorkOrdersPage } from './pages/ManagementPages';
+import VisitorsPage from './pages/VisitorsPage';
+import { AmenitiesPage, ApartmentsPage, AuditLogsPage, BlocksPage, BookingsPage, CommunitiesPage, DocumentsPage, InventoryPage, NoticesPage, ParkingPage, ReportsPage, ResidentsPage, SecurityDashboard, TechniciansPage, VehiclesPage, WorkOrdersPage } from './pages/ManagementPages';
 
 const protect = (element, roles) => <ProtectedPage roles={roles}>{element}</ProtectedPage>;
 
@@ -41,7 +42,7 @@ export default function App() {
       <Route path="/technicians" element={protect(<TechniciansPage />, ['MAIN_ADMIN'])} />
       <Route path="/vendors" element={protect(<VendorManagement />, ['MAIN_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/visitors" element={protect(<VisitorsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY'])} />
-      <Route path="/security/dashboard" element={protect(<SecurityDashboard />, ['SECURITY'])} />
+      <Route path="/security/dashboard" element={protect(<VisitorsPage security />, ['SECURITY'])} />
       <Route path="/vehicles" element={protect(<VehiclesPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT'])} />
       <Route path="/parking" element={protect(<ParkingPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN'])} />
       <Route path="/amenities" element={protect(<AmenitiesPage />, ['MAIN_ADMIN', 'RESIDENT', 'FACILITY_MANAGER'])} />

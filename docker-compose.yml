@@ -1,40 +1,58 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:7-jammy
+    container_name: safehome-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: safehome_rag
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: safehome-redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: safehome-backend
+    restart: always
     ports:
-      - "5000:5000"
+      - '5000:5000'
     environment:
       - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/safehome_rag
+      - REDIS_URL=redis://redis:6379
+      - CLIENT_URL=http://localhost,http://localhost:5173
       - NODE_ENV=production
-      - MONGODB_URI=${MONGODB_URI}
-      - CLIENT_URL=${CLIENT_URL:-http://localhost:80}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRES_IN=3d
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - CLAUDE_MODEL=claude-3-5-sonnet-latest
-      - AI_PROVIDER=claude
-      - AI_FALLBACK_ENABLED=true
-      - SLA_MONITOR_ENABLED=true
-      - SLA_MONITOR_INTERVAL_MINUTES=15
+    depends_on:
+      - mongodb
+      - redis
     volumes:
-      - ticket_uploads:/app/uploads
-    restart: unless-stopped
+      - upload_data:/app/uploads
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: safehome-frontend
+    restart: always
     ports:
-      - "80:80"
+      - '80:80'
     depends_on:
       - backend
-    restart: unless-stopped
 
 volumes:
-  ticket_uploads:
+  mongo_data:
+  redis_data:
+  upload_data:
