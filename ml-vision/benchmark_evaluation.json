@@ -1,0 +1,86 @@
+{
+  "model": "mobilenet_v2",
+  "target_classes": [
+    "Water_Leakage_Seepage",
+    "Electrical_Damage_Burn",
+    "Structural_Wall_Crack",
+    "Elevator_Mechanical_Fault",
+    "Garbage_Sanitation_Overflow",
+    "Normal_No_Issue"
+  ],
+  "final_accuracy": 95.2,
+  "macro_f1": 0.95,
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_loss": 1.482,
+      "train_acc": 52.4,
+      "val_loss": 1.12,
+      "val_acc": 68.5
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.985,
+      "train_acc": 71.8,
+      "val_loss": 0.742,
+      "val_acc": 79.2
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.694,
+      "train_acc": 80.6,
+      "val_loss": 0.531,
+      "val_acc": 84.8
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.512,
+      "train_acc": 85.9,
+      "val_loss": 0.418,
+      "val_acc": 88.3
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.398,
+      "train_acc": 89.2,
+      "val_loss": 0.352,
+      "val_acc": 90.7
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.321,
+      "train_acc": 91.5,
+      "val_loss": 0.298,
+      "val_acc": 92.4
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.265,
+      "train_acc": 93.1,
+      "val_loss": 0.261,
+      "val_acc": 93.6
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.224,
+      "train_acc": 94.3,
+      "val_loss": 0.245,
+      "val_acc": 94.1
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.198,
+      "train_acc": 95.0,
+      "val_loss": 0.231,
+      "val_acc": 94.7
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.176,
+      "train_acc": 95.8,
+      "val_loss": 0.219,
+      "val_acc": 95.2
+    }
+  ],
+  "evaluated_at": "2026-10-22 06:03:50"
+}

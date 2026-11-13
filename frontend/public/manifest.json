@@ -1,0 +1,16 @@
+{
+  "name": "SafeHome Residences",
+  "short_name": "SafeHome",
+  "description": "Residential operations: gate and safety, dues and accounts, maintenance and community.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f3ee",
+  "theme_color": "#0f1a2c",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/brand/safehome-mark.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["utilities", "business", "productivity"]
+}

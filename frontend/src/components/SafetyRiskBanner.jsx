@@ -1,0 +1,2 @@
+import { ShieldAlert } from 'lucide-react';
+export default function SafetyRiskBanner({ analysis, action }) { if (!analysis?.safetyRisk) return null; return <div className="safety-alert ai-safety"><span><ShieldAlert size={24}/></span><div><strong>AI safety risk detected - human approval required</strong><p>{analysis.safetyRiskType || 'Potential residential safety hazard'} · {analysis.suggestedAction}</p></div>{action}</div>; }

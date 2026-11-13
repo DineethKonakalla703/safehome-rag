@@ -1,0 +1,2 @@
+import { apiRequest } from './apiClient';
+export async function getReferenceData() { const data = await apiRequest('/reference'); return { communities: data.communities.map((v) => ({ ...v, id: v.communityId })), blocks: data.blocks.map((v) => ({ ...v, id: v.blockId })), apartments: data.apartments.map((v) => ({ ...v, id: v.apartmentId, name: v.number })), technicians: data.technicians.map((v) => ({ ...v, id: v.technicianId, specialty: v.skill })) }; }

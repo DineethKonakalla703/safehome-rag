@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "SafeHome",
+    "slug": "safehome-residences",
+    "version": "1.0.0",
+    "scheme": "safehome",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F5F3EE",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.safehome.residences",
+      "infoPlist": {
+        "NSAppTransportSecurity": { "NSAllowsLocalNetworking": true }
+      }
+    },
+    "android": {
+      "package": "com.safehome.residences",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F1A2C"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "SafeHome Residences",
+      "themeColor": "#0F1A2C",
+      "backgroundColor": "#F5F3EE"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0F1A2C",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180
+        }
+      ]
+    ]
+  }
+}

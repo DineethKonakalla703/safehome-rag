@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { billingReport, residentReport, slaReport, technicianReport, ticketReport } from '../controllers/reportController.js';
+import { authenticate, authorize } from '../middleware/auth.js';
+const router = Router();
+router.use(authenticate, authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'));
+router.get('/tickets', ticketReport);
+router.get('/billing', billingReport);
+router.get('/technicians', technicianReport);
+router.get('/residents', residentReport);
+router.get('/sla', slaReport);
+export default router;

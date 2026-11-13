@@ -1,0 +1,12 @@
+{
+  "community": { "id": "C001", "name": "Green Valley Residency", "address": "Vijayawada, Andhra Pradesh" },
+  "sampleComplaint": {
+    "title": "Water leakage near electrical switchboard",
+    "description": "Water is leaking near the electrical switchboard in A-102.",
+    "expectedCategory": "Plumbing + Electrical Risk",
+    "expectedSeverity": "High",
+    "expectedSafetyRisk": true
+  },
+  "demoBill": { "serviceCharge": 300, "partsCharge": 200, "totalAmount": 500, "paymentStatus": "Pending" }
+}
+

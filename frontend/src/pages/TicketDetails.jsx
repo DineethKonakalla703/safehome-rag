@@ -1,0 +1,227 @@
+import { ArrowLeft, Bot, Camera, CheckCircle2, CreditCard, Edit3, Home, MessageSquare, RefreshCw, ShieldAlert, UserRound, Wrench } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { createBill, getBills } from '../api/billApi';
+import { predictSlaRisk, recommendTechnicians, recommendVendors, reviewAIAnalysis } from '../api/aiApi';
+import { getReferenceData } from '../api/referenceApi';
+import { addTicketComment, analyzeTicketImage, assignTicket, escalateTicket, getTicket, overrideTicketAI, reanalyzeTicket, reopenTicket, updateTicketStatus, uploadTicketImage } from '../api/ticketApi';
+import { getWorkOrders, updateWorkOrderStatus } from '../api/workOrderApi';
+import DataState from '../components/DataState';
+import StatusBadge from '../components/StatusBadge';
+import AIAnalysisCard from '../components/AIAnalysisCard';
+import SafetyRiskBanner from '../components/SafetyRiskBanner';
+import TechnicianRecommendationPanel from '../components/TechnicianRecommendationPanel';
+import VendorRecommendationPanel from '../components/VendorRecommendationPanel';
+import SlaRiskPanel from '../components/SlaRiskPanel';
+import { getCurrentUser } from '../utils/auth';
+import { assetUrl } from '../api/apiClient';
+
+const statuses = ['New', 'Assigned', 'In Progress', 'Resolved', 'Closed'];
+export default function TicketDetails() {
+  const { id } = useParams(); const user = getCurrentUser(); const navigate = useNavigate();
+  const [ticket, setTicket] = useState(null); const [refs, setRefs] = useState({ technicians: [] }); const [bills, setBills] = useState([]); const [orders, setOrders] = useState([]);
+  const [technicianId, setTechnicianId] = useState(''); const [status, setStatus] = useState('New'); const [comment, setComment] = useState(''); const [completionNote, setCompletionNote] = useState('');
+  const [showOverride, setShowOverride] = useState(false);
+  const [overrideCat, setOverrideCat] = useState('');
+  const [overrideSev, setOverrideSev] = useState('Medium');
+  const [overrideRisk, setOverrideRisk] = useState(false);
+  const [overrideReason, setOverrideReason] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [vendorRecs, setVendorRecs] = useState([]);
+  const [loading, setLoading] = useState(true); const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
+  const load = async () => { setLoading(true); setError(''); try { const [nextTicket, reference, nextBills, nextOrders] = await Promise.all([getTicket(id), getReferenceData(), getBills(), getWorkOrders()]); setTicket(nextTicket); setRefs(reference); setBills(nextBills); setOrders(nextOrders); setTechnicianId(nextTicket.assignedTechnicianId || ''); setStatus(nextTicket.status); setOverrideCat(nextTicket.category); setOverrideSev(nextTicket.severity); setOverrideRisk(Boolean(nextTicket.safetyRisk)); } catch (e) { setError(e.message); } finally { setLoading(false); } };
+  useEffect(() => { load(); }, [id]);
+  const act = async (action) => { setBusy(true); setError(''); try { await action(); await load(); } catch (e) { setError(e.message); } finally { setBusy(false); } };
+  if (loading || error || !ticket) return <DataState loading={loading} error={error || (!ticket ? 'Ticket was not found or is outside your access scope.' : '')} onRetry={load} />;
+  const canManage = ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'].includes(user.role); const canWork = canManage || user.role === 'TECHNICIAN';
+  const analysis = ticket.aiAnalysis;
+  const bill = bills.find((item) => item.ticketId === ticket.id); const order = orders.find((item) => item.ticketId === ticket.id);
+  const techName = refs.technicians.find((item) => item.id === ticket.assignedTechnicianId)?.name || 'Not assigned';
+  const timeline = [...(ticket.timeline || [])].reverse();
+  return <><div className="detail-top"><Link className="back-link" to="/tickets"><ArrowLeft size={17} /> Back to tickets</Link><div className="detail-heading"><div><span className="page-eyebrow">Maintenance case file</span><div className="detail-kicker"><span>{ticket.id}</span><StatusBadge>{ticket.status}</StatusBadge>{ticket.escalationFlag && <StatusBadge value="High Risk">Escalated</StatusBadge>}</div><h1>{ticket.title}</h1><p>{ticket.createdAt} · {ticket.blockId} · {ticket.apartmentId}</p></div><div className="case-state"><span>Priority</span><strong>{ticket.priority || ticket.severity}</strong></div></div></div>
+  {analysis ? <SafetyRiskBanner analysis={analysis} action={<StatusBadge value="High Risk">Immediate review</StatusBadge>} /> : ticket.safetyRisk && <div className="safety-alert"><span><ShieldAlert size={24} /></span><div><strong>Safety Risk Detected - Human approval required</strong><p>{ticket.suggestedAction}</p></div><StatusBadge value="High Risk">Immediate review</StatusBadge></div>}
+  {error && <p className="form-error">{error}</p>}
+  <div className="detail-grid"><div className="detail-main">
+    <section className="content-card detail-card"><div className="card-title"><Home size={19}/><h2>Complaint details</h2></div><dl className="info-grid"><div><dt>Description</dt><dd>{ticket.description}</dd></div><div><dt>Category</dt><dd>{ticket.category}</dd></div><div><dt>SLA due</dt><dd>{ticket.slaDueDate ? new Date(ticket.slaDueDate).toLocaleString() : 'Not set'}</dd></div><div><dt>Attachments</dt><dd>{ticket.attachments?.length || 0} metadata record(s)</dd></div></dl></section>
+    <section className="content-card detail-card ai-card"><div className="ai-card-head"><div className="card-title"><span className="ai-icon"><Bot size={21}/></span><div><span className="eyebrow">Validated workflow fields</span><h2>Maintenance classification summary</h2></div></div><span className="simulation-label">Backend enforced</span></div><div className="analysis-grid"><div><span>Category</span><strong>{ticket.category}</strong></div><div><span>Severity</span><strong>{ticket.severity}</strong></div><div><span>Safety risk</span><strong>{ticket.safetyRisk ? 'Detected' : 'Not detected'}</strong></div><div><span>Approval</span><strong>{ticket.humanApprovalRequired ? 'Required' : 'Not required'}</strong></div></div><div className="suggestion"><Bot size={18}/><div><span>Recommended action</span><p>{ticket.suggestedAction}</p></div></div></section>
+    <AIAnalysisCard analysis={analysis} busy={busy} onReview={canManage ? ()=>act(()=>reviewAIAnalysis(id)) : null}/>
+
+    {canManage && (
+      <section className="content-card detail-card">
+        <div className="card-title">
+          <Edit3 size={19} />
+          <h2>AI Reanalysis & Human Correction</h2>
+        </div>
+        <p className="muted">
+          Reviewers can re-run automated classification or explicitly record a human override with full audit history.
+        </p>
+
+        {ticket.aiReview && (
+          <div className="override-comparison-box">
+            <strong>Human Decision vs. AI Recommendation</strong>
+            <div className="comparison-grid">
+              <div>
+                <span>Original AI Category:</span> <code>{ticket.aiReview.originalAiAnalysis?.category || 'N/A'}</code>
+              </div>
+              <div>
+                <span>Human Overridden Category:</span> <code>{ticket.aiReview.correctedCategory}</code>
+              </div>
+              <div>
+                <span>Original AI Severity:</span> <code>{ticket.aiReview.originalAiAnalysis?.severity || 'N/A'}</code>
+              </div>
+              <div>
+                <span>Human Overridden Severity:</span> <code>{ticket.aiReview.correctedSeverity}</code>
+              </div>
+            </div>
+            <p className="override-reason-text">
+              <strong>Override Reason:</strong> {ticket.aiReview.overrideReason} (by {ticket.aiReview.reviewedBy})
+            </p>
+          </div>
+        )}
+
+        <div className="inline-action mt-2">
+          <button
+            className="secondary-button"
+            disabled={busy}
+            onClick={() => act(() => reanalyzeTicket(id))}
+          >
+            <RefreshCw size={15} /> Re-run AI Analysis
+          </button>
+          <button
+            className={showOverride ? 'primary-button' : 'secondary-button'}
+            disabled={busy}
+            onClick={() => setShowOverride(!showOverride)}
+          >
+            <Edit3 size={15} /> {showOverride ? 'Close Override Form' : 'Override AI Classification'}
+          </button>
+        </div>
+
+        {showOverride && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!overrideReason.trim()) return alert('Please enter an override reason.');
+              act(async () => {
+                await overrideTicketAI(id, {
+                  correctedCategory: overrideCat.trim() || undefined,
+                  correctedSeverity: overrideSev,
+                  correctedSafetyRisk: overrideRisk,
+                  overrideReason: overrideReason.trim(),
+                });
+                setShowOverride(false);
+                setOverrideReason('');
+              });
+            }}
+            className="override-form mt-3"
+          >
+            <div className="form-row">
+              <label>
+                Corrected Category
+                <input
+                  value={overrideCat}
+                  onChange={(e) => setOverrideCat(e.target.value)}
+                  placeholder="e.g. Plumbing, Electrical"
+                />
+              </label>
+              <label>
+                Corrected Severity
+                <select value={overrideSev} onChange={(e) => setOverrideSev(e.target.value)}>
+                  {['Low', 'Medium', 'High', 'Critical'].map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={overrideRisk}
+                onChange={(e) => setOverrideRisk(e.target.checked)}
+              />
+              <span>Confirmed Safety Risk (requires urgent safety protocols)</span>
+            </label>
+            <label>
+              Reason for Override (Audited)
+              <input
+                required
+                value={overrideReason}
+                onChange={(e) => setOverrideReason(e.target.value)}
+                placeholder="Explain why AI classification was modified..."
+              />
+            </label>
+            <button className="primary-button" type="submit" disabled={busy || !overrideReason.trim()}>
+              Save Human Override
+            </button>
+          </form>
+        )}
+      </section>
+    )}
+
+    <section className="content-card detail-card">
+      <div className="card-title">
+        <Camera size={19} />
+        <h2>Complaint Images & Vision Analysis</h2>
+      </div>
+      {ticket.attachments?.length > 0 ? (
+        <div className="attachment-gallery">
+          {ticket.attachments.map((item) => (
+            <article key={item.attachmentId} className="attachment-card">
+              <img src={assetUrl(item.fileUrl)} alt={item.originalName} />
+              <div>
+                <strong>{item.originalName}</strong>
+                {item.aiImageAnalysis ? (
+                  <>
+                    <p>{item.aiImageAnalysis.detectedIssue}</p>
+                    <small>
+                      {Math.round((item.aiImageAnalysis.confidence || 0) * 100)}% confidence · {item.aiImageAnalysis.provider}
+                    </small>
+                    {item.aiImageAnalysis.visibleSafetyRisk && (
+                      <StatusBadge value="High Risk">Visible safety risk</StatusBadge>
+                    )}
+                  </>
+                ) : (
+                  <p className="muted">Awaiting image analysis.</p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p className="muted">No photos attached yet.</p>
+      )}
+
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (!imageFile) return;
+          act(async () => {
+            const att = await uploadTicketImage(id, imageFile);
+            await analyzeTicketImage(id, att.attachmentId);
+            setImageFile(null);
+          });
+        }}
+        className="inline-action mt-3"
+      >
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+        />
+        <button className="secondary-button" type="submit" disabled={!imageFile || busy}>
+          <Camera size={15} /> Upload & Analyze Photo
+        </button>
+      </form>
+    </section>
+    <section className="content-card detail-card"><div className="card-title"><UserRound size={19}/><h2>Resident / apartment context</h2></div><dl className="info-grid"><div><dt>Resident ID</dt><dd>{ticket.residentId}</dd></div><div><dt>Apartment</dt><dd>{ticket.apartmentId}</dd></div><div><dt>Block</dt><dd>{ticket.blockId}</dd></div><div><dt>Technician</dt><dd>{techName}</dd></div>{ticket.relatedIncidentId&&<div><dt>Collective incident</dt><dd><Link to="/collective-incidents">{ticket.relatedIncidentId}</Link></dd></div>}</dl></section>
+    <section className="content-card detail-card"><div className="card-title"><MessageSquare size={19}/><h2>Comments</h2></div><div className="comment-list">{ticket.comments?.length ? ticket.comments.map((item, index) => <div className="comment-item" key={`${item.createdAt}-${index}`}><strong>{item.authorName || item.authorId}</strong><p>{item.message}</p><small>{new Date(item.createdAt).toLocaleString()}</small></div>) : <p className="muted">No comments yet.</p>}</div><div className="inline-action"><input value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Add a progress note or question"/><button className="secondary-button" disabled={!comment.trim() || busy} onClick={() => act(async () => { const updated = await addTicketComment(id, comment); setComment(''); return updated; })}>Add comment</button></div></section>
+    <section className="content-card detail-card"><div className="card-title"><CheckCircle2 size={19}/><h2>Activity timeline</h2></div><ol className="timeline">{timeline.map((item, index) => <li key={index}><span/><div><strong>{item.text}</strong><small>{item.at}</small></div></li>)}</ol></section>
+  </div><aside className="detail-side">
+    <section className="content-card action-card"><div className="card-title"><Wrench size={19}/><h2>Technician assignment</h2></div><p className="muted">Currently assigned</p><strong className="assigned-name">{techName}</strong>{canManage && <><label>Choose technician<select value={technicianId} onChange={(e) => setTechnicianId(e.target.value)}><option value="">Select technician</option>{refs.technicians.map((tech) => <option key={tech.id} value={tech.id}>{tech.name} — {tech.specialty}</option>)}</select></label><button className="primary-button full" disabled={!technicianId || busy} onClick={() => act(() => assignTicket(id, technicianId))}>Assign & create work order</button></>}</section>
+    <TechnicianRecommendationPanel recommendations={ticket.recommendedTechnicians} canManage={canManage} busy={busy} onGenerate={()=>act(()=>recommendTechnicians(id))}/>
+    <VendorRecommendationPanel recommendations={ticket.recommendedVendors?.length ? ticket.recommendedVendors : vendorRecs} canManage={canManage} busy={busy} onGenerate={() => act(async () => { const recs = await recommendVendors(id); setVendorRecs(recs); })}/>
+    <SlaRiskPanel prediction={ticket.slaPrediction} canManage={canManage} busy={busy} onPredict={()=>act(()=>predictSlaRisk(id))}/>
+    <section className="content-card action-card"><div className="card-title"><CheckCircle2 size={19}/><h2>Status and escalation</h2></div>{canWork && <><label>New status<select value={status} onChange={(e) => setStatus(e.target.value)}>{statuses.map((item) => <option key={item}>{item}</option>)}</select></label><button className="secondary-button full" disabled={status === ticket.status || busy} onClick={() => act(() => updateTicketStatus(id, status))}>Update status</button></>}{['Resolved','Closed'].includes(ticket.status) && <button className="secondary-button full" disabled={busy} onClick={() => act(() => reopenTicket(id))}>Reopen ticket</button>}{canManage && <button className="danger-button full" disabled={busy} onClick={() => act(() => escalateTicket(id, !ticket.escalationFlag))}>{ticket.escalationFlag ? 'Remove escalation' : 'Escalate ticket'}</button>}</section>
+    <section className="content-card action-card"><div className="card-title"><Wrench size={19}/><h2>Work order</h2></div>{order ? <><div className="bill-summary"><div><span>Work order</span><strong>{order.workOrderId}</strong></div><div><span>Status</span><strong>{order.status}</strong></div></div>{canWork && <><input value={completionNote} onChange={(e) => setCompletionNote(e.target.value)} placeholder="Completion note"/><button className="primary-button full" disabled={busy} onClick={() => act(() => updateWorkOrderStatus(order.workOrderId, status === 'Resolved' ? 'Completed' : 'In Progress', completionNote))}>Update work order</button></>}</> : <p className="muted">A work order is created when a technician is assigned.</p>}</section>
+    <section className="content-card action-card"><div className="card-title"><CreditCard size={19}/><h2>Billing summary</h2></div>{bill ? <div className="bill-summary"><div><span>Bill ID</span><strong>{bill.id}</strong></div><div><span>Total</span><strong>₹{bill.totalAmount}</strong></div><StatusBadge>{bill.paymentStatus}</StatusBadge></div> : canManage ? <button className="primary-button full" disabled={busy} onClick={() => act(() => createBill(id))}>Generate repair bill</button> : <p className="muted">No bill created yet.</p>}</section>
+  </aside></div></>;
+}

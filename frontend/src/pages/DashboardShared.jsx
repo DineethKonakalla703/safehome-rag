@@ -1,0 +1,30 @@
+import { useCallback, useEffect, useState } from 'react';
+import { AlertTriangle, Banknote, Bot, Building2, CircleCheck, Clock3, FileText, Gauge, Receipt, ShieldCheck, Users } from 'lucide-react';
+import { getBills } from '../api/billApi';
+import { getDashboard } from '../api/dashboardApi';
+import { getTickets } from '../api/ticketApi';
+import { ErrorState, LoadingState } from '../components/DataState';
+import PageHeader from '../components/PageHeader';
+import StatCard from '../components/StatCard';
+import TicketTable from '../components/TicketTable';
+
+const money = (value = 0) => `₹${Number(value).toLocaleString('en-IN')}`;
+export function useRecords(user) {
+  const [state, setState] = useState({ tickets: [], bills: [], loading: true, error: null });
+  const load = useCallback(() => { setState((v) => ({ ...v, loading: true, error: null })); Promise.all([getTickets(), user.role === 'TECHNICIAN' ? Promise.resolve([]) : getBills()]).then(([tickets, bills]) => setState({ tickets, bills, loading: false, error: null })).catch((error) => setState({ tickets: [], bills: [], loading: false, error })); }, [user.id, user.role]);
+  useEffect(load, [load]); return { ...state, reload: load };
+}
+export function DashboardView({ user, type }) {
+  const [state, setState] = useState({ dashboard: null, bills: [], loading: true, error: null });
+  const load = useCallback(() => { setState((v) => ({ ...v, loading: true, error: null })); Promise.all([getDashboard(user), getBills()]).then(([dashboard, bills]) => setState({ dashboard, bills, loading: false, error: null })).catch((error) => setState({ dashboard: null, bills: [], loading: false, error })); }, [user.id, user.role, user.blockId]);
+  useEffect(load, [load]);
+  if (state.loading) return <LoadingState label="Loading dashboard…" />;
+  if (state.error) return <ErrorState error={state.error} onRetry={load} />;
+  const { summary, recentTickets: recent } = state.dashboard; const bills = state.bills; const pending = bills.filter((b) => b.paymentStatus === 'Pending'); const paid = bills.filter((b) => b.paymentStatus === 'Paid'); const total = bills.reduce((sum, b) => sum + b.totalAmount, 0); const highRisk = summary.highRiskTickets || 0;
+  let title; let subtitle; let cards;
+  if (type === 'main') { title = 'Community overview'; subtitle = 'Live maintenance, resident, financial, and governed AI operations across Green Valley Residency.'; cards = [['Total Blocks', summary.totalBlocks, Building2], ['Total Residents', summary.totalResidents, Users], ['Total Tickets', summary.totalTickets, FileText], ['Open Tickets', summary.openTickets, Clock3, 'amber'], ['AI High Risk', summary.highRiskTickets, AlertTriangle, 'red'], ['SLA Risk', summary.slaRiskTickets || 0, Gauge, 'amber'], ['Collective Incidents', summary.collectiveIncidents || 0, Bot], ['Pending AI Review', summary.pendingHumanReview || 0, ShieldCheck, 'amber'], ['Pending Bills', summary.pendingBills, Receipt, 'amber'], ['Paid Bills', summary.paidBills, CircleCheck, 'green'], ['Total Billing Amount', money(summary.totalBillingAmount), Banknote, 'green']]; }
+  else if (type === 'block') { title = 'Block A operations'; subtitle = 'Restricted operational and AI-assisted view for your assigned block.'; cards = [['Block Name', summary.blockName, Building2], ['Block Residents', summary.blockResidents, Users], ['Block Tickets', summary.blockTickets, FileText], ['Open Complaints', summary.openComplaints, Clock3, 'amber'], ['AI High Risk', summary.highRiskTickets, AlertTriangle, 'red'], ['SLA Risk', summary.slaRiskTickets || 0, Gauge, 'amber'], ['Incidents', summary.collectiveIncidents || 0, Bot], ['Pending AI Review', summary.pendingHumanReview || 0, ShieldCheck, 'amber'], ['Pending Bills', summary.pendingBills, Receipt, 'amber']]; }
+  else { title = `Welcome back, ${user.name}`; subtitle = `Personal services and account activity for ${user.apartmentId}.`; cards = [['My Tickets', summary.myTickets, FileText], ['Open Tickets', summary.openTickets, Clock3, 'amber'], ['My Bills', summary.myBills, Receipt], ['Pending Amount', money(summary.pendingAmount), Banknote, 'amber'], ['Recent Ticket Status', summary.recentTicketStatus, CircleCheck, summary.recentTicketStatus === 'Resolved' ? 'green' : 'blue']]; }
+  return <><PageHeader eyebrow={type === 'main' ? 'Global operations' : type === 'block' ? 'Block A restricted view' : 'Resident workspace'} title={title} subtitle={subtitle} meta={<><span className="live-indicator"><i /> API connected</span><span>Authenticated database view</span></>} />{highRisk > 0 && <div className="risk-banner"><span className="risk-banner-icon"><AlertTriangle size={20} /></span><div><strong>{highRisk} high-risk ticket{highRisk === 1 ? '' : 's'} require attention</strong><p>Review the safety guidance and confirm a human response.</p></div><span className="risk-count">{highRisk}</span></div>}<section className="stats-grid">{cards.map(([label, value, Icon, tone]) => <StatCard key={label} label={label} value={value} icon={Icon} tone={tone} />)}</section><div className="dashboard-grid"><section className="content-card"><div className="section-heading"><div><span className="section-kicker">Operations</span><h2>Recent tickets</h2><p>Latest records within your access scope.</p></div></div><TicketTable tickets={recent} compact /></section><aside className="content-card billing-snapshot"><div className="section-heading"><div><span className="section-kicker">Financial snapshot</span><h2>Billing summary</h2></div></div><div className="snapshot-total"><span>Total billed</span><strong>{money(total)}</strong></div><div className="snapshot-row"><span>Pending</span><strong>{pending.length}</strong></div><div className="snapshot-row"><span>Paid</span><strong>{paid.length}</strong></div><div className="snapshot-progress"><span style={{ width: `${bills.length ? (paid.length / bills.length) * 100 : 0}%` }} /></div><small>{bills.length ? `${Math.round((paid.length / bills.length) * 100)}% of bills paid` : 'No bills generated yet'}</small></aside></div></>;
+}
+export { default as PageHeader } from '../components/PageHeader';

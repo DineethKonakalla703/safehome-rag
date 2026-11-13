@@ -1,0 +1,3 @@
+import { Gauge } from 'lucide-react';
+import StatusBadge from './StatusBadge';
+export default function SlaRiskPanel({ prediction, onPredict, busy, canManage }) { return <section className="content-card action-card"><div className="card-title"><Gauge size={19}/><h2>SLA breach risk</h2></div>{prediction?.riskLevel ? <><div className="sla-score"><strong>{Math.round((prediction.riskScore || 0) * 100)}%</strong><StatusBadge value={prediction.riskLevel}>{prediction.riskLevel}</StatusBadge></div><p>{prediction.reason}</p></> : <p className="muted">No SLA prediction generated yet.</p>}{canManage && <button className="secondary-button full" disabled={busy} onClick={onPredict}>Predict SLA risk</button>}</section>; }

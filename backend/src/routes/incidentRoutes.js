@@ -1,0 +1,4 @@
+import { Router } from 'express';
+import { assignIncident, commentIncident, getIncident, incidentAudit, listIncidents, mergeTicket, notifyResidents, removeTicket, updateIncidentStatus } from '../controllers/incidentController.js';
+import { authenticate, authorize } from '../middleware/auth.js';
+const router=Router();router.use(authenticate,authorize('MAIN_ADMIN','BLOCK_SUB_ADMIN','FACILITY_MANAGER'));router.get('/',listIncidents);router.get('/:id',getIncident);router.patch('/:id/status',updateIncidentStatus);router.post('/:id/comments',commentIncident);router.post('/:id/assign',assignIncident);router.post('/:id/merge-ticket',mergeTicket);router.post('/:id/remove-ticket',removeTicket);router.post('/:id/notify-residents',notifyResidents);router.get('/:id/audit',incidentAudit);export default router;
