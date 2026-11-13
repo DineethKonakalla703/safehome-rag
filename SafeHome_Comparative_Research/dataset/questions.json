@@ -1,0 +1,614 @@
+[
+  {
+    "qid": "F01",
+    "type": "F",
+    "question": "What are the quiet hours in the society?",
+    "gold": [
+      "KDOC005"
+    ],
+    "answer": "10:00 PM",
+    "note": ""
+  },
+  {
+    "qid": "F02",
+    "type": "F",
+    "question": "By which date are monthly maintenance bills due?",
+    "gold": [
+      "KDOC007"
+    ],
+    "answer": "10th",
+    "note": ""
+  },
+  {
+    "qid": "F03",
+    "type": "F",
+    "question": "How far in advance can residents book the community hall?",
+    "gold": [
+      "KDOC006"
+    ],
+    "answer": "30 days",
+    "note": ""
+  },
+  {
+    "qid": "F04",
+    "type": "F",
+    "question": "How often are overhead water tanks cleaned?",
+    "gold": [
+      "KDOC108"
+    ],
+    "answer": "six months",
+    "note": ""
+  },
+  {
+    "qid": "F05",
+    "type": "F",
+    "question": "On which day is general pest control done in common areas?",
+    "gold": [
+      "KDOC114"
+    ],
+    "answer": "first Saturday",
+    "note": ""
+  },
+  {
+    "qid": "F06",
+    "type": "F",
+    "question": "How quickly must the lift vendor respond to entrapment calls?",
+    "gold": [
+      "KDOC117"
+    ],
+    "answer": "30 minutes",
+    "note": ""
+  },
+  {
+    "qid": "F07",
+    "type": "F",
+    "question": "What is the response target for critical requests such as gas smell or lift entrapment?",
+    "gold": [
+      "KDOC116"
+    ],
+    "answer": "one-hour",
+    "note": ""
+  },
+  {
+    "qid": "F08",
+    "type": "F",
+    "question": "How often must RO purifier filters be replaced?",
+    "gold": [
+      "KDOC118"
+    ],
+    "answer": "six months",
+    "note": ""
+  },
+  {
+    "qid": "F09",
+    "type": "F",
+    "question": "What is the late fee for maintenance payments made after the 20th?",
+    "gold": [
+      "KDOC007"
+    ],
+    "answer": "₹50 per week",
+    "note": ""
+  },
+  {
+    "qid": "F10",
+    "type": "F",
+    "question": "During which hours can heavy furniture be moved with the service lift?",
+    "gold": [
+      "KDOC122"
+    ],
+    "answer": "9:00 AM and 6:00 PM",
+    "note": ""
+  },
+  {
+    "qid": "S01",
+    "type": "S",
+    "question": "My cooling unit is on but the bedroom still feels hot — what should I look at first?",
+    "gold": [
+      "KDOC102"
+    ],
+    "answer": "filter",
+    "note": ""
+  },
+  {
+    "qid": "S02",
+    "type": "S",
+    "question": "I can smell cooking fuel in my kitchen. What do I do right now?",
+    "gold": [
+      "KDOC111"
+    ],
+    "answer": "gas meter valve",
+    "note": ""
+  },
+  {
+    "qid": "S03",
+    "type": "S",
+    "question": "I got a tingle touching the metal faucet. Is that dangerous?",
+    "gold": [
+      "KDOC110"
+    ],
+    "answer": "earthing",
+    "note": ""
+  },
+  {
+    "qid": "S04",
+    "type": "S",
+    "question": "Somebody is stuck inside the elevator between floors.",
+    "gold": [
+      "KDOC003"
+    ],
+    "answer": "never force lift doors",
+    "note": ""
+  },
+  {
+    "qid": "S05",
+    "type": "S",
+    "question": "There are brownish wet marks on my ceiling that keep growing.",
+    "gold": [
+      "KDOC107"
+    ],
+    "answer": "directly above",
+    "note": ""
+  },
+  {
+    "qid": "S06",
+    "type": "S",
+    "question": "The hot water storage tank in the bathroom is making loud knocking sounds.",
+    "gold": [
+      "KDOC103"
+    ],
+    "answer": "switch it off",
+    "note": ""
+  },
+  {
+    "qid": "S07",
+    "type": "S",
+    "question": "Whole flat has no electricity but the neighbours are fine.",
+    "gold": [
+      "KDOC109"
+    ],
+    "answer": "distribution board",
+    "note": ""
+  },
+  {
+    "qid": "S08",
+    "type": "S",
+    "question": "Every sink in our vertical line is gurgling and dirty water is coming back up.",
+    "gold": [
+      "KDOC106"
+    ],
+    "answer": "soil stack",
+    "note": ""
+  },
+  {
+    "qid": "S09",
+    "type": "S",
+    "question": "Why does my fridge freeze up at the back and stop chilling food?",
+    "gold": [
+      "KDOC105"
+    ],
+    "answer": "defrost heater",
+    "note": ""
+  },
+  {
+    "qid": "S10",
+    "type": "S",
+    "question": "Upstairs flats get only a trickle from the taps in the evening.",
+    "gold": [
+      "KDOC121"
+    ],
+    "answer": "pressure pump",
+    "note": ""
+  },
+  {
+    "qid": "H01",
+    "type": "H",
+    "question": "Has apartment A-203 had plumbing problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH007",
+      "TKH014",
+      "TKH021",
+      "TKH031"
+    ],
+    "answer": "Imran Shaikh",
+    "note": "4 matching ticket(s)"
+  },
+  {
+    "qid": "H02",
+    "type": "H",
+    "question": "Has apartment B-201 had electrical problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH012",
+      "TKH057"
+    ],
+    "answer": "Anil Verma",
+    "note": "2 matching ticket(s)"
+  },
+  {
+    "qid": "H03",
+    "type": "H",
+    "question": "Has apartment A-103 had air-conditioning problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH033"
+    ],
+    "answer": "Priya Nair",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "H04",
+    "type": "H",
+    "question": "Has apartment B-202 had water seepage or leakage problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH070"
+    ],
+    "answer": "Mohan Das",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "H05",
+    "type": "H",
+    "question": "Has apartment B-203 had door or carpentry problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH029"
+    ],
+    "answer": "Joseph Fernandes",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "H06",
+    "type": "H",
+    "question": "Has apartment C-303 had air-conditioning problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH009",
+      "TKH023"
+    ],
+    "answer": "Priya Nair",
+    "note": "2 matching ticket(s)"
+  },
+  {
+    "qid": "H07",
+    "type": "H",
+    "question": "Has apartment B-501 had electrical problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH010"
+    ],
+    "answer": "Suresh Rao",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "H08",
+    "type": "H",
+    "question": "Has apartment B-402 had appliance problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH042"
+    ],
+    "answer": "Kavitha Reddy",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "H09",
+    "type": "H",
+    "question": "Has apartment B-502 had door or carpentry problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH052"
+    ],
+    "answer": "Joseph Fernandes",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "H10",
+    "type": "H",
+    "question": "Has apartment B-301 had electrical problems before, and who fixed the most recent one?",
+    "gold": [
+      "TKH066"
+    ],
+    "answer": "Suresh Rao",
+    "note": "1 matching ticket(s)"
+  },
+  {
+    "qid": "M01",
+    "type": "M",
+    "question": "Water from a burst pipe is running near the corridor electrical panel. What should the team do?",
+    "gold": [
+      "KDOC001",
+      "KDOC002"
+    ],
+    "answer": "isolate",
+    "note": ""
+  },
+  {
+    "qid": "M02",
+    "type": "M",
+    "question": "A resident reports the same kitchen leak for the fourth time this quarter. How should it be handled and how fast?",
+    "gold": [
+      "KDOC115",
+      "KDOC116"
+    ],
+    "answer": "senior technician",
+    "note": ""
+  },
+  {
+    "qid": "M03",
+    "type": "M",
+    "question": "The fire alarm is ringing — can residents take the lift, and what should they do if someone is trapped in it?",
+    "gold": [
+      "KDOC113",
+      "KDOC003"
+    ],
+    "answer": "staircases",
+    "note": ""
+  },
+  {
+    "qid": "M04",
+    "type": "M",
+    "question": "The geyser keeps tripping the RCCB and the bathroom tap gives a mild shock. Which checks apply?",
+    "gold": [
+      "KDOC103",
+      "KDOC110"
+    ],
+    "answer": "insulation resistance",
+    "note": ""
+  },
+  {
+    "qid": "M05",
+    "type": "M",
+    "question": "A top-floor flat has ceiling seepage after the first monsoon rain. What is the likely cause and when is the roof inspected?",
+    "gold": [
+      "KDOC107",
+      "KDOC108"
+    ],
+    "answer": "May",
+    "note": ""
+  },
+  {
+    "qid": "M06",
+    "type": "M",
+    "question": "During a power cut, which services keep running and what should a resident check if only their flat is dark when power returns?",
+    "gold": [
+      "KDOC112",
+      "KDOC109"
+    ],
+    "answer": "MCB",
+    "note": ""
+  },
+  {
+    "qid": "M07",
+    "type": "M",
+    "question": "When is the AC in common areas serviced, and what does a standard AC service include?",
+    "gold": [
+      "KDOC120",
+      "KDOC101"
+    ],
+    "answer": "condensate drain",
+    "note": ""
+  },
+  {
+    "qid": "M08",
+    "type": "M",
+    "question": "Can a resident move a new refrigerator in at 8 PM, and will the society repair it if it stops cooling?",
+    "gold": [
+      "KDOC122",
+      "KDOC105"
+    ],
+    "answer": "6:00 PM",
+    "note": ""
+  },
+  {
+    "qid": "M09",
+    "type": "M",
+    "question": "Water is collecting under the washing machine and the floor trap smells. Who repairs what?",
+    "gold": [
+      "KDOC104",
+      "KDOC106"
+    ],
+    "answer": "brand service centre",
+    "note": ""
+  },
+  {
+    "qid": "M10",
+    "type": "M",
+    "question": "Tap water turned yellow on the day the tanks were cleaned. Is that expected and whom should I tell?",
+    "gold": [
+      "KDOC118",
+      "KDOC108"
+    ],
+    "answer": "report",
+    "note": ""
+  },
+  {
+    "qid": "G01",
+    "type": "G",
+    "question": "There is a damp patch on the ceiling of A-202. Who fixed the most recent leakage in the flat directly above it?",
+    "gold": [
+      "APT-A-202",
+      "TKH061"
+    ],
+    "answer": "Mohan Das",
+    "note": "hop: A-202 -> above A-302 -> TKH061 -> Mohan Das"
+  },
+  {
+    "qid": "G02",
+    "type": "G",
+    "question": "There is a damp patch on the ceiling of A-301. Who fixed the most recent leakage in the flat directly above it?",
+    "gold": [
+      "APT-A-301",
+      "TKH025"
+    ],
+    "answer": "Mohan Das",
+    "note": "hop: A-301 -> above A-401 -> TKH025 -> Mohan Das"
+  },
+  {
+    "qid": "G03",
+    "type": "G",
+    "question": "There is a damp patch on the ceiling of A-401. Who fixed the most recent leakage in the flat directly above it?",
+    "gold": [
+      "APT-A-401",
+      "TKH077"
+    ],
+    "answer": "Mohan Das",
+    "note": "hop: A-401 -> above A-501 -> TKH077 -> Mohan Das"
+  },
+  {
+    "qid": "G04",
+    "type": "G",
+    "question": "There is a damp patch on the ceiling of B-102. Who fixed the most recent leakage in the flat directly above it?",
+    "gold": [
+      "APT-B-102",
+      "TKH070"
+    ],
+    "answer": "Mohan Das",
+    "note": "hop: B-102 -> above B-202 -> TKH070 -> Mohan Das"
+  },
+  {
+    "qid": "G05",
+    "type": "G",
+    "question": "There is a damp patch on the ceiling of B-203. Who fixed the most recent leakage in the flat directly above it?",
+    "gold": [
+      "APT-B-203",
+      "TKH035"
+    ],
+    "answer": "Mohan Das",
+    "note": "hop: B-203 -> above B-303 -> TKH035 -> Mohan Das"
+  },
+  {
+    "qid": "G06",
+    "type": "G",
+    "question": "There is a damp patch on the ceiling of B-402. Who fixed the most recent leakage in the flat directly above it?",
+    "gold": [
+      "APT-B-402",
+      "TKH040"
+    ],
+    "answer": "Mohan Das",
+    "note": "hop: B-402 -> above B-502 -> TKH040 -> Mohan Das"
+  },
+  {
+    "qid": "G07",
+    "type": "G",
+    "question": "Does apartment A-203 qualify as a recurring plumbing issue under the escalation policy, and who should handle it next?",
+    "gold": [
+      "KDOC115",
+      "TKH007",
+      "TKH014",
+      "TKH021",
+      "TKH031"
+    ],
+    "answer": "senior technician",
+    "note": "4 Plumbing tickets; policy KDOC115"
+  },
+  {
+    "qid": "G08",
+    "type": "G",
+    "question": "Does apartment C-402 qualify as a recurring plumbing issue under the escalation policy, and who should handle it next?",
+    "gold": [
+      "KDOC115",
+      "TKH043",
+      "TKH049",
+      "TKH059"
+    ],
+    "answer": "senior technician",
+    "note": "3 Plumbing tickets; policy KDOC115"
+  },
+  {
+    "qid": "G09",
+    "type": "G",
+    "question": "Which technician has handled the most air-conditioning tickets in Block B?",
+    "gold": [
+      "TKH002",
+      "TKH037",
+      "TKH046",
+      "TKH071"
+    ],
+    "answer": "Priya Nair",
+    "note": "aggregation over 4 tickets"
+  },
+  {
+    "qid": "G10",
+    "type": "G",
+    "question": "Which technician has handled the most electrical tickets in Block C?",
+    "gold": [
+      "TKH026",
+      "TKH074"
+    ],
+    "answer": "Anil Verma",
+    "note": "aggregation over 2 tickets"
+  },
+  {
+    "qid": "U01",
+    "type": "U",
+    "question": "What is the chlorine dosing schedule for the swimming pool?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U02",
+    "type": "U",
+    "question": "How much does the society charge for a second covered car parking slot?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U03",
+    "type": "U",
+    "question": "Which solar panel vendor maintains the rooftop solar plant?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U04",
+    "type": "U",
+    "question": "What is the Wi-Fi password for the clubhouse?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U05",
+    "type": "U",
+    "question": "When was apartment D-101 last painted?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U06",
+    "type": "U",
+    "question": "Who is the treasurer of the residents welfare association this year?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U07",
+    "type": "U",
+    "question": "What is the procedure for EV charger installation in the basement?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U08",
+    "type": "U",
+    "question": "Which technician repaired the intercom in Block E?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U09",
+    "type": "U",
+    "question": "How many CCTV cameras cover the main gate?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  },
+  {
+    "qid": "U10",
+    "type": "U",
+    "question": "What is the penalty for overstaying guest parking beyond 48 hours?",
+    "gold": [],
+    "answer": null,
+    "note": ""
+  }
+]

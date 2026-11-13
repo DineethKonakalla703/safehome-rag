@@ -1,0 +1,3960 @@
+{
+ "generated": "2026-11-13T20:13:53.140Z",
+ "bootstrapResamples": 10000,
+ "permutations": 10000,
+ "prngSeed": 20261114,
+ "environment": {
+  "date": "2026-11-13T20:10:52.150Z",
+  "node": "v24.15.0",
+  "platform": "Windows_NT 10.0.26200 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-1340P",
+  "logicalCores": 16,
+  "totalMemGB": 15.6,
+  "embeddingModel": "Xenova/all-MiniLM-L6-v2 (ONNX, fp32, mean pooling, L2-normalised) via @huggingface/transformers 3.7.6",
+  "safehomeEmbedding": "feature-hash-v1 (64-dim MD5 feature hashing) from backend/src/ai/rag/embeddingService.js",
+  "chunking": "splitText(maxLength = 900) from backend/src/ai/rag/textExtractor.js, applied to every system",
+  "K": 5,
+  "repetitions": 5,
+  "candidatePool": 40,
+  "modelLoadMs": 9784,
+  "units": 162,
+  "chunksAll": 162,
+  "chunksKb": 29,
+  "questions": 60
+ },
+ "systems": {
+  "KEYWORD": {
+   "name": "Keyword search (term overlap)",
+   "indexMs": 1.5,
+   "cpuMsPerQuery": 0.157,
+   "memBefore": {
+    "rssMB": 270.7,
+    "heapMB": 24.2
+   },
+   "memAfter": {
+    "rssMB": 270.7,
+    "heapMB": 24.7
+   }
+  },
+  "BM25": {
+   "name": "BM25",
+   "indexMs": 2.8,
+   "cpuMsPerQuery": 0.31,
+   "memBefore": {
+    "rssMB": 270.7,
+    "heapMB": 24.7
+   },
+   "memAfter": {
+    "rssMB": 270.7,
+    "heapMB": 25.3
+   }
+  },
+  "DENSE": {
+   "name": "Vector RAG (all-MiniLM-L6-v2)",
+   "indexMs": 9926.2,
+   "cpuMsPerQuery": 240.42,
+   "memBefore": {
+    "rssMB": 270.7,
+    "heapMB": 25.3
+   },
+   "memAfter": {
+    "rssMB": 932.4,
+    "heapMB": 31.3
+   }
+  },
+  "SH_HYBRID": {
+   "name": "SafeHome hybrid (same corpus)",
+   "indexMs": 34,
+   "cpuMsPerQuery": 3.85,
+   "memBefore": {
+    "rssMB": 932.4,
+    "heapMB": 31.3
+   },
+   "memAfter": {
+    "rssMB": 933.7,
+    "heapMB": 35.7
+   }
+  },
+  "SH_DEPLOYED": {
+   "name": "SafeHome as deployed (KB hybrid + graph context)",
+   "indexMs": null,
+   "cpuMsPerQuery": 0.99
+  },
+  "PROTO_GRAPH": {
+   "name": "Prototype: graph-expanded hybrid (not in SafeHome)",
+   "indexMs": null,
+   "cpuMsPerQuery": 0.573
+  }
+ },
+ "deployed": {
+  "storedChunks": 26,
+  "questions": 60,
+  "identicalRankingsAndScores": 60,
+  "mismatches": [],
+  "deployedLatencyMs": {
+   "n": 120,
+   "mean": 66.6,
+   "median": 65,
+   "p95": 74.3,
+   "min": 59.3,
+   "max": 108.9
+  },
+  "note": "Latency = retrieveKnowledge(question) + buildGraphContext(admin) in parallel against MongoDB Atlas from this laptop; excludes the Claude generation call."
+ },
+ "descriptive": {
+  "KEYWORD": {
+   "overall": {
+    "precisionAtK": {
+     "n": 50,
+     "mean": 0.184,
+     "median": 0.2,
+     "sd": 0.1707,
+     "ci95": [
+      0.14,
+      0.232
+     ]
+    },
+    "recallAtK": {
+     "n": 50,
+     "mean": 0.601,
+     "median": 0.9,
+     "sd": 0.4493,
+     "ci95": [
+      0.476,
+      0.72
+     ]
+    },
+    "hitAtK": {
+     "n": 50,
+     "mean": 0.68,
+     "median": 1,
+     "sd": 0.4712,
+     "ci95": [
+      0.54,
+      0.8
+     ]
+    },
+    "completeAtK": {
+     "n": 50,
+     "mean": 0.5,
+     "median": 0.5,
+     "sd": 0.5051,
+     "ci95": [
+      0.36,
+      0.64
+     ]
+    },
+    "mrr": {
+     "n": 50,
+     "mean": 0.587,
+     "median": 1,
+     "sd": 0.4439,
+     "ci95": [
+      0.4633,
+      0.7068
+     ]
+    },
+    "ndcgAtK": {
+     "n": 50,
+     "mean": 0.5497,
+     "median": 0.6131,
+     "sd": 0.4392,
+     "ci95": [
+      0.4284,
+      0.6685
+     ]
+    },
+    "contextPrecision": {
+     "n": 50,
+     "mean": 0.5594,
+     "median": 0.8049,
+     "sd": 0.4566,
+     "ci95": [
+      0.4305,
+      0.6821
+     ]
+    },
+    "contextRecall": {
+     "n": 50,
+     "mean": 0.601,
+     "median": 0.9,
+     "sd": 0.4493,
+     "ci95": [
+      0.475,
+      0.721
+     ]
+    },
+    "answerContainment": {
+     "n": 50,
+     "mean": 0.78,
+     "median": 1,
+     "sd": 0.4185,
+     "ci95": [
+      0.66,
+      0.88
+     ]
+    }
+   },
+   "byType": {
+    "F": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.18,
+      "median": 0.2,
+      "sd": 0.0632,
+      "ci95": [
+       0.14,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "S": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.12,
+      "median": 0.2,
+      "sd": 0.1033,
+      "ci95": [
+       0.06,
+       0.18
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.6167,
+      "median": 1,
+      "sd": 0.4972,
+      "ci95": [
+       0.3167,
+       0.9
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     }
+    },
+    "H": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0.2,
+      "sd": 0.1578,
+      "ci95": [
+       0.08,
+       0.26
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.55,
+      "median": 0.75,
+      "sd": 0.4972,
+      "ci95": [
+       0.25,
+       0.85
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.5,
+      "median": 0.5,
+      "sd": 0.527,
+      "ci95": [
+       0.2,
+       0.8
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.3406,
+      "median": 0.25,
+      "sd": 0.3611,
+      "ci95": [
+       0.1522,
+       0.5783
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.3726,
+      "median": 0.397,
+      "sd": 0.3896,
+      "ci95": [
+       0.1521,
+       0.6089
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.3242,
+      "median": 0.25,
+      "sd": 0.3878,
+      "ci95": [
+       0.115,
+       0.5667
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.55,
+      "median": 0.75,
+      "sd": 0.4972,
+      "ci95": [
+       0.25,
+       0.85
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.7,
+      "median": 1,
+      "sd": 0.483,
+      "ci95": [
+       0.4,
+       1
+      ]
+     }
+    },
+    "M": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0.3,
+      "sd": 0.1054,
+      "ci95": [
+       0.24,
+       0.36
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.75,
+      "median": 0.75,
+      "sd": 0.2635,
+      "ci95": [
+       0.6,
+       0.9
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.5,
+      "median": 0.5,
+      "sd": 0.527,
+      "ci95": [
+       0.2,
+       0.8
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8083,
+      "median": 1,
+      "sd": 0.3144,
+      "ci95": [
+       0.6083,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.6981,
+      "median": 0.632,
+      "sd": 0.2765,
+      "ci95": [
+       0.5245,
+       0.8533
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.7917,
+      "median": 1,
+      "sd": 0.3074,
+      "ci95": [
+       0.6,
+       0.95
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.75,
+      "median": 0.75,
+      "sd": 0.2635,
+      "ci95": [
+       0.6,
+       0.9
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "G": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0,
+      "sd": 0.2951,
+      "ci95": [
+       0,
+       0.36
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.205,
+      "median": 0,
+      "sd": 0.3387,
+      "ci95": [
+       0,
+       0.415
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.483,
+      "ci95": [
+       0,
+       0.6
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.2697,
+      "median": 0.127,
+      "sd": 0.391,
+      "ci95": [
+       0.0698,
+       0.5354
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.1777,
+      "median": 0,
+      "sd": 0.3208,
+      "ci95": [
+       0,
+       0.3865
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.181,
+      "median": 0,
+      "sd": 0.3347,
+      "ci95": [
+       0,
+       0.4025
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.205,
+      "median": 0,
+      "sd": 0.3387,
+      "ci95": [
+       0,
+       0.415
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    }
+   }
+  },
+  "BM25": {
+   "overall": {
+    "precisionAtK": {
+     "n": 50,
+     "mean": 0.176,
+     "median": 0.2,
+     "sd": 0.1437,
+     "ci95": [
+      0.14,
+      0.216
+     ]
+    },
+    "recallAtK": {
+     "n": 50,
+     "mean": 0.607,
+     "median": 1,
+     "sd": 0.4461,
+     "ci95": [
+      0.482,
+      0.725
+     ]
+    },
+    "hitAtK": {
+     "n": 50,
+     "mean": 0.7,
+     "median": 1,
+     "sd": 0.4629,
+     "ci95": [
+      0.58,
+      0.82
+     ]
+    },
+    "completeAtK": {
+     "n": 50,
+     "mean": 0.52,
+     "median": 1,
+     "sd": 0.5047,
+     "ci95": [
+      0.38,
+      0.66
+     ]
+    },
+    "mrr": {
+     "n": 50,
+     "mean": 0.5773,
+     "median": 0.5,
+     "sd": 0.4153,
+     "ci95": [
+      0.4639,
+      0.6906
+     ]
+    },
+    "ndcgAtK": {
+     "n": 50,
+     "mean": 0.5388,
+     "median": 0.622,
+     "sd": 0.4228,
+     "ci95": [
+      0.4225,
+      0.6551
+     ]
+    },
+    "contextPrecision": {
+     "n": 50,
+     "mean": 0.55,
+     "median": 0.5,
+     "sd": 0.4403,
+     "ci95": [
+      0.4317,
+      0.67
+     ]
+    },
+    "contextRecall": {
+     "n": 50,
+     "mean": 0.607,
+     "median": 1,
+     "sd": 0.4461,
+     "ci95": [
+      0.482,
+      0.725
+     ]
+    },
+    "answerContainment": {
+     "n": 50,
+     "mean": 0.84,
+     "median": 1,
+     "sd": 0.3703,
+     "ci95": [
+      0.74,
+      0.94
+     ]
+    }
+   },
+   "byType": {
+    "F": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.18,
+      "median": 0.2,
+      "sd": 0.0632,
+      "ci95": [
+       0.14,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "S": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0.2,
+      "sd": 0.0843,
+      "ci95": [
+       0.1,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.525,
+      "median": 0.5,
+      "sd": 0.3644,
+      "ci95": [
+       0.3167,
+       0.7417
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.5823,
+      "median": 0.6309,
+      "sd": 0.3709,
+      "ci95": [
+       0.3562,
+       0.7954
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.5083,
+      "median": 0.5,
+      "sd": 0.3858,
+      "ci95": [
+       0.2833,
+       0.7333
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "H": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.08,
+      "median": 0,
+      "sd": 0.1033,
+      "ci95": [
+       0.02,
+       0.14
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.35,
+      "median": 0,
+      "sd": 0.4743,
+      "ci95": [
+       0.1,
+       0.65
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0,
+      "sd": 0.5164,
+      "ci95": [
+       0.1,
+       0.7
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.483,
+      "ci95": [
+       0,
+       0.6
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.331,
+      "median": 0.1667,
+      "sd": 0.3698,
+      "ci95": [
+       0.1381,
+       0.5667
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.2807,
+      "median": 0,
+      "sd": 0.4158,
+      "ci95": [
+       0.05,
+       0.5307
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.2667,
+      "median": 0,
+      "sd": 0.4098,
+      "ci95": [
+       0.0667,
+       0.5333
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.35,
+      "median": 0,
+      "sd": 0.4743,
+      "ci95": [
+       0.1,
+       0.65
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.5,
+      "median": 0.5,
+      "sd": 0.527,
+      "ci95": [
+       0.2,
+       0.8
+      ]
+     }
+    },
+    "M": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.32,
+      "median": 0.4,
+      "sd": 0.1033,
+      "ci95": [
+       0.26,
+       0.38
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.2582,
+      "ci95": [
+       0.65,
+       0.95
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8333,
+      "median": 1,
+      "sd": 0.2722,
+      "ci95": [
+       0.6667,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.749,
+      "median": 0.7853,
+      "sd": 0.2697,
+      "ci95": [
+       0.5835,
+       0.8985
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.8167,
+      "median": 1,
+      "sd": 0.2659,
+      "ci95": [
+       0.65,
+       0.95
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.2582,
+      "ci95": [
+       0.65,
+       0.95
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "G": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.14,
+      "median": 0,
+      "sd": 0.2119,
+      "ci95": [
+       0.02,
+       0.28
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.185,
+      "median": 0,
+      "sd": 0.2539,
+      "ci95": [
+       0.05,
+       0.335
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0,
+      "sd": 0.5164,
+      "ci95": [
+       0.1,
+       0.7
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.2972,
+      "median": 0.1389,
+      "sd": 0.3862,
+      "ci95": [
+       0.0944,
+       0.55
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.1819,
+      "median": 0,
+      "sd": 0.2798,
+      "ci95": [
+       0.0264,
+       0.362
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.2583,
+      "median": 0,
+      "sd": 0.4091,
+      "ci95": [
+       0.0333,
+       0.5333
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.185,
+      "median": 0,
+      "sd": 0.2539,
+      "ci95": [
+       0.05,
+       0.345
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     }
+    }
+   }
+  },
+  "DENSE": {
+   "overall": {
+    "precisionAtK": {
+     "n": 50,
+     "mean": 0.216,
+     "median": 0.2,
+     "sd": 0.1267,
+     "ci95": [
+      0.184,
+      0.252
+     ]
+    },
+    "recallAtK": {
+     "n": 50,
+     "mean": 0.742,
+     "median": 1,
+     "sd": 0.3559,
+     "ci95": [
+      0.642,
+      0.837
+     ]
+    },
+    "hitAtK": {
+     "n": 50,
+     "mean": 0.88,
+     "median": 1,
+     "sd": 0.3283,
+     "ci95": [
+      0.78,
+      0.96
+     ]
+    },
+    "completeAtK": {
+     "n": 50,
+     "mean": 0.6,
+     "median": 1,
+     "sd": 0.4949,
+     "ci95": [
+      0.46,
+      0.74
+     ]
+    },
+    "mrr": {
+     "n": 50,
+     "mean": 0.7638,
+     "median": 1,
+     "sd": 0.3755,
+     "ci95": [
+      0.6588,
+      0.8623
+     ]
+    },
+    "ndcgAtK": {
+     "n": 50,
+     "mean": 0.7013,
+     "median": 0.9599,
+     "sd": 0.3627,
+     "ci95": [
+      0.5992,
+      0.7965
+     ]
+    },
+    "contextPrecision": {
+     "n": 50,
+     "mean": 0.7481,
+     "median": 1,
+     "sd": 0.382,
+     "ci95": [
+      0.6411,
+      0.8501
+     ]
+    },
+    "contextRecall": {
+     "n": 50,
+     "mean": 0.742,
+     "median": 1,
+     "sd": 0.3559,
+     "ci95": [
+      0.642,
+      0.837
+     ]
+    },
+    "answerContainment": {
+     "n": 50,
+     "mean": 0.94,
+     "median": 1,
+     "sd": 0.2399,
+     "ci95": [
+      0.86,
+      1
+     ]
+    }
+   },
+   "byType": {
+    "F": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.2,
+      "median": 0.2,
+      "sd": 0,
+      "ci95": [
+       0.2,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     }
+    },
+    "S": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.18,
+      "median": 0.2,
+      "sd": 0.0632,
+      "ci95": [
+       0.14,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.85,
+      "median": 1,
+      "sd": 0.3375,
+      "ci95": [
+       0.65,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.8631,
+      "median": 1,
+      "sd": 0.3247,
+      "ci95": [
+       0.6524,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.85,
+      "median": 1,
+      "sd": 0.3375,
+      "ci95": [
+       0.6,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "H": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.2,
+      "median": 0.2,
+      "sd": 0.0943,
+      "ci95": [
+       0.14,
+       0.26
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.75,
+      "median": 1,
+      "sd": 0.3536,
+      "ci95": [
+       0.55,
+       0.95
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.695,
+      "median": 1,
+      "sd": 0.4113,
+      "ci95": [
+       0.44,
+       0.925
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.6311,
+      "median": 0.622,
+      "sd": 0.3175,
+      "ci95": [
+       0.4354,
+       0.8107
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.695,
+      "median": 1,
+      "sd": 0.4113,
+      "ci95": [
+       0.445,
+       0.925
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.75,
+      "median": 1,
+      "sd": 0.3536,
+      "ci95": [
+       0.55,
+       0.95
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "M": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0.3,
+      "sd": 0.1054,
+      "ci95": [
+       0.24,
+       0.36
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.75,
+      "median": 0.75,
+      "sd": 0.2635,
+      "ci95": [
+       0.6,
+       0.9
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.5,
+      "median": 0.5,
+      "sd": 0.527,
+      "ci95": [
+       0.2,
+       0.8
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.925,
+      "median": 1,
+      "sd": 0.2372,
+      "ci95": [
+       0.775,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.7636,
+      "median": 0.7664,
+      "sd": 0.2556,
+      "ci95": [
+       0.6127,
+       0.9066
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.9083,
+      "median": 1,
+      "sd": 0.2372,
+      "ci95": [
+       0.7583,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.75,
+      "median": 0.75,
+      "sd": 0.2635,
+      "ci95": [
+       0.6,
+       0.9
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "G": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.2,
+      "median": 0.2,
+      "sd": 0.2309,
+      "ci95": [
+       0.08,
+       0.34
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.31,
+      "median": 0.375,
+      "sd": 0.2933,
+      "ci95": [
+       0.135,
+       0.485
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.3492,
+      "median": 0.2667,
+      "sd": 0.3648,
+      "ci95": [
+       0.1533,
+       0.5825
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.2488,
+      "median": 0.2162,
+      "sd": 0.2814,
+      "ci95": [
+       0.0934,
+       0.4245
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.2872,
+      "median": 0.2667,
+      "sd": 0.3246,
+      "ci95": [
+       0.1067,
+       0.4939
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.31,
+      "median": 0.375,
+      "sd": 0.2933,
+      "ci95": [
+       0.15,
+       0.485
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     }
+    }
+   }
+  },
+  "SH_HYBRID": {
+   "overall": {
+    "precisionAtK": {
+     "n": 50,
+     "mean": 0.148,
+     "median": 0.2,
+     "sd": 0.1446,
+     "ci95": [
+      0.112,
+      0.188
+     ]
+    },
+    "recallAtK": {
+     "n": 50,
+     "mean": 0.492,
+     "median": 0.5,
+     "sd": 0.4462,
+     "ci95": [
+      0.37,
+      0.614
+     ]
+    },
+    "hitAtK": {
+     "n": 50,
+     "mean": 0.6,
+     "median": 1,
+     "sd": 0.4949,
+     "ci95": [
+      0.46,
+      0.74
+     ]
+    },
+    "completeAtK": {
+     "n": 50,
+     "mean": 0.38,
+     "median": 0,
+     "sd": 0.4903,
+     "ci95": [
+      0.26,
+      0.52
+     ]
+    },
+    "mrr": {
+     "n": 50,
+     "mean": 0.4998,
+     "median": 0.3333,
+     "sd": 0.4477,
+     "ci95": [
+      0.3777,
+      0.6218
+     ]
+    },
+    "ndcgAtK": {
+     "n": 50,
+     "mean": 0.4349,
+     "median": 0.4307,
+     "sd": 0.4076,
+     "ci95": [
+      0.3245,
+      0.5468
+     ]
+    },
+    "contextPrecision": {
+     "n": 50,
+     "mean": 0.4658,
+     "median": 0.3333,
+     "sd": 0.4481,
+     "ci95": [
+      0.3434,
+      0.5907
+     ]
+    },
+    "contextRecall": {
+     "n": 50,
+     "mean": 0.492,
+     "median": 0.5,
+     "sd": 0.4462,
+     "ci95": [
+      0.37,
+      0.612
+     ]
+    },
+    "answerContainment": {
+     "n": 50,
+     "mean": 0.78,
+     "median": 1,
+     "sd": 0.4185,
+     "ci95": [
+      0.66,
+      0.88
+     ]
+    }
+   },
+   "byType": {
+    "F": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0.2,
+      "sd": 0.0843,
+      "ci95": [
+       0.1,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    },
+    "S": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.12,
+      "median": 0.2,
+      "sd": 0.1033,
+      "ci95": [
+       0.06,
+       0.18
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.4211,
+      "median": 0.25,
+      "sd": 0.4248,
+      "ci95": [
+       0.1811,
+       0.675
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.4492,
+      "median": 0.4307,
+      "sd": 0.4411,
+      "ci95": [
+       0.1923,
+       0.7062
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0.25,
+      "sd": 0.4441,
+      "ci95": [
+       0.15,
+       0.675
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.7,
+      "median": 1,
+      "sd": 0.483,
+      "ci95": [
+       0.4,
+       1
+      ]
+     }
+    },
+    "H": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.1,
+      "median": 0,
+      "sd": 0.1414,
+      "ci95": [
+       0.02,
+       0.18
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.4216,
+      "ci95": [
+       0.1,
+       0.55
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0,
+      "sd": 0.5164,
+      "ci95": [
+       0.1,
+       0.7
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.2,
+      "median": 0,
+      "sd": 0.4216,
+      "ci95": [
+       0,
+       0.5
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.235,
+      "median": 0.1333,
+      "sd": 0.3178,
+      "ci95": [
+       0.07,
+       0.445
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.1958,
+      "median": 0,
+      "sd": 0.2581,
+      "ci95": [
+       0.0431,
+       0.353
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.2083,
+      "median": 0,
+      "sd": 0.3316,
+      "ci95": [
+       0.05,
+       0.4167
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.4216,
+      "ci95": [
+       0.05,
+       0.55
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.7,
+      "median": 1,
+      "sd": 0.483,
+      "ci95": [
+       0.4,
+       1
+      ]
+     }
+    },
+    "M": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.26,
+      "median": 0.2,
+      "sd": 0.0966,
+      "ci95": [
+       0.2,
+       0.32
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.65,
+      "median": 0.5,
+      "sd": 0.2415,
+      "ci95": [
+       0.5,
+       0.8
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.483,
+      "ci95": [
+       0,
+       0.6
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8033,
+      "median": 1,
+      "sd": 0.3245,
+      "ci95": [
+       0.5933,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.61,
+      "median": 0.6131,
+      "sd": 0.2122,
+      "ci95": [
+       0.4777,
+       0.7315
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.77,
+      "median": 0.9167,
+      "sd": 0.3017,
+      "ci95": [
+       0.5783,
+       0.9333
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.65,
+      "median": 0.5,
+      "sd": 0.2415,
+      "ci95": [
+       0.5,
+       0.8
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    },
+    "G": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.1,
+      "median": 0,
+      "sd": 0.216,
+      "ci95": [
+       0,
+       0.24
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.11,
+      "median": 0,
+      "sd": 0.2331,
+      "ci95": [
+       0,
+       0.27
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.2,
+      "median": 0,
+      "sd": 0.4216,
+      "ci95": [
+       0,
+       0.5
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.2397,
+      "median": 0.0556,
+      "sd": 0.4053,
+      "ci95": [
+       0.0286,
+       0.5143
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.1196,
+      "median": 0,
+      "sd": 0.2536,
+      "ci95": [
+       0,
+       0.2934
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.1506,
+      "median": 0,
+      "sd": 0.3184,
+      "ci95": [
+       0,
+       0.3711
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.11,
+      "median": 0,
+      "sd": 0.2331,
+      "ci95": [
+       0,
+       0.27
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    }
+   }
+  },
+  "SH_DEPLOYED": {
+   "overall": {
+    "precisionAtK": {
+     "n": 50,
+     "mean": 0.116,
+     "median": 0.2,
+     "sd": 0.1218,
+     "ci95": [
+      0.084,
+      0.148
+     ]
+    },
+    "recallAtK": {
+     "n": 50,
+     "mean": 0.419,
+     "median": 0.225,
+     "sd": 0.4534,
+     "ci95": [
+      0.296,
+      0.543
+     ]
+    },
+    "hitAtK": {
+     "n": 50,
+     "mean": 0.52,
+     "median": 1,
+     "sd": 0.5047,
+     "ci95": [
+      0.38,
+      0.66
+     ]
+    },
+    "completeAtK": {
+     "n": 50,
+     "mean": 0.34,
+     "median": 0,
+     "sd": 0.4785,
+     "ci95": [
+      0.2,
+      0.48
+     ]
+    },
+    "mrr": {
+     "n": 50,
+     "mean": 0.4327,
+     "median": 0.225,
+     "sd": 0.4668,
+     "ci95": [
+      0.3087,
+      0.5617
+     ]
+    },
+    "ndcgAtK": {
+     "n": 50,
+     "mean": 0.3839,
+     "median": 0.2256,
+     "sd": 0.4219,
+     "ci95": [
+      0.2708,
+      0.5005
+     ]
+    },
+    "contextPrecision": {
+     "n": 50,
+     "mean": 0.424,
+     "median": 0.225,
+     "sd": 0.4604,
+     "ci95": [
+      0.299,
+      0.5533
+     ]
+    },
+    "contextRecall": {
+     "n": 50,
+     "mean": 0.429,
+     "median": 0.375,
+     "sd": 0.4495,
+     "ci95": [
+      0.309,
+      0.554
+     ]
+    },
+    "answerContainment": {
+     "n": 50,
+     "mean": 0.7,
+     "median": 1,
+     "sd": 0.4629,
+     "ci95": [
+      0.58,
+      0.82
+     ]
+    }
+   },
+   "byType": {
+    "F": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0.2,
+      "sd": 0.0843,
+      "ci95": [
+       0.1,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    },
+    "S": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.12,
+      "median": 0.2,
+      "sd": 0.1033,
+      "ci95": [
+       0.06,
+       0.18
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0.25,
+      "sd": 0.4441,
+      "ci95": [
+       0.15,
+       0.675
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.4492,
+      "median": 0.4307,
+      "sd": 0.4411,
+      "ci95": [
+       0.1861,
+       0.7062
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0.25,
+      "sd": 0.4441,
+      "ci95": [
+       0.15,
+       0.675
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     }
+    },
+    "H": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0,
+      "sd": 0.5164,
+      "ci95": [
+       0.1,
+       0.7
+      ]
+     }
+    },
+    "M": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.26,
+      "median": 0.2,
+      "sd": 0.0966,
+      "ci95": [
+       0.2,
+       0.32
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.65,
+      "median": 0.5,
+      "sd": 0.2415,
+      "ci95": [
+       0.5,
+       0.8
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.483,
+      "ci95": [
+       0,
+       0.6
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8033,
+      "median": 1,
+      "sd": 0.3245,
+      "ci95": [
+       0.6067,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.61,
+      "median": 0.6131,
+      "sd": 0.2122,
+      "ci95": [
+       0.4836,
+       0.7315
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.77,
+      "median": 0.9167,
+      "sd": 0.3017,
+      "ci95": [
+       0.5817,
+       0.9333
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.65,
+      "median": 0.5,
+      "sd": 0.2415,
+      "ci95": [
+       0.5,
+       0.8
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    },
+    "G": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.04,
+      "median": 0,
+      "sd": 0.0843,
+      "ci95": [
+       0,
+       0.1
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.045,
+      "median": 0,
+      "sd": 0.0956,
+      "ci95": [
+       0,
+       0.11
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.2,
+      "median": 0,
+      "sd": 0.4216,
+      "ci95": [
+       0,
+       0.5
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0,
+      "median": 0,
+      "sd": 0,
+      "ci95": [
+       0,
+       0
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0,
+      "sd": 0.334,
+      "ci95": [
+       0,
+       0.38
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.0604,
+      "median": 0,
+      "sd": 0.134,
+      "ci95": [
+       0,
+       0.1423
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.15,
+      "median": 0,
+      "sd": 0.3375,
+      "ci95": [
+       0,
+       0.4
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.095,
+      "median": 0,
+      "sd": 0.1707,
+      "ci95": [
+       0,
+       0.2
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    }
+   }
+  },
+  "PROTO_GRAPH": {
+   "overall": {
+    "precisionAtK": {
+     "n": 50,
+     "mean": 0.272,
+     "median": 0.2,
+     "sd": 0.197,
+     "ci95": [
+      0.22,
+      0.328
+     ]
+    },
+    "recallAtK": {
+     "n": 50,
+     "mean": 0.806,
+     "median": 1,
+     "sd": 0.3472,
+     "ci95": [
+      0.708,
+      0.896
+     ]
+    },
+    "hitAtK": {
+     "n": 50,
+     "mean": 0.88,
+     "median": 1,
+     "sd": 0.3283,
+     "ci95": [
+      0.78,
+      0.96
+     ]
+    },
+    "completeAtK": {
+     "n": 50,
+     "mean": 0.72,
+     "median": 1,
+     "sd": 0.4536,
+     "ci95": [
+      0.6,
+      0.84
+     ]
+    },
+    "mrr": {
+     "n": 50,
+     "mean": 0.6849,
+     "median": 1,
+     "sd": 0.3598,
+     "ci95": [
+      0.5854,
+      0.783
+     ]
+    },
+    "ndcgAtK": {
+     "n": 50,
+     "mean": 0.6916,
+     "median": 0.6934,
+     "sd": 0.3297,
+     "ci95": [
+      0.5978,
+      0.7789
+     ]
+    },
+    "contextPrecision": {
+     "n": 50,
+     "mean": 0.6881,
+     "median": 0.7917,
+     "sd": 0.3576,
+     "ci95": [
+      0.5872,
+      0.7838
+     ]
+    },
+    "contextRecall": {
+     "n": 50,
+     "mean": 0.806,
+     "median": 1,
+     "sd": 0.3472,
+     "ci95": [
+      0.706,
+      0.896
+     ]
+    },
+    "answerContainment": {
+     "n": 50,
+     "mean": 0.84,
+     "median": 1,
+     "sd": 0.3703,
+     "ci95": [
+      0.74,
+      0.94
+     ]
+    }
+   },
+   "byType": {
+    "F": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.16,
+      "median": 0.2,
+      "sd": 0.0843,
+      "ci95": [
+       0.1,
+       0.2
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    },
+    "S": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.12,
+      "median": 0.2,
+      "sd": 0.1033,
+      "ci95": [
+       0.06,
+       0.18
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.4211,
+      "median": 0.25,
+      "sd": 0.4248,
+      "ci95": [
+       0.185,
+       0.6722
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.4492,
+      "median": 0.4307,
+      "sd": 0.4411,
+      "ci95": [
+       0.1923,
+       0.7123
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.4,
+      "median": 0.25,
+      "sd": 0.4441,
+      "ci95": [
+       0.15,
+       0.675
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.6,
+      "median": 1,
+      "sd": 0.5164,
+      "ci95": [
+       0.3,
+       0.9
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.7,
+      "median": 1,
+      "sd": 0.483,
+      "ci95": [
+       0.4,
+       1
+      ]
+     }
+    },
+    "H": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0.2,
+      "sd": 0.1944,
+      "ci95": [
+       0.2,
+       0.42
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.5,
+      "median": 0.5,
+      "sd": 0,
+      "ci95": [
+       0.5,
+       0.5
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.6564,
+      "median": 0.6309,
+      "sd": 0.0449,
+      "ci95": [
+       0.6309,
+       0.6828
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.5346,
+      "median": 0.5,
+      "sd": 0.0615,
+      "ci95": [
+       0.5,
+       0.5717
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     }
+    },
+    "M": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.26,
+      "median": 0.2,
+      "sd": 0.0966,
+      "ci95": [
+       0.2,
+       0.32
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.65,
+      "median": 0.5,
+      "sd": 0.2415,
+      "ci95": [
+       0.5,
+       0.8
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.3,
+      "median": 0,
+      "sd": 0.483,
+      "ci95": [
+       0,
+       0.6
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.8033,
+      "median": 1,
+      "sd": 0.3245,
+      "ci95": [
+       0.5933,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.61,
+      "median": 0.6131,
+      "sd": 0.2122,
+      "ci95": [
+       0.4847,
+       0.7311
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.77,
+      "median": 0.9167,
+      "sd": 0.3017,
+      "ci95": [
+       0.5833,
+       0.9333
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.65,
+      "median": 0.5,
+      "sd": 0.2415,
+      "ci95": [
+       0.5,
+       0.8
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.8,
+      "median": 1,
+      "sd": 0.4216,
+      "ci95": [
+       0.5,
+       1
+      ]
+     }
+    },
+    "G": {
+     "precisionAtK": {
+      "n": 10,
+      "mean": 0.52,
+      "median": 0.4,
+      "sd": 0.1932,
+      "ci95": [
+       0.4,
+       0.64
+      ]
+     },
+     "recallAtK": {
+      "n": 10,
+      "mean": 0.98,
+      "median": 1,
+      "sd": 0.0632,
+      "ci95": [
+       0.94,
+       1
+      ]
+     },
+     "hitAtK": {
+      "n": 10,
+      "mean": 1,
+      "median": 1,
+      "sd": 0,
+      "ci95": [
+       1,
+       1
+      ]
+     },
+     "completeAtK": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     },
+     "mrr": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.2108,
+      "ci95": [
+       0.75,
+       1
+      ]
+     },
+     "ndcgAtK": {
+      "n": 10,
+      "mean": 0.9421,
+      "median": 1,
+      "sd": 0.1242,
+      "ci95": [
+       0.8604,
+       1
+      ]
+     },
+     "contextPrecision": {
+      "n": 10,
+      "mean": 0.9358,
+      "median": 1,
+      "sd": 0.1353,
+      "ci95": [
+       0.8396,
+       1
+      ]
+     },
+     "contextRecall": {
+      "n": 10,
+      "mean": 0.98,
+      "median": 1,
+      "sd": 0.0632,
+      "ci95": [
+       0.94,
+       1
+      ]
+     },
+     "answerContainment": {
+      "n": 10,
+      "mean": 0.9,
+      "median": 1,
+      "sd": 0.3162,
+      "ci95": [
+       0.7,
+       1
+      ]
+     }
+    }
+   }
+  }
+ },
+ "unanswerable": {
+  "KEYWORD": {
+   "n": 10,
+   "noResultRate": 0
+  },
+  "BM25": {
+   "n": 10,
+   "noResultRate": 0
+  },
+  "DENSE": {
+   "n": 10,
+   "noResultRate": 0
+  },
+  "SH_HYBRID": {
+   "n": 10,
+   "noResultRate": 0
+  },
+  "SH_DEPLOYED": {
+   "n": 10,
+   "noResultRate": 0
+  },
+  "PROTO_GRAPH": {
+   "n": 10,
+   "noResultRate": 0
+  }
+ },
+ "latencyStats": {
+  "KEYWORD": {
+   "n": 300,
+   "mean": 0.1815,
+   "median": 0.1334,
+   "sd": 0.408,
+   "p95": 0.2786,
+   "min": 0.0593,
+   "max": 6.1464,
+   "ci95Mean": [
+    0.1448,
+    0.2351
+   ]
+  },
+  "BM25": {
+   "n": 300,
+   "mean": 0.1864,
+   "median": 0.1802,
+   "sd": 0.0764,
+   "p95": 0.2833,
+   "min": 0.081,
+   "max": 0.8796,
+   "ci95Mean": [
+    0.1782,
+    0.1957
+   ]
+  },
+  "DENSE": {
+   "n": 300,
+   "mean": 27.2942,
+   "median": 19.0238,
+   "sd": 19.9381,
+   "p95": 60.471,
+   "min": 6.1013,
+   "max": 152.4928,
+   "ci95Mean": [
+    25.0961,
+    29.5146
+   ]
+  },
+  "SH_HYBRID": {
+   "n": 300,
+   "mean": 0.5105,
+   "median": 0.3621,
+   "sd": 0.9772,
+   "p95": 0.812,
+   "min": 0.2349,
+   "max": 11.2177,
+   "ci95Mean": [
+    0.4156,
+    0.6343
+   ]
+  },
+  "SH_DEPLOYED": {
+   "n": 300,
+   "mean": 0.2965,
+   "median": 0.148,
+   "sd": 0.9154,
+   "p95": 0.6567,
+   "min": 0.0889,
+   "max": 15.1806,
+   "ci95Mean": [
+    0.2219,
+    0.4196
+   ]
+  },
+  "PROTO_GRAPH": {
+   "n": 300,
+   "mean": 0.47,
+   "median": 0.4001,
+   "sd": 0.3168,
+   "p95": 0.9422,
+   "min": 0.2592,
+   "max": 4.1629,
+   "ci95Mean": [
+    0.4382,
+    0.5083
+   ]
+  }
+ },
+ "tests": [
+  {
+   "a": "SH_HYBRID",
+   "b": "KEYWORD",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "ndcgAtK",
+   "n": 50,
+   "meanA": 0.4349,
+   "meanB": 0.5497,
+   "absoluteDiff": -0.1147,
+   "relativeImprovementPct": -20.8741,
+   "nonZeroPairs": 20,
+   "pRaw": 0.0098,
+   "pHolm": 0.147,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "KEYWORD",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "recallAtK",
+   "n": 50,
+   "meanA": 0.492,
+   "meanB": 0.601,
+   "absoluteDiff": -0.109,
+   "relativeImprovementPct": -18.1364,
+   "nonZeroPairs": 13,
+   "pRaw": 0.0374,
+   "pHolm": 0.3234,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "KEYWORD",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "mrr",
+   "n": 50,
+   "meanA": 0.4998,
+   "meanB": 0.587,
+   "absoluteDiff": -0.0872,
+   "relativeImprovementPct": -14.8578,
+   "nonZeroPairs": 22,
+   "pRaw": 0.063,
+   "pHolm": 0.3438,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "BM25",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "ndcgAtK",
+   "n": 50,
+   "meanA": 0.4349,
+   "meanB": 0.5388,
+   "absoluteDiff": -0.1038,
+   "relativeImprovementPct": -19.2748,
+   "nonZeroPairs": 24,
+   "pRaw": 0.0226,
+   "pHolm": 0.2938,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "BM25",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "recallAtK",
+   "n": 50,
+   "meanA": 0.492,
+   "meanB": 0.607,
+   "absoluteDiff": -0.115,
+   "relativeImprovementPct": -18.9456,
+   "nonZeroPairs": 16,
+   "pRaw": 0.0573,
+   "pHolm": 0.3438,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "BM25",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "mrr",
+   "n": 50,
+   "meanA": 0.4998,
+   "meanB": 0.5773,
+   "absoluteDiff": -0.0775,
+   "relativeImprovementPct": -13.4204,
+   "nonZeroPairs": 22,
+   "pRaw": 0.0895,
+   "pHolm": 0.358,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "DENSE",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "ndcgAtK",
+   "n": 50,
+   "meanA": 0.4349,
+   "meanB": 0.7013,
+   "absoluteDiff": -0.2664,
+   "relativeImprovementPct": -37.9852,
+   "nonZeroPairs": 29,
+   "pRaw": 0.0001,
+   "pHolm": 0.0027,
+   "significantAt05": true
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "DENSE",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "recallAtK",
+   "n": 50,
+   "meanA": 0.492,
+   "meanB": 0.742,
+   "absoluteDiff": -0.25,
+   "relativeImprovementPct": -33.6927,
+   "nonZeroPairs": 23,
+   "pRaw": 0.0008,
+   "pHolm": 0.0192,
+   "significantAt05": true
+  },
+  {
+   "a": "SH_HYBRID",
+   "b": "DENSE",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "mrr",
+   "n": 50,
+   "meanA": 0.4998,
+   "meanB": 0.7638,
+   "absoluteDiff": -0.264,
+   "relativeImprovementPct": -34.5636,
+   "nonZeroPairs": 25,
+   "pRaw": 0.0001,
+   "pHolm": 0.0027,
+   "significantAt05": true
+  },
+  {
+   "a": "SH_DEPLOYED",
+   "b": "SH_HYBRID",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "ndcgAtK",
+   "n": 50,
+   "meanA": 0.3839,
+   "meanB": 0.4349,
+   "absoluteDiff": -0.051,
+   "relativeImprovementPct": -11.7264,
+   "nonZeroPairs": 6,
+   "pRaw": 0.0305,
+   "pHolm": 0.3234,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_DEPLOYED",
+   "b": "SH_HYBRID",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "recallAtK",
+   "n": 50,
+   "meanA": 0.419,
+   "meanB": 0.492,
+   "absoluteDiff": -0.073,
+   "relativeImprovementPct": -14.8374,
+   "nonZeroPairs": 6,
+   "pRaw": 0.0294,
+   "pHolm": 0.3234,
+   "significantAt05": false
+  },
+  {
+   "a": "SH_DEPLOYED",
+   "b": "SH_HYBRID",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "mrr",
+   "n": 50,
+   "meanA": 0.4327,
+   "meanB": 0.4998,
+   "absoluteDiff": -0.0672,
+   "relativeImprovementPct": -13.4364,
+   "nonZeroPairs": 13,
+   "pRaw": 0.0009,
+   "pHolm": 0.0207,
+   "significantAt05": true
+  },
+  {
+   "a": "DENSE",
+   "b": "BM25",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "ndcgAtK",
+   "n": 50,
+   "meanA": 0.7013,
+   "meanB": 0.5388,
+   "absoluteDiff": 0.1626,
+   "relativeImprovementPct": 30.1708,
+   "nonZeroPairs": 27,
+   "pRaw": 0.0018,
+   "pHolm": 0.036,
+   "significantAt05": true
+  },
+  {
+   "a": "DENSE",
+   "b": "BM25",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "recallAtK",
+   "n": 50,
+   "meanA": 0.742,
+   "meanB": 0.607,
+   "absoluteDiff": 0.135,
+   "relativeImprovementPct": 22.2405,
+   "nonZeroPairs": 17,
+   "pRaw": 0.0316,
+   "pHolm": 0.3234,
+   "significantAt05": false
+  },
+  {
+   "a": "DENSE",
+   "b": "BM25",
+   "subset": "answerable (F,S,H,M,G)",
+   "metric": "mrr",
+   "n": 50,
+   "meanA": 0.7638,
+   "meanB": 0.5773,
+   "absoluteDiff": 0.1865,
+   "relativeImprovementPct": 32.311,
+   "nonZeroPairs": 23,
+   "pRaw": 0.0004,
+   "pHolm": 0.01,
+   "significantAt05": true
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "SH_HYBRID",
+   "subset": "G",
+   "metric": "ndcgAtK",
+   "n": 10,
+   "meanA": 0.9421,
+   "meanB": 0.1196,
+   "absoluteDiff": 0.8225,
+   "relativeImprovementPct": 687.6119,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0014,
+   "pHolm": 0.0308,
+   "significantAt05": true
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "SH_HYBRID",
+   "subset": "G",
+   "metric": "recallAtK",
+   "n": 10,
+   "meanA": 0.98,
+   "meanB": 0.11,
+   "absoluteDiff": 0.87,
+   "relativeImprovementPct": 790.9091,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0019,
+   "pHolm": 0.0361,
+   "significantAt05": true
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "SH_HYBRID",
+   "subset": "G",
+   "metric": "mrr",
+   "n": 10,
+   "meanA": 0.9,
+   "meanB": 0.2397,
+   "absoluteDiff": 0.6603,
+   "relativeImprovementPct": 275.4967,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0237,
+   "pHolm": 0.2938,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "DENSE",
+   "subset": "G",
+   "metric": "ndcgAtK",
+   "n": 10,
+   "meanA": 0.9421,
+   "meanB": 0.2488,
+   "absoluteDiff": 0.6933,
+   "relativeImprovementPct": 278.6699,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0063,
+   "pHolm": 0.1071,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "DENSE",
+   "subset": "G",
+   "metric": "recallAtK",
+   "n": 10,
+   "meanA": 0.98,
+   "meanB": 0.31,
+   "absoluteDiff": 0.67,
+   "relativeImprovementPct": 216.129,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0017,
+   "pHolm": 0.0357,
+   "significantAt05": true
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "DENSE",
+   "subset": "G",
+   "metric": "mrr",
+   "n": 10,
+   "meanA": 0.9,
+   "meanB": 0.3492,
+   "absoluteDiff": 0.5508,
+   "relativeImprovementPct": 157.7566,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0204,
+   "pHolm": 0.2856,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "SH_HYBRID",
+   "subset": "H",
+   "metric": "ndcgAtK",
+   "n": 10,
+   "meanA": 0.6564,
+   "meanB": 0.1958,
+   "absoluteDiff": 0.4606,
+   "relativeImprovementPct": 235.1966,
+   "nonZeroPairs": 10,
+   "pRaw": 0.0029,
+   "pHolm": 0.0522,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "SH_HYBRID",
+   "subset": "H",
+   "metric": "recallAtK",
+   "n": 10,
+   "meanA": 1,
+   "meanB": 0.3,
+   "absoluteDiff": 0.7,
+   "relativeImprovementPct": 233.3333,
+   "nonZeroPairs": 8,
+   "pRaw": 0.0075,
+   "pHolm": 0.12,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "SH_HYBRID",
+   "subset": "H",
+   "metric": "mrr",
+   "n": 10,
+   "meanA": 0.5,
+   "meanB": 0.235,
+   "absoluteDiff": 0.265,
+   "relativeImprovementPct": 112.766,
+   "nonZeroPairs": 9,
+   "pRaw": 0.0468,
+   "pHolm": 0.3276,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "DENSE",
+   "subset": "H",
+   "metric": "ndcgAtK",
+   "n": 10,
+   "meanA": 0.6564,
+   "meanB": 0.6311,
+   "absoluteDiff": 0.0253,
+   "relativeImprovementPct": 4.0017,
+   "nonZeroPairs": 9,
+   "pRaw": 0.8268,
+   "pHolm": 0.8268,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "DENSE",
+   "subset": "H",
+   "metric": "recallAtK",
+   "n": 10,
+   "meanA": 1,
+   "meanB": 0.75,
+   "absoluteDiff": 0.25,
+   "relativeImprovementPct": 33.3333,
+   "nonZeroPairs": 4,
+   "pRaw": 0.1233,
+   "pHolm": 0.3699,
+   "significantAt05": false
+  },
+  {
+   "a": "PROTO_GRAPH",
+   "b": "DENSE",
+   "subset": "H",
+   "metric": "mrr",
+   "n": 10,
+   "meanA": 0.5,
+   "meanB": 0.695,
+   "absoluteDiff": -0.195,
+   "relativeImprovementPct": -28.0576,
+   "nonZeroPairs": 9,
+   "pRaw": 0.2091,
+   "pHolm": 0.4182,
+   "significantAt05": false
+  }
+ ],
+ "latencyComparisons": {
+  "formula": "reduction % = (baseline − system) / baseline × 100 on mean latency; improvement % = (system − baseline) / baseline × 100 on a quality metric",
+  "SH_HYBRID_vs_DENSE_meanLatencyReductionPct": 98.1296,
+  "BM25_vs_DENSE_meanLatencyReductionPct": 99.3171
+ }
+}

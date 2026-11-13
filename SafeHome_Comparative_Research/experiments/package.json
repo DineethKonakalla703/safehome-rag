@@ -1,0 +1,9 @@
+{
+  "name": "safehome-comparative-experiments",
+  "private": true,
+  "type": "module",
+  "description": "Retrieval benchmark harness. Not part of the SafeHome application.",
+  "dependencies": {
+    "@huggingface/transformers": "^3.7.6"
+  }
+}

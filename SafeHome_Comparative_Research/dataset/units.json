@@ -1,0 +1,1136 @@
+[
+  {
+    "unitId": "KDOC001",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Electrical Safety SOP",
+    "text": "Keep people away from water near electrical equipment. Do not touch switches or exposed wiring. Isolate the electricity supply only if a trained person can do so safely. Escalate immediately to an authorized electrician and contact emergency services when fire or electrocution risk is present."
+  },
+  {
+    "unitId": "KDOC002",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Plumbing Leakage Handling Guide",
+    "text": "Identify the leak location, isolate the nearest water valve when safe, protect electrical equipment, record affected units, and assign a plumber. Shared leaks across several apartments should be treated as a possible block incident."
+  },
+  {
+    "unitId": "KDOC003",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Lift Emergency Procedure",
+    "text": "When a person is trapped, contact lift emergency support and security, maintain communication, and never force lift doors. Restrict use until an authorized lift technician confirms safety."
+  },
+  {
+    "unitId": "KDOC004",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Visitor and Security Rules",
+    "text": "Visitors require a resident-linked request and security approval. Security must verify identity, record entry status, and record exit. Access is limited to the authorized block and purpose."
+  },
+  {
+    "unitId": "KDOC005",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Resident Community Guidelines & Noise Policy",
+    "text": "Quiet hours are strictly observed between 10:00 PM and 6:00 AM. Household waste must be segregated into dry and wet bins and placed in floor chutes before 9:00 AM. Pets must be leashed in all common areas, elevators, and corridors. Balcony plants must be secured against falling hazards."
+  },
+  {
+    "unitId": "KDOC006",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Amenity Booking & Clubhouse Rules",
+    "text": "Residents can book the community hall, badminton court, and party terrace up to 30 days in advance via the resident portal. Clubhouse facilities are open daily from 6:00 AM to 10:00 PM. A sanitization deposit applies to party hall bookings, refundable upon inspection. Cancellations 24 hours prior receive full refund."
+  },
+  {
+    "unitId": "KDOC007",
+    "kind": "document",
+    "origin": "seeded",
+    "title": "Maintenance Billing & Payment FAQ",
+    "text": "Monthly society maintenance bills are generated on the 1st of every month and are due by the 10th. Payments can be completed online via UPI, net banking, or cards through the SafeHome billing portal. Late fee of ₹50 per week applies for payments past the 20th. Specific repair charges are billed separately upon work order sign-off."
+  },
+  {
+    "unitId": "KDOC101",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Split Air Conditioner Servicing Standard",
+    "text": "Split air conditioners in apartments are serviced every 90 days during summer and every 180 days in winter. A standard service includes washing the indoor filter mesh, cleaning the evaporator coil with a foaming cleaner, flushing the condensate drain line, and checking the outdoor condenser fins for bent or blocked sections. The technician records the supply-air temperature after 15 minutes of operation; a reading above 16 degrees Celsius in cooling mode at 24 degrees setpoint indicates low refrigerant or a weak compressor. Refrigerant top-up (R32 or R410A) may only be done by a certified HVAC technician after a leak test with nitrogen pressure or an electronic detector. Topping up without fixing the leak is not permitted."
+  },
+  {
+    "unitId": "KDOC102",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Troubleshooting Warm Air from AC Units",
+    "text": "If an air conditioner runs but the room stays warm, first confirm the remote is in Cool mode and not Fan or Dry. Check that the indoor filter is not choked with dust, because a clogged filter is the most common cause of poor cooling in this society. Look at the outdoor unit: if its fan is not spinning or the unit is in direct afternoon sun without shade, report it. Ice formation on the copper pipes points to low gas or restricted airflow. Residents should switch the unit off if ice is seen and raise an HVAC request; do not pour water on the outdoor unit."
+  },
+  {
+    "unitId": "KDOC103",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Electric Water Heater (Geyser) Safety",
+    "text": "Storage water heaters must have a working pressure relief valve and a thermostat cut-off. If the geyser makes a hissing or banging noise, or water from the hot tap is steaming, switch it off at the wall switch and the MCB and raise an urgent request. Never block the relief valve outlet. A tripping RCCB when the geyser is switched on usually means a failed heating element leaking current to the tank; the unit must stay off until an electrician tests insulation resistance. Element replacement is a 45-minute job; tank corrosion requires full replacement."
+  },
+  {
+    "unitId": "KDOC104",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Washing Machine and Dishwasher Water Issues",
+    "text": "Water pooling under a washing machine is usually caused by a loose inlet hose, a cracked drain hose, or a blocked floor trap. Turn off the angle valve behind the machine before inspecting. Front-load machines that stop mid-cycle with water inside typically have a choked drain pump filter, which residents may clean using the access flap at the bottom front. Dishwashers that leave dirty water should have the bottom filter and spray arms cleaned. The society maintenance team services only the plumbing connections; internal appliance repairs are handled by the brand service centre at the resident cost."
+  },
+  {
+    "unitId": "KDOC105",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Refrigerator Not Cooling Checklist",
+    "text": "Before raising a request for a refrigerator that is not cooling, check that the plug is fully seated, the voltage stabiliser display is on, and the door gasket seals evenly. Frost build-up on the back panel of a frost-free fridge indicates a defrost heater or sensor failure. A clicking sound every few minutes with no cooling usually means the compressor relay is failing. Refrigerator repairs are not covered by society maintenance; the facility desk can share a list of empanelled appliance vendors."
+  },
+  {
+    "unitId": "KDOC106",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Drain Blockage and Sewer Backflow Procedure",
+    "text": "Slow drains in bathrooms are cleared with a plunger or a flexible drain snake; chemical drain cleaners are not allowed because they damage PVC stack joints. If several apartments in the same vertical line report gurgling or backflow at the same time, the shared soil stack is blocked and the facility manager must treat it as a block-level incident. The plumbing contractor then rods the stack from the ground-floor inspection chamber. Residents in the affected stack should avoid using washing machines until clearance is confirmed."
+  },
+  {
+    "unitId": "KDOC107",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Wall Seepage and Dampness Diagnosis",
+    "text": "Damp patches, peeling paint, or white salt deposits on a wall are signs of seepage. Seepage on a ceiling usually comes from the bathroom or balcony of the apartment directly above, so the apartment above must be inspected first. Seepage on an external wall that worsens during rain points to cracks in exterior plaster or failed window sealant. The technician uses a moisture meter and photographs the patch; ponding tests on the floor above confirm a failed waterproofing membrane. Repairs above the ceiling require consent from the upstairs resident."
+  },
+  {
+    "unitId": "KDOC108",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Terrace and Overhead Tank Waterproofing",
+    "text": "Terrace waterproofing is inspected every year before the monsoon in May. Top-floor apartments are most exposed to roof leaks. Overhead water tanks are cleaned every six months; the cleaning schedule is announced 48 hours in advance because water supply is cut for four hours. Any crack in the terrace membrane must be sealed with polyurethane coating, and terrace drains must be kept free of leaves to prevent ponding."
+  },
+  {
+    "unitId": "KDOC109",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "MCB Tripping and Power Failure in an Apartment",
+    "text": "If power goes off in only one apartment, check the apartment distribution board. A tripped MCB that trips again immediately after reset indicates a short circuit on that circuit; leave it off and report it. If the RCCB trips, unplug all appliances, reset, and plug them back one by one to find the faulty appliance. If the whole floor is dark, the problem is at the floor meter room and must be handled by the society electrician. Residents must never replace fuses with copper wire or bypass an RCCB."
+  },
+  {
+    "unitId": "KDOC110",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Earthing and Shock Complaints",
+    "text": "A mild shock from a metal tap, washing machine body, or geyser indicates an earthing fault or current leakage. The affected appliance must be switched off immediately and not touched with wet hands. The electrician measures earth resistance at the apartment earth pit connection; values above 5 ohms require earth pit recharging. Shock complaints are always classified as high severity with a four-hour response target."
+  },
+  {
+    "unitId": "KDOC111",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Piped Gas Leak Emergency",
+    "text": "If a smell of gas is noticed, do not operate any electrical switch, do not light a flame, and do not use a mobile phone inside the apartment. Open windows, close the gas meter valve outside the kitchen, leave the apartment, and call the city gas distributor emergency line and security. Only the gas distributor may reopen the supply after a pressure test. The society maintenance team must not attempt gas pipeline repairs."
+  },
+  {
+    "unitId": "KDOC112",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Diesel Generator Backup Operation",
+    "text": "The diesel generator provides backup for lifts, common lighting, water pumps, and a limited 1 kW load per apartment. It starts automatically within 30 seconds of a grid failure. The facility manager logs fuel level daily and the generator is run on load for 15 minutes every Monday. Annual load bank testing and a pollution-control check are mandatory under the AMC."
+  },
+  {
+    "unitId": "KDOC113",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Fire Alarm and Sprinkler Testing",
+    "text": "Smoke detectors and manual call points are tested every quarter by the fire safety vendor, one floor at a time, with an announcement to residents. Sprinkler heads must not be painted or covered. If a fire alarm sounds, residents should use staircases and never lifts, and gather at the assembly point near the main gate. False alarms caused by cooking smoke should still be reported so the detector can be inspected."
+  },
+  {
+    "unitId": "KDOC114",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Pest Control Schedule",
+    "text": "General pest control for common areas is done on the first Saturday of every month. Apartment-level cockroach gel treatment is available on request and is billed per apartment. Termite treatment is done for wooden doors and wardrobes when tunnels or powdery residue are noticed; the treatment requires the apartment to be vacated for six hours."
+  },
+  {
+    "unitId": "KDOC115",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Recurring Issue Escalation Policy",
+    "text": "An issue is classed as recurring when the same category of fault is reported for the same apartment three or more times within 90 days, or when the same asset fails twice within 30 days of a repair. Recurring issues are escalated to the facility manager, who must review the previous repair notes, assign a senior technician instead of the original one, and consider root-cause work such as pipe replacement rather than another patch repair. The resident is informed of the escalation."
+  },
+  {
+    "unitId": "KDOC116",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Technician Assignment and SLA Policy",
+    "text": "Requests are assigned to a technician whose skill matches the category and who covers the block. Critical requests such as electrical shock, gas smell, lift entrapment, or active flooding have a one-hour response target. High severity requests have four hours, medium requests one working day, and low requests three working days. If the assigned technician is unavailable, the facility manager reassigns within 30 minutes. Technicians must close a ticket with resolution notes and photos."
+  },
+  {
+    "unitId": "KDOC117",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Lift Annual Maintenance Contract",
+    "text": "Each block has two passenger lifts covered by a comprehensive annual maintenance contract with monthly preventive visits. The lift vendor must respond to entrapment calls within 30 minutes. Lift ropes are inspected every quarter and the statutory lift licence is renewed annually after inspection by the electrical inspectorate."
+  },
+  {
+    "unitId": "KDOC118",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "RO Water Purifier and Water Quality",
+    "text": "Drinking water in the society comes from municipal supply and borewell water treated at the central water treatment plant. Apartment RO purifiers need filter replacement every six months and membrane replacement every two years. If tap water turns yellow or smells, residents should stop drinking it and report it; the facility manager checks the treatment plant and overhead tank chlorination."
+  },
+  {
+    "unitId": "KDOC119",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Door, Window and Carpentry Repairs",
+    "text": "Main doors that do not close properly usually need hinge screw tightening or door-closer adjustment. Sliding balcony doors that are hard to move need track cleaning and roller replacement. Carpentry repairs inside apartments are chargeable, while repairs to common-area doors and fire doors are covered by the society."
+  },
+  {
+    "unitId": "KDOC120",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Preventive Maintenance Calendar",
+    "text": "The preventive maintenance calendar covers water pump servicing every month, overhead tank cleaning every six months, DG servicing every 250 running hours, fire system testing every quarter, terrace waterproofing inspection every May, and AC servicing for common areas every 90 days. Overdue items are flagged on the facility dashboard."
+  },
+  {
+    "unitId": "KDOC121",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Water Pump and Low Pressure Complaints",
+    "text": "Low water pressure on upper floors usually indicates a pressure pump fault or a partially closed riser valve. If only one apartment has low pressure, the inlet filter or the apartment isolation valve is checked. Water pumps are serviced monthly; a pump making grinding noise must be stopped and the standby pump started."
+  },
+  {
+    "unitId": "KDOC122",
+    "kind": "document",
+    "origin": "synthetic",
+    "title": "Moving Heavy Furniture and Service Lift Use",
+    "text": "Heavy furniture and appliances must be moved using the service lift with protective padding, only between 9:00 AM and 6:00 PM. A refundable damage deposit is collected for move-in and move-out. Any damage to lift panels or corridor walls is deducted from the deposit after inspection."
+  },
+  {
+    "unitId": "TKH001",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH001",
+    "text": "Ticket TKH001 for apartment A-303 (Block A, floor 3). Category: Appliances. Reported on 2026-01-09: Kitchen exhaust fan stopped working. Resolved on 2026-01-10 by technician Kavitha Reddy (TEC07): Replaced the exhaust fan capacitor."
+  },
+  {
+    "unitId": "TKH002",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH002",
+    "text": "Ticket TKH002 for apartment B-403 (Block B, floor 4). Category: HVAC. Reported on 2026-01-15: Bedroom air conditioner blowing warm air. Resolved on 2026-01-18 by technician Priya Nair (TEC04): Cleaned choked filters and recharged refrigerant after leak repair."
+  },
+  {
+    "unitId": "TKH003",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH003",
+    "text": "Ticket TKH003 for apartment C-302 (Block C, floor 3). Category: Appliances. Reported on 2026-01-21: Geyser making a banging noise. Resolved on 2026-01-22 by technician Kavitha Reddy (TEC07): Descaled the tank and replaced the thermostat."
+  },
+  {
+    "unitId": "TKH004",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH004",
+    "text": "Ticket TKH004 for apartment A-101 (Block A, floor 1). Category: Plumbing. Reported on 2026-01-21: Bathroom floor trap blocked with bad smell. Resolved on 2026-01-24 by technician Ramesh Kumar (TEC01): Rodded the floor trap and fitted an anti-odour cap."
+  },
+  {
+    "unitId": "TKH005",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH005",
+    "text": "Ticket TKH005 for apartment C-203 (Block C, floor 2). Category: Water Leakage. Reported on 2026-01-24: Damp patch spreading on the bedroom ceiling. Resolved on 2026-01-25 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH006",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH006",
+    "text": "Ticket TKH006 for apartment A-303 (Block A, floor 3). Category: Water Leakage. Reported on 2026-02-06: Damp patch spreading on the bedroom ceiling. Resolved on 2026-02-09 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH007",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH007",
+    "text": "Ticket TKH007 for apartment A-203 (Block A, floor 2). Category: Plumbing. Reported on 2026-02-10: Kitchen sink draining very slowly. Resolved on 2026-02-12 by technician Ramesh Kumar (TEC01): Cleared grease from the sink trap and flushed the line."
+  },
+  {
+    "unitId": "TKH008",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH008",
+    "text": "Ticket TKH008 for apartment C-501 (Block C, floor 5). Category: HVAC. Reported on 2026-02-11: Bedroom air conditioner blowing warm air. Resolved on 2026-02-12 by technician Priya Nair (TEC04): Cleaned choked filters and recharged refrigerant after leak repair."
+  },
+  {
+    "unitId": "TKH009",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH009",
+    "text": "Ticket TKH009 for apartment C-303 (Block C, floor 3). Category: HVAC. Reported on 2026-02-13: AC does not switch on with the remote. Resolved on 2026-02-14 by technician Priya Nair (TEC04): Replaced the indoor unit receiver board."
+  },
+  {
+    "unitId": "TKH010",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH010",
+    "text": "Ticket TKH010 for apartment B-501 (Block B, floor 5). Category: Electrical. Reported on 2026-02-15: Half the lights in the flat stopped working. Resolved on 2026-02-17 by technician Suresh Rao (TEC02): Reset and replaced a faulty MCB in the distribution board."
+  },
+  {
+    "unitId": "TKH011",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH011",
+    "text": "Ticket TKH011 for apartment C-102 (Block C, floor 1). Category: Appliances. Reported on 2026-02-28: Geyser making a banging noise. Resolved on 2026-03-02 by technician Kavitha Reddy (TEC07): Descaled the tank and replaced the thermostat."
+  },
+  {
+    "unitId": "TKH012",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH012",
+    "text": "Ticket TKH012 for apartment B-201 (Block B, floor 2). Category: Electrical. Reported on 2026-03-02: Mild shock felt from the geyser body. Resolved on 2026-03-03 by technician Suresh Rao (TEC02): Repaired the earthing connection and tested earth resistance."
+  },
+  {
+    "unitId": "TKH013",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH013",
+    "text": "Ticket TKH013 for apartment A-503 (Block A, floor 5). Category: Plumbing. Reported on 2026-03-04: Toilet flush tank keeps running after use. Resolved on 2026-03-06 by technician Ramesh Kumar (TEC01): Replaced the flush valve seal."
+  },
+  {
+    "unitId": "TKH014",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH014",
+    "text": "Ticket TKH014 for apartment A-203 (Block A, floor 2). Category: Plumbing. Reported on 2026-03-14: Pipe under the wash basin leaking onto the floor. Resolved on 2026-03-16 by technician Ramesh Kumar (TEC01): Replaced a cracked PVC coupling."
+  },
+  {
+    "unitId": "TKH015",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH015",
+    "text": "Ticket TKH015 for apartment A-103 (Block A, floor 1). Category: Water Leakage. Reported on 2026-03-22: Damp patch spreading on the bedroom ceiling. Resolved on 2026-03-23 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH016",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH016",
+    "text": "Ticket TKH016 for apartment A-201 (Block A, floor 2). Category: Appliances. Reported on 2026-03-25: Washing machine inlet hose leaking. Resolved on 2026-03-28 by technician Kavitha Reddy (TEC07): Replaced the inlet hose and washer."
+  },
+  {
+    "unitId": "TKH017",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH017",
+    "text": "Ticket TKH017 for apartment C-303 (Block C, floor 3). Category: Appliances. Reported on 2026-03-28: Geyser making a banging noise. Resolved on 2026-03-31 by technician Kavitha Reddy (TEC07): Descaled the tank and replaced the thermostat."
+  },
+  {
+    "unitId": "TKH018",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH018",
+    "text": "Ticket TKH018 for apartment B-302 (Block B, floor 3). Category: Electrical. Reported on 2026-03-29: Living room fan regulator not working. Resolved on 2026-03-30 by technician Suresh Rao (TEC02): Replaced the fan regulator."
+  },
+  {
+    "unitId": "TKH019",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH019",
+    "text": "Ticket TKH019 for apartment B-403 (Block B, floor 4). Category: Electrical. Reported on 2026-03-30: Mild shock felt from the geyser body. Resolved on 2026-04-01 by technician Suresh Rao (TEC02): Repaired the earthing connection and tested earth resistance."
+  },
+  {
+    "unitId": "TKH020",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH020",
+    "text": "Ticket TKH020 for apartment A-402 (Block A, floor 4). Category: Electrical. Reported on 2026-04-05: Mild shock felt from the geyser body. Resolved on 2026-04-06 by technician Suresh Rao (TEC02): Repaired the earthing connection and tested earth resistance."
+  },
+  {
+    "unitId": "TKH021",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH021",
+    "text": "Ticket TKH021 for apartment A-203 (Block A, floor 2). Category: Plumbing. Reported on 2026-04-06: Pipe under the wash basin leaking onto the floor. Resolved on 2026-04-09 by technician Ramesh Kumar (TEC01): Replaced a cracked PVC coupling."
+  },
+  {
+    "unitId": "TKH022",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH022",
+    "text": "Ticket TKH022 for apartment C-302 (Block C, floor 3). Category: HVAC. Reported on 2026-04-06: Bedroom air conditioner blowing warm air. Resolved on 2026-04-08 by technician Priya Nair (TEC04): Cleaned choked filters and recharged refrigerant after leak repair."
+  },
+  {
+    "unitId": "TKH023",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH023",
+    "text": "Ticket TKH023 for apartment C-303 (Block C, floor 3). Category: HVAC. Reported on 2026-04-06: Bedroom air conditioner blowing warm air. Resolved on 2026-04-09 by technician Priya Nair (TEC04): Cleaned choked filters and recharged refrigerant after leak repair."
+  },
+  {
+    "unitId": "TKH024",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH024",
+    "text": "Ticket TKH024 for apartment A-403 (Block A, floor 4). Category: Electrical. Reported on 2026-04-07: Living room fan regulator not working. Resolved on 2026-04-10 by technician Suresh Rao (TEC02): Replaced the fan regulator."
+  },
+  {
+    "unitId": "TKH025",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH025",
+    "text": "Ticket TKH025 for apartment A-401 (Block A, floor 4). Category: Water Leakage. Reported on 2026-04-08: Damp patch spreading on the bedroom ceiling. Resolved on 2026-04-11 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH026",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH026",
+    "text": "Ticket TKH026 for apartment C-102 (Block C, floor 1). Category: Electrical. Reported on 2026-04-11: Living room fan regulator not working. Resolved on 2026-04-12 by technician Anil Verma (TEC06): Replaced the fan regulator."
+  },
+  {
+    "unitId": "TKH027",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH027",
+    "text": "Ticket TKH027 for apartment B-201 (Block B, floor 2). Category: Appliances. Reported on 2026-04-11: Washing machine inlet hose leaking. Resolved on 2026-04-14 by technician Kavitha Reddy (TEC07): Replaced the inlet hose and washer."
+  },
+  {
+    "unitId": "TKH028",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH028",
+    "text": "Ticket TKH028 for apartment C-502 (Block C, floor 5). Category: Plumbing. Reported on 2026-04-12: Bathroom tap dripping even when fully closed. Resolved on 2026-04-13 by technician Imran Shaikh (TEC03): Replaced the tap cartridge."
+  },
+  {
+    "unitId": "TKH029",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH029",
+    "text": "Ticket TKH029 for apartment B-203 (Block B, floor 2). Category: Carpentry. Reported on 2026-04-15: Main door does not close properly. Resolved on 2026-04-18 by technician Joseph Fernandes (TEC05): Adjusted the door closer and tightened hinges."
+  },
+  {
+    "unitId": "TKH030",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH030",
+    "text": "Ticket TKH030 for apartment B-103 (Block B, floor 1). Category: Plumbing. Reported on 2026-04-21: Bathroom floor trap blocked with bad smell. Resolved on 2026-04-22 by technician Ramesh Kumar (TEC01): Rodded the floor trap and fitted an anti-odour cap."
+  },
+  {
+    "unitId": "TKH031",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH031",
+    "text": "Ticket TKH031 for apartment A-203 (Block A, floor 2). Category: Plumbing. Reported on 2026-04-29: Bathroom floor trap blocked with bad smell. Resolved on 2026-05-02 by technician Imran Shaikh (TEC03): Rodded the floor trap and fitted an anti-odour cap."
+  },
+  {
+    "unitId": "TKH032",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH032",
+    "text": "Ticket TKH032 for apartment A-303 (Block A, floor 3). Category: Water Leakage. Reported on 2026-04-29: Seepage on the external wall during rain. Resolved on 2026-05-01 by technician Mohan Das (TEC08): Sealed exterior plaster cracks and window sealant."
+  },
+  {
+    "unitId": "TKH033",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH033",
+    "text": "Ticket TKH033 for apartment A-103 (Block A, floor 1). Category: HVAC. Reported on 2026-05-01: Bedroom air conditioner blowing warm air. Resolved on 2026-05-03 by technician Priya Nair (TEC04): Cleaned choked filters and recharged refrigerant after leak repair."
+  },
+  {
+    "unitId": "TKH034",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH034",
+    "text": "Ticket TKH034 for apartment B-303 (Block B, floor 3). Category: Water Leakage. Reported on 2026-05-11: Bathroom ceiling wet with peeling paint. Resolved on 2026-05-13 by technician Mohan Das (TEC08): Replaced grout and waterproofed the bathroom floor above."
+  },
+  {
+    "unitId": "TKH035",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH035",
+    "text": "Ticket TKH035 for apartment B-303 (Block B, floor 3). Category: Water Leakage. Reported on 2026-05-12: Bathroom ceiling wet with peeling paint. Resolved on 2026-05-13 by technician Mohan Das (TEC08): Replaced grout and waterproofed the bathroom floor above."
+  },
+  {
+    "unitId": "TKH036",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH036",
+    "text": "Ticket TKH036 for apartment A-301 (Block A, floor 3). Category: Plumbing. Reported on 2026-05-13: Bathroom tap dripping even when fully closed. Resolved on 2026-05-15 by technician Ramesh Kumar (TEC01): Replaced the tap cartridge."
+  },
+  {
+    "unitId": "TKH037",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH037",
+    "text": "Ticket TKH037 for apartment B-303 (Block B, floor 3). Category: HVAC. Reported on 2026-05-18: AC outdoor unit making a rattling noise. Resolved on 2026-05-20 by technician Priya Nair (TEC04): Tightened the fan mount and replaced vibration pads."
+  },
+  {
+    "unitId": "TKH038",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH038",
+    "text": "Ticket TKH038 for apartment C-101 (Block C, floor 1). Category: Water Leakage. Reported on 2026-05-22: Damp patch spreading on the bedroom ceiling. Resolved on 2026-05-25 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH039",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH039",
+    "text": "Ticket TKH039 for apartment C-202 (Block C, floor 2). Category: Carpentry. Reported on 2026-05-23: Main door does not close properly. Resolved on 2026-05-26 by technician Joseph Fernandes (TEC05): Adjusted the door closer and tightened hinges."
+  },
+  {
+    "unitId": "TKH040",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH040",
+    "text": "Ticket TKH040 for apartment B-502 (Block B, floor 5). Category: Water Leakage. Reported on 2026-05-26: Damp patch spreading on the bedroom ceiling. Resolved on 2026-05-27 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH041",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH041",
+    "text": "Ticket TKH041 for apartment B-103 (Block B, floor 1). Category: Water Leakage. Reported on 2026-05-28: Damp patch spreading on the bedroom ceiling. Resolved on 2026-05-31 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH042",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH042",
+    "text": "Ticket TKH042 for apartment B-402 (Block B, floor 4). Category: Appliances. Reported on 2026-05-29: Washing machine inlet hose leaking. Resolved on 2026-06-01 by technician Kavitha Reddy (TEC07): Replaced the inlet hose and washer."
+  },
+  {
+    "unitId": "TKH043",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH043",
+    "text": "Ticket TKH043 for apartment C-402 (Block C, floor 4). Category: Plumbing. Reported on 2026-05-31: Bathroom tap dripping even when fully closed. Resolved on 2026-06-01 by technician Imran Shaikh (TEC03): Replaced the tap cartridge."
+  },
+  {
+    "unitId": "TKH044",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH044",
+    "text": "Ticket TKH044 for apartment B-101 (Block B, floor 1). Category: Electrical. Reported on 2026-06-01: Bedroom MCB trips again and again. Resolved on 2026-06-02 by technician Suresh Rao (TEC02): Found damaged insulation on the bedroom circuit and rewired it."
+  },
+  {
+    "unitId": "TKH045",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH045",
+    "text": "Ticket TKH045 for apartment A-403 (Block A, floor 4). Category: Water Leakage. Reported on 2026-06-10: Damp patch spreading on the bedroom ceiling. Resolved on 2026-06-13 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH046",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH046",
+    "text": "Ticket TKH046 for apartment B-101 (Block B, floor 1). Category: HVAC. Reported on 2026-06-13: AC does not switch on with the remote. Resolved on 2026-06-15 by technician Priya Nair (TEC04): Replaced the indoor unit receiver board."
+  },
+  {
+    "unitId": "TKH047",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH047",
+    "text": "Ticket TKH047 for apartment B-401 (Block B, floor 4). Category: Appliances. Reported on 2026-06-13: Kitchen exhaust fan stopped working. Resolved on 2026-06-16 by technician Kavitha Reddy (TEC07): Replaced the exhaust fan capacitor."
+  },
+  {
+    "unitId": "TKH048",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH048",
+    "text": "Ticket TKH048 for apartment B-102 (Block B, floor 1). Category: Electrical. Reported on 2026-06-19: Mild shock felt from the geyser body. Resolved on 2026-06-20 by technician Suresh Rao (TEC02): Repaired the earthing connection and tested earth resistance."
+  },
+  {
+    "unitId": "TKH049",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH049",
+    "text": "Ticket TKH049 for apartment C-402 (Block C, floor 4). Category: Plumbing. Reported on 2026-06-21: Pipe under the wash basin leaking onto the floor. Resolved on 2026-06-23 by technician Imran Shaikh (TEC03): Replaced a cracked PVC coupling."
+  },
+  {
+    "unitId": "TKH050",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH050",
+    "text": "Ticket TKH050 for apartment B-402 (Block B, floor 4). Category: Carpentry. Reported on 2026-06-23: Sliding balcony door is stuck. Resolved on 2026-06-25 by technician Joseph Fernandes (TEC05): Cleaned the track and replaced rollers."
+  },
+  {
+    "unitId": "TKH051",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH051",
+    "text": "Ticket TKH051 for apartment A-102 (Block A, floor 1). Category: Plumbing. Reported on 2026-06-29: Toilet flush tank keeps running after use. Resolved on 2026-06-30 by technician Ramesh Kumar (TEC01): Replaced the flush valve seal."
+  },
+  {
+    "unitId": "TKH052",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH052",
+    "text": "Ticket TKH052 for apartment B-502 (Block B, floor 5). Category: Carpentry. Reported on 2026-06-29: Wardrobe hinge broken. Resolved on 2026-07-01 by technician Joseph Fernandes (TEC05): Replaced two soft-close hinges."
+  },
+  {
+    "unitId": "TKH053",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH053",
+    "text": "Ticket TKH053 for apartment A-101 (Block A, floor 1). Category: HVAC. Reported on 2026-07-03: AC outdoor unit making a rattling noise. Resolved on 2026-07-06 by technician Priya Nair (TEC04): Tightened the fan mount and replaced vibration pads."
+  },
+  {
+    "unitId": "TKH054",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH054",
+    "text": "Ticket TKH054 for apartment C-303 (Block C, floor 3). Category: Water Leakage. Reported on 2026-07-08: Water leaking from the balcony slab into the room below. Resolved on 2026-07-10 by technician Mohan Das (TEC08): Applied a polyurethane membrane to the balcony floor."
+  },
+  {
+    "unitId": "TKH055",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH055",
+    "text": "Ticket TKH055 for apartment C-503 (Block C, floor 5). Category: Appliances. Reported on 2026-07-09: Washing machine inlet hose leaking. Resolved on 2026-07-12 by technician Kavitha Reddy (TEC07): Replaced the inlet hose and washer."
+  },
+  {
+    "unitId": "TKH056",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH056",
+    "text": "Ticket TKH056 for apartment A-402 (Block A, floor 4). Category: HVAC. Reported on 2026-07-16: Bedroom air conditioner blowing warm air. Resolved on 2026-07-18 by technician Priya Nair (TEC04): Cleaned choked filters and recharged refrigerant after leak repair."
+  },
+  {
+    "unitId": "TKH057",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH057",
+    "text": "Ticket TKH057 for apartment B-201 (Block B, floor 2). Category: Electrical. Reported on 2026-07-20: Bedroom MCB trips again and again. Resolved on 2026-07-21 by technician Anil Verma (TEC06): Found damaged insulation on the bedroom circuit and rewired it."
+  },
+  {
+    "unitId": "TKH058",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH058",
+    "text": "Ticket TKH058 for apartment A-103 (Block A, floor 1). Category: Electrical. Reported on 2026-07-20: Mild shock felt from the geyser body. Resolved on 2026-07-22 by technician Suresh Rao (TEC02): Repaired the earthing connection and tested earth resistance."
+  },
+  {
+    "unitId": "TKH059",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH059",
+    "text": "Ticket TKH059 for apartment C-402 (Block C, floor 4). Category: Plumbing. Reported on 2026-07-25: Kitchen sink draining very slowly. Resolved on 2026-07-26 by technician Imran Shaikh (TEC03): Cleared grease from the sink trap and flushed the line."
+  },
+  {
+    "unitId": "TKH060",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH060",
+    "text": "Ticket TKH060 for apartment B-401 (Block B, floor 4). Category: Electrical. Reported on 2026-07-29: Bedroom MCB trips again and again. Resolved on 2026-07-30 by technician Suresh Rao (TEC02): Found damaged insulation on the bedroom circuit and rewired it."
+  },
+  {
+    "unitId": "TKH061",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH061",
+    "text": "Ticket TKH061 for apartment A-302 (Block A, floor 3). Category: Water Leakage. Reported on 2026-07-30: Bathroom ceiling wet with peeling paint. Resolved on 2026-08-02 by technician Mohan Das (TEC08): Replaced grout and waterproofed the bathroom floor above."
+  },
+  {
+    "unitId": "TKH062",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH062",
+    "text": "Ticket TKH062 for apartment A-301 (Block A, floor 3). Category: Carpentry. Reported on 2026-08-01: Main door does not close properly. Resolved on 2026-08-04 by technician Joseph Fernandes (TEC05): Adjusted the door closer and tightened hinges."
+  },
+  {
+    "unitId": "TKH063",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH063",
+    "text": "Ticket TKH063 for apartment A-101 (Block A, floor 1). Category: Plumbing. Reported on 2026-08-06: Pipe under the wash basin leaking onto the floor. Resolved on 2026-08-09 by technician Ramesh Kumar (TEC01): Replaced a cracked PVC coupling."
+  },
+  {
+    "unitId": "TKH064",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH064",
+    "text": "Ticket TKH064 for apartment B-502 (Block B, floor 5). Category: Electrical. Reported on 2026-08-10: Living room fan regulator not working. Resolved on 2026-08-13 by technician Suresh Rao (TEC02): Replaced the fan regulator."
+  },
+  {
+    "unitId": "TKH065",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH065",
+    "text": "Ticket TKH065 for apartment C-203 (Block C, floor 2). Category: Water Leakage. Reported on 2026-08-19: Seepage on the external wall during rain. Resolved on 2026-08-22 by technician Mohan Das (TEC08): Sealed exterior plaster cracks and window sealant."
+  },
+  {
+    "unitId": "TKH066",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH066",
+    "text": "Ticket TKH066 for apartment B-301 (Block B, floor 3). Category: Electrical. Reported on 2026-08-20: Mild shock felt from the geyser body. Resolved on 2026-08-23 by technician Suresh Rao (TEC02): Repaired the earthing connection and tested earth resistance."
+  },
+  {
+    "unitId": "TKH067",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH067",
+    "text": "Ticket TKH067 for apartment C-502 (Block C, floor 5). Category: Appliances. Reported on 2026-08-27: Geyser making a banging noise. Resolved on 2026-08-29 by technician Kavitha Reddy (TEC07): Descaled the tank and replaced the thermostat."
+  },
+  {
+    "unitId": "TKH068",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH068",
+    "text": "Ticket TKH068 for apartment B-203 (Block B, floor 2). Category: Plumbing. Reported on 2026-08-31: Pipe under the wash basin leaking onto the floor. Resolved on 2026-09-01 by technician Ramesh Kumar (TEC01): Replaced a cracked PVC coupling."
+  },
+  {
+    "unitId": "TKH069",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH069",
+    "text": "Ticket TKH069 for apartment B-103 (Block B, floor 1). Category: Appliances. Reported on 2026-09-01: Washing machine inlet hose leaking. Resolved on 2026-09-03 by technician Kavitha Reddy (TEC07): Replaced the inlet hose and washer."
+  },
+  {
+    "unitId": "TKH070",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH070",
+    "text": "Ticket TKH070 for apartment B-202 (Block B, floor 2). Category: Water Leakage. Reported on 2026-09-04: Damp patch spreading on the bedroom ceiling. Resolved on 2026-09-05 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH071",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH071",
+    "text": "Ticket TKH071 for apartment B-201 (Block B, floor 2). Category: HVAC. Reported on 2026-09-09: AC outdoor unit making a rattling noise. Resolved on 2026-09-11 by technician Priya Nair (TEC04): Tightened the fan mount and replaced vibration pads."
+  },
+  {
+    "unitId": "TKH072",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH072",
+    "text": "Ticket TKH072 for apartment A-302 (Block A, floor 3). Category: Carpentry. Reported on 2026-09-10: Sliding balcony door is stuck. Resolved on 2026-09-13 by technician Joseph Fernandes (TEC05): Cleaned the track and replaced rollers."
+  },
+  {
+    "unitId": "TKH073",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH073",
+    "text": "Ticket TKH073 for apartment C-302 (Block C, floor 3). Category: Appliances. Reported on 2026-09-25: Washing machine inlet hose leaking. Resolved on 2026-09-27 by technician Kavitha Reddy (TEC07): Replaced the inlet hose and washer."
+  },
+  {
+    "unitId": "TKH074",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH074",
+    "text": "Ticket TKH074 for apartment C-102 (Block C, floor 1). Category: Electrical. Reported on 2026-09-28: Half the lights in the flat stopped working. Resolved on 2026-09-30 by technician Anil Verma (TEC06): Reset and replaced a faulty MCB in the distribution board."
+  },
+  {
+    "unitId": "TKH075",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH075",
+    "text": "Ticket TKH075 for apartment C-103 (Block C, floor 1). Category: Water Leakage. Reported on 2026-09-30: Damp patch spreading on the bedroom ceiling. Resolved on 2026-10-01 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH076",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH076",
+    "text": "Ticket TKH076 for apartment B-503 (Block B, floor 5). Category: Appliances. Reported on 2026-10-06: Geyser making a banging noise. Resolved on 2026-10-07 by technician Kavitha Reddy (TEC07): Descaled the tank and replaced the thermostat."
+  },
+  {
+    "unitId": "TKH077",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH077",
+    "text": "Ticket TKH077 for apartment A-501 (Block A, floor 5). Category: Water Leakage. Reported on 2026-10-08: Damp patch spreading on the bedroom ceiling. Resolved on 2026-10-11 by technician Mohan Das (TEC08): Traced seepage to the bathroom above and redid its waterproofing."
+  },
+  {
+    "unitId": "TKH078",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH078",
+    "text": "Ticket TKH078 for apartment C-301 (Block C, floor 3). Category: Water Leakage. Reported on 2026-10-11: Seepage on the external wall during rain. Resolved on 2026-10-14 by technician Mohan Das (TEC08): Sealed exterior plaster cracks and window sealant."
+  },
+  {
+    "unitId": "TKH079",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH079",
+    "text": "Ticket TKH079 for apartment A-402 (Block A, floor 4). Category: Carpentry. Reported on 2026-10-24: Sliding balcony door is stuck. Resolved on 2026-10-25 by technician Joseph Fernandes (TEC05): Cleaned the track and replaced rollers."
+  },
+  {
+    "unitId": "TKH080",
+    "kind": "ticket",
+    "origin": "synthetic",
+    "title": "Ticket TKH080",
+    "text": "Ticket TKH080 for apartment B-302 (Block B, floor 3). Category: Appliances. Reported on 2026-10-25: Geyser making a banging noise. Resolved on 2026-10-28 by technician Kavitha Reddy (TEC07): Descaled the tank and replaced the thermostat."
+  },
+  {
+    "unitId": "APT-A-101",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-101",
+    "text": "Apartment A-101 is on floor 1 of Block A. It is directly below apartment A-201."
+  },
+  {
+    "unitId": "APT-A-102",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-102",
+    "text": "Apartment A-102 is on floor 1 of Block A. It is directly below apartment A-202."
+  },
+  {
+    "unitId": "APT-A-103",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-103",
+    "text": "Apartment A-103 is on floor 1 of Block A. It is directly below apartment A-203."
+  },
+  {
+    "unitId": "APT-A-201",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-201",
+    "text": "Apartment A-201 is on floor 2 of Block A. It is directly below apartment A-301. It is directly above apartment A-101."
+  },
+  {
+    "unitId": "APT-A-202",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-202",
+    "text": "Apartment A-202 is on floor 2 of Block A. It is directly below apartment A-302. It is directly above apartment A-102."
+  },
+  {
+    "unitId": "APT-A-203",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-203",
+    "text": "Apartment A-203 is on floor 2 of Block A. It is directly below apartment A-303. It is directly above apartment A-103."
+  },
+  {
+    "unitId": "APT-A-301",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-301",
+    "text": "Apartment A-301 is on floor 3 of Block A. It is directly below apartment A-401. It is directly above apartment A-201."
+  },
+  {
+    "unitId": "APT-A-302",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-302",
+    "text": "Apartment A-302 is on floor 3 of Block A. It is directly below apartment A-402. It is directly above apartment A-202."
+  },
+  {
+    "unitId": "APT-A-303",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-303",
+    "text": "Apartment A-303 is on floor 3 of Block A. It is directly below apartment A-403. It is directly above apartment A-203."
+  },
+  {
+    "unitId": "APT-A-401",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-401",
+    "text": "Apartment A-401 is on floor 4 of Block A. It is directly below apartment A-501. It is directly above apartment A-301."
+  },
+  {
+    "unitId": "APT-A-402",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-402",
+    "text": "Apartment A-402 is on floor 4 of Block A. It is directly below apartment A-502. It is directly above apartment A-302."
+  },
+  {
+    "unitId": "APT-A-403",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-403",
+    "text": "Apartment A-403 is on floor 4 of Block A. It is directly below apartment A-503. It is directly above apartment A-303."
+  },
+  {
+    "unitId": "APT-A-501",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-501",
+    "text": "Apartment A-501 is on floor 5 of Block A. It is a top-floor apartment under the terrace. It is directly above apartment A-401."
+  },
+  {
+    "unitId": "APT-A-502",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-502",
+    "text": "Apartment A-502 is on floor 5 of Block A. It is a top-floor apartment under the terrace. It is directly above apartment A-402."
+  },
+  {
+    "unitId": "APT-A-503",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment A-503",
+    "text": "Apartment A-503 is on floor 5 of Block A. It is a top-floor apartment under the terrace. It is directly above apartment A-403."
+  },
+  {
+    "unitId": "APT-B-101",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-101",
+    "text": "Apartment B-101 is on floor 1 of Block B. It is directly below apartment B-201."
+  },
+  {
+    "unitId": "APT-B-102",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-102",
+    "text": "Apartment B-102 is on floor 1 of Block B. It is directly below apartment B-202."
+  },
+  {
+    "unitId": "APT-B-103",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-103",
+    "text": "Apartment B-103 is on floor 1 of Block B. It is directly below apartment B-203."
+  },
+  {
+    "unitId": "APT-B-201",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-201",
+    "text": "Apartment B-201 is on floor 2 of Block B. It is directly below apartment B-301. It is directly above apartment B-101."
+  },
+  {
+    "unitId": "APT-B-202",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-202",
+    "text": "Apartment B-202 is on floor 2 of Block B. It is directly below apartment B-302. It is directly above apartment B-102."
+  },
+  {
+    "unitId": "APT-B-203",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-203",
+    "text": "Apartment B-203 is on floor 2 of Block B. It is directly below apartment B-303. It is directly above apartment B-103."
+  },
+  {
+    "unitId": "APT-B-301",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-301",
+    "text": "Apartment B-301 is on floor 3 of Block B. It is directly below apartment B-401. It is directly above apartment B-201."
+  },
+  {
+    "unitId": "APT-B-302",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-302",
+    "text": "Apartment B-302 is on floor 3 of Block B. It is directly below apartment B-402. It is directly above apartment B-202."
+  },
+  {
+    "unitId": "APT-B-303",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-303",
+    "text": "Apartment B-303 is on floor 3 of Block B. It is directly below apartment B-403. It is directly above apartment B-203."
+  },
+  {
+    "unitId": "APT-B-401",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-401",
+    "text": "Apartment B-401 is on floor 4 of Block B. It is directly below apartment B-501. It is directly above apartment B-301."
+  },
+  {
+    "unitId": "APT-B-402",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-402",
+    "text": "Apartment B-402 is on floor 4 of Block B. It is directly below apartment B-502. It is directly above apartment B-302."
+  },
+  {
+    "unitId": "APT-B-403",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-403",
+    "text": "Apartment B-403 is on floor 4 of Block B. It is directly below apartment B-503. It is directly above apartment B-303."
+  },
+  {
+    "unitId": "APT-B-501",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-501",
+    "text": "Apartment B-501 is on floor 5 of Block B. It is a top-floor apartment under the terrace. It is directly above apartment B-401."
+  },
+  {
+    "unitId": "APT-B-502",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-502",
+    "text": "Apartment B-502 is on floor 5 of Block B. It is a top-floor apartment under the terrace. It is directly above apartment B-402."
+  },
+  {
+    "unitId": "APT-B-503",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment B-503",
+    "text": "Apartment B-503 is on floor 5 of Block B. It is a top-floor apartment under the terrace. It is directly above apartment B-403."
+  },
+  {
+    "unitId": "APT-C-101",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-101",
+    "text": "Apartment C-101 is on floor 1 of Block C. It is directly below apartment C-201."
+  },
+  {
+    "unitId": "APT-C-102",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-102",
+    "text": "Apartment C-102 is on floor 1 of Block C. It is directly below apartment C-202."
+  },
+  {
+    "unitId": "APT-C-103",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-103",
+    "text": "Apartment C-103 is on floor 1 of Block C. It is directly below apartment C-203."
+  },
+  {
+    "unitId": "APT-C-201",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-201",
+    "text": "Apartment C-201 is on floor 2 of Block C. It is directly below apartment C-301. It is directly above apartment C-101."
+  },
+  {
+    "unitId": "APT-C-202",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-202",
+    "text": "Apartment C-202 is on floor 2 of Block C. It is directly below apartment C-302. It is directly above apartment C-102."
+  },
+  {
+    "unitId": "APT-C-203",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-203",
+    "text": "Apartment C-203 is on floor 2 of Block C. It is directly below apartment C-303. It is directly above apartment C-103."
+  },
+  {
+    "unitId": "APT-C-301",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-301",
+    "text": "Apartment C-301 is on floor 3 of Block C. It is directly below apartment C-401. It is directly above apartment C-201."
+  },
+  {
+    "unitId": "APT-C-302",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-302",
+    "text": "Apartment C-302 is on floor 3 of Block C. It is directly below apartment C-402. It is directly above apartment C-202."
+  },
+  {
+    "unitId": "APT-C-303",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-303",
+    "text": "Apartment C-303 is on floor 3 of Block C. It is directly below apartment C-403. It is directly above apartment C-203."
+  },
+  {
+    "unitId": "APT-C-401",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-401",
+    "text": "Apartment C-401 is on floor 4 of Block C. It is directly below apartment C-501. It is directly above apartment C-301."
+  },
+  {
+    "unitId": "APT-C-402",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-402",
+    "text": "Apartment C-402 is on floor 4 of Block C. It is directly below apartment C-502. It is directly above apartment C-302."
+  },
+  {
+    "unitId": "APT-C-403",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-403",
+    "text": "Apartment C-403 is on floor 4 of Block C. It is directly below apartment C-503. It is directly above apartment C-303."
+  },
+  {
+    "unitId": "APT-C-501",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-501",
+    "text": "Apartment C-501 is on floor 5 of Block C. It is a top-floor apartment under the terrace. It is directly above apartment C-401."
+  },
+  {
+    "unitId": "APT-C-502",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-502",
+    "text": "Apartment C-502 is on floor 5 of Block C. It is a top-floor apartment under the terrace. It is directly above apartment C-402."
+  },
+  {
+    "unitId": "APT-C-503",
+    "kind": "apartment",
+    "origin": "synthetic",
+    "title": "Apartment C-503",
+    "text": "Apartment C-503 is on floor 5 of Block C. It is a top-floor apartment under the terrace. It is directly above apartment C-403."
+  },
+  {
+    "unitId": "TEC01",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Ramesh Kumar",
+    "text": "Technician Ramesh Kumar (TEC01) handles Plumbing work in Block A and Block B."
+  },
+  {
+    "unitId": "TEC02",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Suresh Rao",
+    "text": "Technician Suresh Rao (TEC02) handles Electrical work in Block A and Block B."
+  },
+  {
+    "unitId": "TEC03",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Imran Shaikh",
+    "text": "Technician Imran Shaikh (TEC03) handles Plumbing work in Block C and Block A and is a senior technician."
+  },
+  {
+    "unitId": "TEC04",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Priya Nair",
+    "text": "Technician Priya Nair (TEC04) handles HVAC work in Block A and Block B and Block C."
+  },
+  {
+    "unitId": "TEC05",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Joseph Fernandes",
+    "text": "Technician Joseph Fernandes (TEC05) handles Carpentry work in Block A and Block B and Block C."
+  },
+  {
+    "unitId": "TEC06",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Anil Verma",
+    "text": "Technician Anil Verma (TEC06) handles Electrical work in Block C and Block B and is a senior technician."
+  },
+  {
+    "unitId": "TEC07",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Kavitha Reddy",
+    "text": "Technician Kavitha Reddy (TEC07) handles Appliances work in Block A and Block B and Block C."
+  },
+  {
+    "unitId": "TEC08",
+    "kind": "technician",
+    "origin": "synthetic",
+    "title": "Mohan Das",
+    "text": "Technician Mohan Das (TEC08) handles Water Leakage work in Block A and Block B and Block C and is a senior technician."
+  }
+]

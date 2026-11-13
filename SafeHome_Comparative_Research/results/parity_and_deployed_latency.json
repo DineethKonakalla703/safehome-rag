@@ -1,0 +1,15 @@
+{
+  "storedChunks": 26,
+  "questions": 60,
+  "identicalRankingsAndScores": 60,
+  "mismatches": [],
+  "deployedLatencyMs": {
+    "n": 120,
+    "mean": 66.6,
+    "median": 65,
+    "p95": 74.3,
+    "min": 59.3,
+    "max": 108.9
+  },
+  "note": "Latency = retrieveKnowledge(question) + buildGraphContext(admin) in parallel against MongoDB Atlas from this laptop; excludes the Claude generation call."
+}
