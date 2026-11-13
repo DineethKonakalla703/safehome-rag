@@ -1,3 +1,5 @@
+import Block from '../models/Block.js';
+import Community from '../models/Community.js';
 import { AppError, asyncHandler, created, nextPublicId, ok, requireFields } from '../utils/http.js';
 import { scopedFilter } from '../middleware/auth.js';
 import { writeAudit } from '../utils/audit.js';
@@ -19,7 +21,17 @@ export function createResourceController({ Model, idField, prefix, required = []
     }),
     create: asyncHandler(async (req, res) => {
       const body = { ...req.body };
-      if (Model.schema.path('communityId') && req.user.communityId) body.communityId = req.user.communityId;
+      if (Model.schema.path('communityId') && Model.modelName !== 'Community') {
+        // Main Admin manages every community: honour an explicit communityId, or inherit it from the block.
+        if (req.user.role === 'MAIN_ADMIN' && !body.communityId && body.blockId && Model.modelName !== 'Block') {
+          const block = await Block.findOne({ blockId: body.blockId }).select('communityId').lean();
+          if (block) body.communityId = block.communityId;
+        }
+        if (req.user.role === 'MAIN_ADMIN' && body.communityId) {
+          if (!(await Community.exists({ communityId: body.communityId }))) throw new AppError(400, `Community ${body.communityId} does not exist.`);
+        } else if (req.user.communityId) body.communityId = req.user.communityId;
+      }
+      if (req.user.role === 'MAIN_ADMIN' && body.blockId && Model.schema.path('blockId') && Model.modelName !== 'Block' && !(await Block.exists({ blockId: body.blockId }))) throw new AppError(400, `Block ${body.blockId} does not exist.`);
       if (['BLOCK_SUB_ADMIN', 'SECURITY'].includes(req.user.role) && Model.schema.path(scope.blockField || 'blockId')) body[scope.blockField || 'blockId'] = req.user.blockId;
       if (req.user.role === 'BLOCK_SUB_ADMIN' && Model.modelName === 'Notice') body.targetType = 'Block';
       if (req.user.role === 'RESIDENT') {

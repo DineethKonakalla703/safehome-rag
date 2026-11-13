@@ -1,6 +1,6 @@
 export const getAIConfig = () => ({
   provider: process.env.AI_PROVIDER || 'claude',
-  model: process.env.CLAUDE_MODEL || 'claude-3-5-sonnet-latest',
+  model: process.env.CLAUDE_MODEL || 'claude-sonnet-4-6',
   apiKey: process.env.ANTHROPIC_API_KEY || '',
   fallbackEnabled: String(process.env.AI_FALLBACK_ENABLED ?? 'true').toLowerCase() !== 'false',
 });

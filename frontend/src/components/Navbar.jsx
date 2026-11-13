@@ -19,6 +19,8 @@ import {
 } from '../api/notificationApi';
 import { changePassword } from '../api/userApi';
 import { logout } from '../utils/auth';
+import { CopilotNavButton, CopilotNavMic } from '../ai/CopilotPanel';
+import { SosButton } from '../pages/CommunityLifePages';
 
 const roleLabels = {
   MAIN_ADMIN: 'Main Admin',
@@ -122,6 +124,9 @@ export default function Navbar({ user, onMenu }) {
       </div>
       <span className="prototype-pill">Phase 2 AI-Powered</span>
       <div className="user-area">
+        <SosButton />
+        <CopilotNavButton />
+        <CopilotNavMic />
         <div style={{ position: 'relative' }}>
           <button
             className="icon-button notification-button"

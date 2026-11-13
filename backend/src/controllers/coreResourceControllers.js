@@ -24,5 +24,5 @@ export const amenityController = createResourceController({ Model: Amenity, idFi
 export const bookingController = createResourceController({ Model: AmenityBooking, idField: 'bookingId', prefix: 'BK', required: ['amenityId', 'residentId', 'blockId', 'date', 'timeSlot'], scope: { residentField: 'residentId', blockField: 'blockId' } });
 export const noticeController = createResourceController({ Model: Notice, idField: 'noticeId', prefix: 'NT', required: ['title', 'message', 'targetType'], scope: { blockField: 'blockId', includeGlobalRecords: true } });
 export const documentController = createResourceController({ Model: Document, idField: 'documentId', prefix: 'DOC', required: ['title', 'type', 'fileUrl', 'relatedEntityType', 'relatedEntityId'], scope: { blockField: 'blockId', includeGlobalRecords: true } });
-export const inventoryController = createResourceController({ Model: InventoryItem, idField: 'itemId', prefix: 'INV', required: ['name', 'category', 'unit', 'location'] });
+export const inventoryController = createResourceController({ Model: InventoryItem, idField: 'itemId', prefix: 'INV', required: ['name', 'category', 'unit', 'location'], scope: { unrestrictedRead: true } });
 export const vendorController = createResourceController({ Model: Vendor, idField: 'vendorId', prefix: 'VEN', required: ['name', 'category', 'phone'] });

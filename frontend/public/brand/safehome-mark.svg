@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SafeHome">
+  <defs>
+    <linearGradient id="sh-ink" x1="14" y1="4" x2="50" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22355A"/>
+      <stop offset="1" stop-color="#0E1828"/>
+    </linearGradient>
+    <linearGradient id="sh-brass" x1="18" y1="18" x2="46" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EBD39C"/>
+      <stop offset=".55" stop-color="#C9A45C"/>
+      <stop offset="1" stop-color="#9E7A36"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield -->
+  <path d="M32 3.5 53.5 11v18.2c0 13.9-8.9 24.6-21.5 31.3C19.4 53.8 10.5 43.1 10.5 29.2V11L32 3.5Z" fill="url(#sh-ink)"/>
+  <!-- Inner hairline -->
+  <path d="M32 7.6 49.6 13.8v15.3c0 11.6-7.2 20.7-17.6 26.7-10.4-6-17.6-15.1-17.6-26.7V13.8L32 7.6Z" fill="none" stroke="url(#sh-brass)" stroke-width=".9" opacity=".55"/>
+  <!-- Roofline -->
+  <path d="M19.5 32.2 32 21.2l12.5 11" fill="none" stroke="url(#sh-brass)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Keyhole door -->
+  <circle cx="32" cy="36.4" r="3.6" fill="url(#sh-brass)"/>
+  <path d="M30.3 38.6h3.4l1.3 7.6a1 1 0 0 1-1 1.2h-5a1 1 0 0 1-1-1.2l1.3-7.6Z" fill="url(#sh-brass)"/>
+</svg>

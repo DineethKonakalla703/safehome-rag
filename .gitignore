@@ -12,3 +12,8 @@ backend/uploads/
 .env
 backend/.env
 frontend/.env
+
+# Local tool settings
+.claude/settings.local.json
+mobile/.env
+mobile/.expo/

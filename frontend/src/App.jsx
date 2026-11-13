@@ -14,6 +14,9 @@ import CollectiveIncidents from './pages/CollectiveIncidents';
 import IncidentDetails from './pages/IncidentDetails';
 import KnowledgeSupport from './pages/KnowledgeSupport';
 import AIChatbot from './pages/AIChatbot';
+import CopilotPage from './pages/CopilotPage';
+import { AccountsPage, EventsPage, PollsPage, SosPage, StaffPage } from './pages/CommunityLifePages';
+import { ForumPage, MaintenancePage, MoveRequestsPage, ParcelsPage } from './pages/OperationsPlusPages';
 import VendorManagement from './pages/VendorManagement';
 import TechnicianDashboard from './pages/TechnicianDashboard';
 import VisitorsPage from './pages/VisitorsPage';
@@ -56,7 +59,17 @@ export default function App() {
       <Route path="/collective-incidents" element={protect(<CollectiveIncidents />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/incidents/:id" element={protect(<IncidentDetails />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'])} />
       <Route path="/knowledge-support" element={protect(<KnowledgeSupport />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
-      <Route path="/ai-chatbot" element={protect(<AIChatbot />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'TECHNICIAN'])} />
+      <Route path="/staff" element={protect(<StaffPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/accounts" element={protect(<AccountsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/polls" element={protect(<PollsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/events" element={protect(<EventsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/sos" element={<SosPage />} />
+      <Route path="/move-requests" element={protect(<MoveRequestsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/parcels" element={protect(<ParcelsPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/maintenance" element={protect(<MaintenancePage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER', 'TECHNICIAN'])} />
+      <Route path="/forum" element={protect(<ForumPage />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'SECURITY', 'FACILITY_MANAGER'])} />
+      <Route path="/ai-chatbot" element={<CopilotPage />} />
+      <Route path="/ai-chatbot/classic" element={protect(<AIChatbot />, ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'RESIDENT', 'TECHNICIAN'])} />
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>;

@@ -4,9 +4,11 @@ import { approveVisitor, assignParking, checkInVisitor, exitVisitor, updateBooki
 import { authenticate, authorize } from '../middleware/auth.js';
 
 const managers = ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'FACILITY_MANAGER'];
-const build = (controller, writeRoles = managers, { allowCreateRoles = writeRoles } = {}) => {
+// `before` registers fixed-path routes ahead of the generic `/:id` handlers so they are not shadowed.
+const build = (controller, writeRoles = managers, { allowCreateRoles = writeRoles, before } = {}) => {
   const router = Router();
   router.use(authenticate);
+  before?.(router);
   router.get('/', controller.list);
   router.get('/:id', controller.get);
   router.post('/', authorize(...allowCreateRoles), controller.create);
@@ -20,8 +22,10 @@ export const blockRoutes = build(blockController, ['MAIN_ADMIN']);
 export const apartmentRoutes = build(apartmentController, ['MAIN_ADMIN']);
 export const residentRoutes = build(residentController, managers);
 
-export const visitorRoutes = build(visitorController, managers, { allowCreateRoles: ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'] });
-visitorRoutes.get('/verify-pass', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'), verifyGatePass);
+export const visitorRoutes = build(visitorController, managers, {
+  allowCreateRoles: ['MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'],
+  before: (router) => router.get('/verify-pass', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'), verifyGatePass),
+});
 visitorRoutes.patch('/:id/approve', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY', 'RESIDENT'), approveVisitor);
 visitorRoutes.patch('/:id/check-in', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY'), checkInVisitor);
 visitorRoutes.patch('/:id/exit', authorize('MAIN_ADMIN', 'BLOCK_SUB_ADMIN', 'SECURITY'), exitVisitor);

@@ -170,7 +170,7 @@ export function WorkOrdersPage() {
                     <img
                       src={assetUrl(selected.completionImage.fileUrl)}
                       alt="Work Completion Proof"
-                      style={{ maxWidth: '300px', maxHeight: '180px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                      style={{ maxWidth: '300px', maxHeight: '180px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #d8d4cc' }}
                     />
                   </dd>
                 </div>
