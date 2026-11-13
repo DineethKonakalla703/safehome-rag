@@ -1,0 +1,85 @@
+{
+  "environment": {
+    "date": "2026-11-13T20:10:52.150Z",
+    "node": "v24.15.0",
+    "platform": "Windows_NT 10.0.26200 x64",
+    "cpu": "13th Gen Intel(R) Core(TM) i5-1340P",
+    "logicalCores": 16,
+    "totalMemGB": 15.6,
+    "embeddingModel": "Xenova/all-MiniLM-L6-v2 (ONNX, fp32, mean pooling, L2-normalised) via @huggingface/transformers 3.7.6",
+    "safehomeEmbedding": "feature-hash-v1 (64-dim MD5 feature hashing) from backend/src/ai/rag/embeddingService.js",
+    "chunking": "splitText(maxLength = 900) from backend/src/ai/rag/textExtractor.js, applied to every system",
+    "K": 5,
+    "repetitions": 5,
+    "candidatePool": 40,
+    "modelLoadMs": 9784,
+    "units": 162,
+    "chunksAll": 162,
+    "chunksKb": 29,
+    "questions": 60
+  },
+  "systems": {
+    "KEYWORD": {
+      "name": "Keyword search (term overlap)",
+      "indexMs": 1.5,
+      "cpuMsPerQuery": 0.157,
+      "memBefore": {
+        "rssMB": 270.7,
+        "heapMB": 24.2
+      },
+      "memAfter": {
+        "rssMB": 270.7,
+        "heapMB": 24.7
+      }
+    },
+    "BM25": {
+      "name": "BM25",
+      "indexMs": 2.8,
+      "cpuMsPerQuery": 0.31,
+      "memBefore": {
+        "rssMB": 270.7,
+        "heapMB": 24.7
+      },
+      "memAfter": {
+        "rssMB": 270.7,
+        "heapMB": 25.3
+      }
+    },
+    "DENSE": {
+      "name": "Vector RAG (all-MiniLM-L6-v2)",
+      "indexMs": 9926.2,
+      "cpuMsPerQuery": 240.42,
+      "memBefore": {
+        "rssMB": 270.7,
+        "heapMB": 25.3
+      },
+      "memAfter": {
+        "rssMB": 932.4,
+        "heapMB": 31.3
+      }
+    },
+    "SH_HYBRID": {
+      "name": "SafeHome hybrid (same corpus)",
+      "indexMs": 34,
+      "cpuMsPerQuery": 3.85,
+      "memBefore": {
+        "rssMB": 932.4,
+        "heapMB": 31.3
+      },
+      "memAfter": {
+        "rssMB": 933.7,
+        "heapMB": 35.7
+      }
+    },
+    "SH_DEPLOYED": {
+      "name": "SafeHome as deployed (KB hybrid + graph context)",
+      "indexMs": null,
+      "cpuMsPerQuery": 0.99
+    },
+    "PROTO_GRAPH": {
+      "name": "Prototype: graph-expanded hybrid (not in SafeHome)",
+      "indexMs": null,
+      "cpuMsPerQuery": 0.573
+    }
+  }
+}
