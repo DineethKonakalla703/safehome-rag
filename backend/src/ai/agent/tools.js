@@ -342,7 +342,25 @@ async function runAction(ctx, input) {
   return compact(result);
 }
 
+// Checks that can be decided before any API call (unknown action, role not allowed, unsupported verb).
+// The runner uses it so the user is never shown an approval card for something that is bound to fail.
+const VERB_FOR = { create_record: 'create', update_record: 'update', delete_record: 'delete' };
+export function precheckTool(user, name, input = {}) {
+  if (name === 'run_action') {
+    const action = ACTIONS[input.action];
+    if (!action) return `Unknown action ${input.action}`;
+    if (action.roles && !action.roles.includes(user?.role)) return `Your role (${user?.role}) cannot run ${input.action}.`;
+  }
+  if (VERB_FOR[name] && !RESOURCES[input.resource]?.verbs.includes(VERB_FOR[name])) {
+    return name === 'create_record' ? `Creating ${input.resource} is not supported. Check the catalog for a matching action.`
+      : name === 'update_record' ? `${input.resource} cannot be edited directly; use run_action.` : `${input.resource} cannot be deleted.`;
+  }
+  return null;
+}
+
 export async function executeTool(ctx, name, input = {}) {
+  const blocked = precheckTool(ctx.user, name, input);
+  if (blocked) throw new Error(blocked);
   switch (name) {
     case 'query_records': return queryRecords(ctx, input);
     case 'get_record': return getRecord(ctx, input);

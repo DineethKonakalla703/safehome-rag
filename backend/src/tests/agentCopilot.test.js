@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { pageAllowed, catalogText } from '../ai/agent/catalog.js';
-import { toolNeedsApproval, toolIsDestructive, TOOL_DEFINITIONS } from '../ai/agent/tools.js';
+import { toolNeedsApproval, toolIsDestructive, precheckTool, TOOL_DEFINITIONS } from '../ai/agent/tools.js';
 
 test('agent navigation is restricted to pages the role can open', () => {
   assert.equal(pageAllowed('MAIN_ADMIN', '/audit-logs'), true);
@@ -59,4 +59,14 @@ test('community and operations modules are exposed per role', () => {
   const text = catalogText();
   for (const key of ['staff', 'ledger-entries', 'polls', 'events', 'sos-alerts', 'move-requests', 'parcels', 'maintenance-schedules', 'forum-posts']) assert.ok(text.includes(`- ${key} [`), key);
   assert.equal(text.split('\n').filter((l) => l.includes('pickupCode') && !l.startsWith('- parcel_collect')).length, 0, 'pickup codes stay out of the parcel schema');
+});
+
+test('actions the role cannot run are rejected before an approval card is shown', () => {
+  const technician = { role: 'TECHNICIAN' };
+  const admin = { role: 'MAIN_ADMIN' };
+  assert.match(precheckTool(technician, 'run_action', { action: 'bills_generate_monthly' }), /cannot run bills_generate_monthly/);
+  assert.equal(precheckTool(admin, 'run_action', { action: 'bills_generate_monthly' }), null);
+  assert.match(precheckTool(admin, 'run_action', { action: 'no_such_action' }), /Unknown action/);
+  assert.match(precheckTool(admin, 'delete_record', { resource: 'tickets' }), /cannot be deleted/);
+  assert.equal(precheckTool(admin, 'create_record', { resource: 'notices' }), null);
 });

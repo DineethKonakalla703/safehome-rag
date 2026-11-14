@@ -4,7 +4,7 @@ import AgentSession from '../../models/AgentSession.js';
 import { writeAudit } from '../../utils/audit.js';
 import { AppError } from '../../utils/http.js';
 import { PAGES, catalogText } from './catalog.js';
-import { TOOL_DEFINITIONS, describeToolCall, executeTool, planBulkBuild, toolAlwaysAsks, toolIsDestructive, toolNeedsApproval } from './tools.js';
+import { TOOL_DEFINITIONS, describeToolCall, executeTool, planBulkBuild, precheckTool, toolAlwaysAsks, toolIsDestructive, toolNeedsApproval } from './tools.js';
 
 const MAX_STEPS = () => Math.max(2, Number(process.env.AGENT_MAX_STEPS || 20));
 const MAX_TOKENS = () => Math.max(512, Number(process.env.AGENT_MAX_TOKENS || 8192));
@@ -127,7 +127,9 @@ async function loop(ctx, session, messages) {
           continue;
         }
       }
-      if (approval && (!ctx.autoApprove || alwaysAsk)) needApproval.push(block);
+      // Not permitted for this role (or unsupported)? Fail now so the model explains it, instead of asking for approval.
+      if (approval && precheckTool(ctx.user, block.name, block.input)) results.push(await runTool(ctx, block));
+      else if (approval && (!ctx.autoApprove || alwaysAsk)) needApproval.push(block);
       else results.push(await runTool(ctx, block));
     }
     if (needApproval.length) {
